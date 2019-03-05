@@ -2,24 +2,48 @@
   "name": "dcgp-web",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "dependencies": {
+    "dcgp": "^0.1.0",
+    "katex": "^0.10.1",
+    "polished": "^3.0.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-katex": "^2.0.2",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.5",
+    "redux": "^4.0.1",
+    "reselect": "^4.0.0",
+    "styled-components": "^4.1.3"
+  },
+  "devDependencies": {
+    "babel-plugin-polished": "^1.1.0",
+    "babel-plugin-styled-components": "^1.10.0",
+    "customize-cra": "^0.2.12",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-eslint-comments": "^3.1.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^1.4.0",
+    "prettier": "^1.16.4",
+    "react-app-rewired": "^2.1.0"
+  }
 }
