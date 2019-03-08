@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test"
@@ -13,12 +15,14 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "homepage": "https://mikeheddes.github.io/dcgp-web",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "^3.0.0-alpha.10",
     "connected-react-router": "^6.3.1",
     "dcgp": "^0.3.0",
+    "gh-pages": "^2.0.1",
     "history": "^4.7.2",
     "katex": "^0.10.1",
     "polished": "^3.0.3",
