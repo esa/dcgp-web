@@ -1,44 +1,57 @@
 import React, { Component } from 'react';
-import dcgp from 'dcgp';
-// import 'dcgp/dcgp.wasm';
-import logo from './logo.svg';
-import './App.css';
+import { css } from 'styled-components';
+import { Route, Switch, withRouter } from 'react-router-dom'; // react-router v4
+import Navigation from './component/Navigation';
+import Footer from './component/Footer';
 
-const { KernelSet, Expression } = dcgp();
+const bodyStyle = css`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 980px;
+`;
+
+const Evolve = () => 'Evolve';
+const Inspect = () => 'Inspect';
+const Introduction = () => 'Introduction';
 
 class App extends Component {
-  state = { chromosome: [] };
-
-  number = 0;
-
-  handleClick = () => {
-    const kernelSet = new KernelSet(KernelSet.ALL_KERNELS);
-    const expression = new Expression(2, 1, 2, 6, 5, 2, kernelSet, this.number);
-
-    this.setState({
-      chromosome: expression.getChromosome(),
-    });
-
-    this.number += 1;
-
-    kernelSet.destroy();
-    expression.destroy();
+  routes = [
+    { label: 'Introduction', path: '/' },
+    { label: 'Evolution', path: '/evolve' },
+    { label: 'Inspection', path: '/inspect' },
+  ];
+  state = {
+    routeIndex: 0,
   };
 
   render() {
-    const { chromosome } = this.state;
+    const { location } = this.props;
+
+    const routeIndex = this.routes.findIndex(
+      route => route.path === location.pathname
+    );
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>{chromosome.join('')}</p>
-          <a className="App-link" onClick={this.handleClick}>
-            Click to generate a new chromosome
-          </a>
-        </header>
-      </div>
+      <>
+        {/* 64px is the height of the footercc */}
+        <div css="min-height: calc(100vh - 64px);">
+          <Navigation
+            routes={this.routes}
+            routeIndex={routeIndex}
+            handleMenuToggle={console.log}
+          />
+          <div css={bodyStyle}>
+            <Switch>
+              <Route exact path="/evolve" component={Evolve} />
+              <Route exact path="/inspect" component={Inspect} />
+              <Route component={Introduction} />
+            </Switch>
+          </div>
+        </div>
+        <Footer />
+      </>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
