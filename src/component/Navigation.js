@@ -37,7 +37,9 @@ const Navigation = ({
   classes,
   theme,
 }) => {
-  const isLargerThenMedium = useMediaQuery(theme.breakpoints.up('md'));
+  const isLargerThenMedium = useMediaQuery(theme.breakpoints.up('md'), {
+    noSsr: true,
+  });
 
   return (
     <>

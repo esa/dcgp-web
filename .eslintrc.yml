@@ -29,10 +29,6 @@ rules:
     - unnecessary: true
       numbers: true
       keywords: true
-  jest/consistent-test-it:
-    - error
-    - fn: test
-      withinDescribe: it
   import/no-named-as-default-member:
     - error
   react/jsx-filename-extension:
