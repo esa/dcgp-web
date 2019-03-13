@@ -1,23 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { Link } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
-import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
-import DcgpLogo from './DcgpLogo';
-import GitHubIcon from './GitHub';
+import React from 'react'
+import PropTypes from 'prop-types'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import { Link } from 'react-router-dom'
+import { withStyles } from '@material-ui/core/styles'
+import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery'
+import DcgpLogo from './DcgpLogo'
+import GitHubIcon from './GitHub'
 
 const StyledTabs = withStyles({
   root: {
     backgroundColor: '#D5D6D2',
     color: '#000000',
   },
-})(AppBar);
+})(AppBar)
 
 const styles = {
   grow: {
@@ -27,7 +27,7 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-};
+}
 
 const Navigation = ({
   routes,
@@ -39,7 +39,7 @@ const Navigation = ({
 }) => {
   const isLargerThenMedium = useMediaQuery(theme.breakpoints.up('md'), {
     noSsr: true,
-  });
+  })
 
   return (
     <>
@@ -75,8 +75,8 @@ const Navigation = ({
         </Tabs>
       </StyledTabs>
     </>
-  );
-};
+  )
+}
 
 Navigation.propTypes = {
   routeIndex: PropTypes.number.isRequired,
@@ -88,6 +88,6 @@ Navigation.propTypes = {
   ).isRequired,
   handleMenuToggle: PropTypes.func.isRequired,
   handleRouteChange: PropTypes.func,
-};
+}
 
-export default withStyles(styles, { withTheme: true })(Navigation);
+export default withStyles(styles, { withTheme: true })(Navigation)

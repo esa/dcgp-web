@@ -1,11 +1,11 @@
-import React from 'react';
-import configureStore from './configureStore';
-import { Provider } from 'react-redux';
-import { HashRouter } from 'react-router-dom';
-import Theme from './style/Theme';
-import Body from './Body';
+import React from 'react'
+import configureStore from './configureStore'
+import { Provider } from 'react-redux'
+import { HashRouter } from 'react-router-dom'
+import Theme from './style/Theme'
+import Body from './component/Body'
 
-const store = configureStore(/* provide initial state if any */);
+const store = configureStore(/* provide initial state if any */)
 
 const App = () => (
   <Provider store={store}>
@@ -15,6 +15,6 @@ const App = () => (
       </Theme>
     </HashRouter>
   </Provider>
-);
+)
 
-export default App;
+export default App
