@@ -1,13 +1,13 @@
 {
   "main.css": "/dcgp-web/static/css/main.ce6f6f01.chunk.css",
-  "main.js": "/dcgp-web/static/js/main.c6a576db.chunk.js",
-  "main.js.map": "/dcgp-web/static/js/main.c6a576db.chunk.js.map",
+  "main.js": "/dcgp-web/static/js/main.968acdf8.chunk.js",
+  "main.js.map": "/dcgp-web/static/js/main.968acdf8.chunk.js.map",
   "runtime~main.js": "/dcgp-web/static/js/runtime~main.6cb91ccc.js",
   "runtime~main.js.map": "/dcgp-web/static/js/runtime~main.6cb91ccc.js.map",
-  "static/js/2.0fcddd0c.chunk.js": "/dcgp-web/static/js/2.0fcddd0c.chunk.js",
-  "static/js/2.0fcddd0c.chunk.js.map": "/dcgp-web/static/js/2.0fcddd0c.chunk.js.map",
+  "static/js/2.8a2d170b.chunk.js": "/dcgp-web/static/js/2.8a2d170b.chunk.js",
+  "static/js/2.8a2d170b.chunk.js.map": "/dcgp-web/static/js/2.8a2d170b.chunk.js.map",
   "index.html": "/dcgp-web/index.html",
-  "precache-manifest.f726b5875faa3d42a3bce637057bb397.js": "/dcgp-web/precache-manifest.f726b5875faa3d42a3bce637057bb397.js",
+  "precache-manifest.ac638ef6e3c16fef38c99cd6fb8068f8.js": "/dcgp-web/precache-manifest.ac638ef6e3c16fef38c99cd6fb8068f8.js",
   "service-worker.js": "/dcgp-web/service-worker.js",
   "static/css/main.ce6f6f01.chunk.css.map": "/dcgp-web/static/css/main.ce6f6f01.chunk.css.map"
 }
