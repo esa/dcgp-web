@@ -1,14 +1,12 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import rootReducer from './reducer'
+import reducers from './reducers'
+import middlewares from './middleware'
 
 export default function configureStore(preloadedState) {
   const store = createStore(
-    rootReducer, // root reducer with router state
+    reducers,
     preloadedState,
-    compose(
-      applyMiddleware()
-      // ... other middlewares ...
-    )
+    compose(applyMiddleware(...middlewares))
   )
 
   return store
