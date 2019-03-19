@@ -1,14 +1,14 @@
 {
-  "main.js": "/dcgp-web/static/js/main.071013a3.chunk.js",
-  "main.js.map": "/dcgp-web/static/js/main.071013a3.chunk.js.map",
+  "main.js": "/dcgp-web/static/js/main.9a8daf22.chunk.js",
+  "main.js.map": "/dcgp-web/static/js/main.9a8daf22.chunk.js.map",
   "runtime~main.js": "/dcgp-web/static/js/runtime~main.d86d1b5f.js",
   "runtime~main.js.map": "/dcgp-web/static/js/runtime~main.d86d1b5f.js.map",
-  "static/js/2.7f8ad529.chunk.js": "/dcgp-web/static/js/2.7f8ad529.chunk.js",
-  "static/js/2.7f8ad529.chunk.js.map": "/dcgp-web/static/js/2.7f8ad529.chunk.js.map",
-  "1daaa90c72065ebd9176.worker.js": "/dcgp-web/1daaa90c72065ebd9176.worker.js",
-  "1daaa90c72065ebd9176.worker.js.map": "/dcgp-web/1daaa90c72065ebd9176.worker.js.map",
+  "static/js/2.53fcb70a.chunk.js": "/dcgp-web/static/js/2.53fcb70a.chunk.js",
+  "static/js/2.53fcb70a.chunk.js.map": "/dcgp-web/static/js/2.53fcb70a.chunk.js.map",
+  "8a8ac8efa1d5a7bd5808.worker.js": "/dcgp-web/8a8ac8efa1d5a7bd5808.worker.js",
+  "8a8ac8efa1d5a7bd5808.worker.js.map": "/dcgp-web/8a8ac8efa1d5a7bd5808.worker.js.map",
   "index.html": "/dcgp-web/index.html",
-  "precache-manifest.f7369567c9a9c81cef62bfd1005ac707.js": "/dcgp-web/precache-manifest.f7369567c9a9c81cef62bfd1005ac707.js",
+  "precache-manifest.18341565bbddae997377b43b848b61d1.js": "/dcgp-web/precache-manifest.18341565bbddae997377b43b848b61d1.js",
   "service-worker.js": "/dcgp-web/service-worker.js",
   "static/media/dcgp.wasm": "/dcgp-web/static/media/dcgp.984a6589.wasm"
 }
