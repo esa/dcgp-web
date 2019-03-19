@@ -6,10 +6,17 @@ import {
   kernelNamesById,
   networkSettingsById,
   startEvolution,
+  pauseEvolution,
+  resetEvolution,
   ONE_PLUS_LAMBDA,
 } from '../actions'
 import { useDispatch } from '../../hooks'
-import { useParameters } from '../hooks'
+import {
+  useParameters,
+  useCurrentStep,
+  useLoss,
+  useEvolutionState,
+} from '../hooks'
 import Radio from '@material-ui/core/Radio'
 import { withStyles } from '@material-ui/core/styles'
 import RadioGroup from '@material-ui/core/RadioGroup'
@@ -42,6 +49,37 @@ const styles = theme => ({
 const Parameters = ({ classes }) => {
   const dispatch = useDispatch()
   const parameters = useParameters()
+  const currentStep = useCurrentStep()
+  const loss = useLoss()
+  const evolutionState = useEvolutionState()
+
+  let buttonLabel
+  switch (evolutionState) {
+    case 'EVOLVING':
+      buttonLabel = 'pause'
+      break
+    case 'EMPTY':
+      buttonLabel = 'start'
+      break
+    case 'PAUSING':
+      buttonLabel = 'resume'
+      break
+    default:
+      break
+  }
+
+  let buttonAction
+  switch (evolutionState) {
+    case 'EVOLVING':
+      buttonAction = pauseEvolution
+      break
+    case 'EMPTY':
+    case 'PAUSING':
+      buttonAction = startEvolution
+      break
+    default:
+      break
+  }
 
   return (
     <>
@@ -121,11 +159,21 @@ const Parameters = ({ classes }) => {
           <Button
             color="secondary"
             variant="contained"
-            onClick={() => dispatch(startEvolution())}
+            onClick={() => dispatch(resetEvolution())}
           >
-            Start
+            reset
+          </Button>
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={() => dispatch(buttonAction())}
+          >
+            {buttonLabel}
           </Button>
         </div>
+        <p>
+          Step: {currentStep}, loss: {loss}
+        </p>
       </Paper>
     </>
   )

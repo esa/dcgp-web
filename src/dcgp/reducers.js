@@ -34,7 +34,8 @@ dcgp: {
     isEvolving: Bool,
     steps: [{
       loss: Number,
-      chromosome,
+      chromosome: [Number],
+      step: Number,
     }],
   },
 }
@@ -106,7 +107,7 @@ function network(state = initialNetworkState, action) {
 const initialAlgorithmState = {
   id: actions.ONE_PLUS_LAMBDA,
   offsprings: 4,
-  maxGenerations: 1,
+  maxGenerations: 1000,
 }
 
 function algorithm(state = initialAlgorithmState, action) {
@@ -138,9 +139,42 @@ function instance(state = {}, action) {
   }
 }
 
+function isEvolving(state = false, action) {
+  const { type } = action
+
+  switch (type) {
+    case actions.START_EVOLUTION:
+      return true
+    case actions.PAUSE_EVOLUTION:
+    case actions.RESET_EVOLUTION:
+      return false
+    default:
+      return state
+  }
+}
+
+function steps(state = [], action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case actions.EVOLUTION_PROGRESS:
+      return [...state, payload]
+    case actions.RESET_EVOLUTION:
+      return []
+    default:
+      return state
+  }
+}
+
+const evolution = combineReducers({
+  isEvolving,
+  steps,
+})
+
 const dcgpReducer = combineReducers({
   parameters,
   instance,
+  evolution,
 })
 
 export default dcgpReducer

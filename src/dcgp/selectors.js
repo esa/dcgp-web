@@ -21,3 +21,40 @@ export const dcgpSelector = createSelector(
   state => state.dcgp.instance,
   dcgp => dcgp
 )
+
+export const currentStepSelector = createSelector(
+  state => state.dcgp.evolution.steps,
+  steps => {
+    if (!steps.length) {
+      return 0
+    }
+
+    return steps[steps.length - 1].step
+  }
+)
+
+export const lossSelector = createSelector(
+  state => state.dcgp.evolution.steps,
+  steps => {
+    if (!steps.length) {
+      return null
+    }
+
+    return steps[steps.length - 1].loss
+  }
+)
+
+export const evolutionStateSelector = createSelector(
+  state => state.dcgp.evolution,
+  evolution => {
+    if (evolution.isEvolving) {
+      return 'EVOLVING'
+    }
+
+    if (evolution.steps.length) {
+      return 'PAUSING'
+    }
+
+    return 'EMPTY'
+  }
+)
