@@ -32,6 +32,10 @@ dcgp: {
   },
   evolution: {
     isEvolving: Bool,
+    initial: {
+      loss: Number,
+      chromosome: [Number],
+    }
     steps: [{
       loss: Number,
       chromosome: [Number],
@@ -54,7 +58,7 @@ function seed(state = 1234, action) {
 }
 
 const initialKernelState = {
-  sum: true,
+  sum: false,
   diff: true,
   mul: true,
   pdiv: true,
@@ -82,7 +86,7 @@ function kernels(state = initialKernelState, action) {
 
 const initialNetworkState = {
   rows: 1, // min 1
-  columns: 4, // min 1
+  columns: 25, // min 1
   arity: 2, // min 2
   levelsBack: 5, // min 1
 }
@@ -153,6 +157,19 @@ function isEvolving(state = false, action) {
   }
 }
 
+function initial(state = {}, action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case actions.INITIAL_EVOLUTION:
+      return payload
+    case actions.RESET_EVOLUTION:
+      return {}
+    default:
+      return state
+  }
+}
+
 function steps(state = [], action) {
   const { type, payload } = action
 
@@ -168,6 +185,7 @@ function steps(state = [], action) {
 
 const evolution = combineReducers({
   isEvolving,
+  initial,
   steps,
 })
 

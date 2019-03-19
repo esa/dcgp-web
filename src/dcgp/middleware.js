@@ -6,6 +6,8 @@ import {
   LOSS_THRESHOLD,
   TOGGLE_KERNEL,
   NETWORK_CHANGE,
+  INITIAL_EVOLUTION,
+  setInitialEvolution,
   setRows,
   setColumns,
   setArity,
@@ -20,6 +22,7 @@ import {
   activeKernelsSelector,
   parametersSelector,
   currentStepSelector,
+  dcgpSelector,
   lossSelector,
 } from './selectors'
 // eslint-disable-next-line import/default
@@ -48,10 +51,14 @@ export const handleWorkerMessages = store => next => action => {
         ...action,
         payload: { ...action.payload, ...dcgp },
       })
+
+      store.dispatch(setInitialEvolution())
     })
-  } else {
-    next(action)
+
+    return
   }
+
+  next(action)
 }
 
 export const evolution = store => next => action => {
@@ -62,8 +69,13 @@ export const evolution = store => next => action => {
   if (action.type === RESET_EVOLUTION) {
     store.dispatch(sendWorkerMessage(action))
 
+    next(action)
+
     const seed = Math.round(Math.random() * 1000)
     store.dispatch(setSeed(seed))
+
+    store.dispatch(setInitialEvolution())
+    return
   }
 
   if (action.type === START_EVOLUTION) {
@@ -92,6 +104,48 @@ export const evolution = store => next => action => {
         },
       })
     )
+    return
+  }
+
+  if (action.type === INITIAL_EVOLUTION) {
+    const state = store.getState()
+
+    const dcgp = dcgpSelector(state)
+    const activeKernelIds = activeKernelsSelector(state)
+    const parameters = parametersSelector(state)
+
+    const {
+      seed,
+      network: { rows, columns, arity, levelsBack },
+      algorithm: { id: algorithmId },
+    } = parameters
+
+    // this should move to dcgp.worker.js
+    const myKernelSet = new dcgp.KernelSet(activeKernelIds)
+    const myExpression = new dcgp.Expression(
+      2,
+      1,
+      rows,
+      columns,
+      levelsBack,
+      arity,
+      myKernelSet,
+      seed
+    )
+
+    // some simple dataset: y = 2x + 2
+    const inputs = [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1]]
+    const outputs = [[2], [4], [6], [8], [10]]
+
+    const resultObj = dcgp.algorithms[algorithmId](
+      myExpression,
+      1,
+      0,
+      inputs,
+      outputs
+    )
+
+    next({ ...action, payload: { ...action.payload, ...resultObj } })
     return
   }
 

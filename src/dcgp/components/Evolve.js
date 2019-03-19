@@ -6,6 +6,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import Paper from '@material-ui/core/Paper'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from 'recharts'
+import { useSteps } from '../hooks'
 import Parameters from './Parameters'
 
 const styles = theme => ({
@@ -22,8 +31,12 @@ const styles = theme => ({
   },
 })
 
+// TODO: move to utils
+const significant2 = number => number.toPrecision(2)
+
 const Evolve = ({ classes }) => {
   const [dataFunc, setDataFunc] = useState('linear')
+  const steps = useSteps()
 
   return (
     <>
@@ -74,7 +87,25 @@ const Evolve = ({ classes }) => {
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat.
       </p>
-      <Paper elevation={0} className={classes.inputBox} />
+      <Paper elevation={0} className={classes.inputBox}>
+        <ResponsiveContainer height={300}>
+          <LineChart
+            width={730}
+            height={250}
+            data={steps}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="step" />
+            <YAxis
+              scale="log"
+              domain={['auto', 'auto']}
+              tickFormatter={significant2}
+            />
+            <Line type="stepAfter" dataKey="loss" stroke="#8884d8" />
+          </LineChart>
+        </ResponsiveContainer>
+      </Paper>
       <h2>Best chromosomes</h2>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

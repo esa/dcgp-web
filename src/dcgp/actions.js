@@ -94,8 +94,14 @@ export const sendWorkerMessage = action => ({
 export const START_EVOLUTION = prefix + 'START_EVOLUTION'
 export const PAUSE_EVOLUTION = prefix + 'PAUSE_EVOLUTION'
 export const RESET_EVOLUTION = prefix + 'RESET_EVOLUTION'
+export const INITIAL_EVOLUTION = prefix + 'INITIAL_EVOLUTION'
 export const LOSS_THRESHOLD = 1e-14
 export const EVOLUTION_PROGRESS = prefix + 'EVOLUTION_PROGRESS'
+
+export const setInitialEvolution = resultObj => ({
+  type: INITIAL_EVOLUTION,
+  payload: resultObj,
+})
 
 export const startEvolution = () => ({
   type: START_EVOLUTION,

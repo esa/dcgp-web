@@ -22,6 +22,11 @@ export const dcgpSelector = createSelector(
   dcgp => dcgp
 )
 
+export const stepsSelector = createSelector(
+  state => state.dcgp.evolution.steps,
+  steps => steps
+)
+
 export const currentStepSelector = createSelector(
   state => state.dcgp.evolution.steps,
   steps => {
@@ -35,8 +40,13 @@ export const currentStepSelector = createSelector(
 
 export const lossSelector = createSelector(
   state => state.dcgp.evolution.steps,
-  steps => {
+  state => state.dcgp.evolution.initial,
+  (steps, initial) => {
     if (!steps.length) {
+      if (initial) {
+        return initial.loss
+      }
+
       return null
     }
 

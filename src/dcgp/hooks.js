@@ -5,12 +5,19 @@ import {
   currentStepSelector,
   lossSelector,
   evolutionStateSelector,
+  stepsSelector,
 } from './selectors'
 
 export const useParameters = () => {
   const { storeState } = useContext(ReactReduxContext)
 
   return parametersSelector(storeState)
+}
+
+export const useSteps = () => {
+  const { storeState } = useContext(ReactReduxContext)
+
+  return stepsSelector(storeState)
 }
 
 export const useCurrentStep = () => {
