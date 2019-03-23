@@ -4,7 +4,7 @@ import { transparentize as fade } from 'polished'
 
 const CircleButton = styled.button`
   color: ${({ theme }) => theme.title};
-  border-radius: 100%;
+  border-radius: 50%;
   background: none;
   background-color: ${({ theme }) => fade(0.93, theme.title)};
   border: none;

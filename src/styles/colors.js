@@ -20,8 +20,7 @@ export const dark = {
 
 export const grays = {
   '000': '#FFFFFF',
-  '050': '#FAFAFA',
-  '100': '#F2F2F2',
+  '100': '#F5F5F5',
   '200': '#D5D6D2',
   '250': '#9A9B9C',
   '300': '#747678',
@@ -47,8 +46,7 @@ export const DAY = {
   primary: bright.red,
   secundary: bright.yellow,
   surface: {
-    regular: grays['050'],
-    prominent: grays['100'],
+    regular: grays['100'],
     selected: grays['200'],
   },
   text: {
@@ -73,7 +71,6 @@ export const NIGHT = {
   secundary: bright.yellow,
   surface: {
     regular: grays['700'],
-    prominent: grays['700'],
     selected: grays['500'],
   },
   text: {

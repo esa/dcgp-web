@@ -20,7 +20,7 @@ const Footer = ({ className, children, ...restProps }) => (
 )
 
 export default styled(Footer)`
-  background-color: ${({ theme }) => theme.surface.prominent};
+  background-color: ${({ theme }) => theme.surface.regular};
   height: 64px;
   padding: 0 20px;
   display: flex;

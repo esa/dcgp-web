@@ -1,12 +1,30 @@
 import React from 'react'
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import AppBar from '../AppBar'
 import Toolbar from '../Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { useMediaQuery } from '../../hooks'
-import DcgpLogo from '../DcgpLogo'
-import GitHubIcon from '../../icons/GitHub'
+import GitHub from '../../icons/GitHub'
+
+const Title = styled.h1`
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+`
+
+const IconLink = styled.a`
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  box-sizing: border-box;
+  color: ${({ theme }) => theme.title};
+
+  svg {
+    fill: currentColor;
+  }
+`
 
 const Navigation = ({ handleMenuToggle }) => {
   const isWideEnough = useMediaQuery('(min-width: 960px)')
@@ -23,14 +41,15 @@ const Navigation = ({ handleMenuToggle }) => {
             <MenuIcon />
           </IconButton>
         </div>
-        <DcgpLogo css="height: 1.2em;" aria-label="dcgp" full={isWideEnough} />
+        <Title>
+          {isWideEnough
+            ? 'differentiable cartesian genetic programming'
+            : 'dcgp'}
+        </Title>
         <div css="flex-grow: 1;" />
-        <IconButton
-          color="inherit"
-          href="https://github.com/mikeheddes/dcgp.js"
-        >
-          <GitHubIcon />
-        </IconButton>
+        <IconLink href="https://github.com/mikeheddes/dcgp.js">
+          <GitHub />
+        </IconLink>
       </Toolbar>
     </AppBar>
   )
