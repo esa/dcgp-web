@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import dcgp from './dcgp/reducers'
+import evolution from './evolution/reducers'
+import settings from './settings/reducers'
 
 export default combineReducers({
-  dcgp,
+  evolution,
+  settings,
 })

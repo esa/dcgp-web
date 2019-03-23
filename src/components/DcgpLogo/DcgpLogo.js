@@ -82,5 +82,5 @@ DcgpLogo.defaultProps = {
 export default styled(DcgpLogo)`
   fill: currentColor;
   stroke: none;
-  transform: translateY(0.05em);
+  transform: translateY(0.1em);
 `

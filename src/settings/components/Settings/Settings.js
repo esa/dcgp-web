@@ -5,18 +5,10 @@ import {
   setAlgorithm,
   kernelNamesById,
   networkSettingsById,
-  startEvolution,
-  pauseEvolution,
-  resetEvolution,
   ONE_PLUS_LAMBDA,
-} from '../actions'
-import { useDispatch } from '../../hooks'
-import {
-  useParameters,
-  useCurrentStep,
-  useLoss,
-  useEvolutionState,
-} from '../hooks'
+} from '../../actions'
+import { useDispatch } from '../../../hooks'
+import { useSettings } from '../../hooks'
 import Radio from '@material-ui/core/Radio'
 import { withStyles } from '@material-ui/core/styles'
 import RadioGroup from '@material-ui/core/RadioGroup'
@@ -27,7 +19,6 @@ import FormLabel from '@material-ui/core/FormLabel'
 import Paper from '@material-ui/core/Paper'
 import Checkbox from '@material-ui/core/Checkbox'
 import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
 
 const kernelIds = Object.keys(kernelNamesById)
 const networkSettingIds = Object.keys(networkSettingsById)
@@ -46,50 +37,13 @@ const styles = theme => ({
   },
 })
 
-const Parameters = ({ classes }) => {
+const Settings = ({ classes }) => {
   const dispatch = useDispatch()
-  const parameters = useParameters()
-  const currentStep = useCurrentStep()
-  const loss = useLoss()
-  const evolutionState = useEvolutionState()
-
-  let buttonLabel
-  switch (evolutionState) {
-    case 'EVOLVING':
-      buttonLabel = 'pause'
-      break
-    case 'EMPTY':
-      buttonLabel = 'start'
-      break
-    case 'PAUSING':
-      buttonLabel = 'resume'
-      break
-    default:
-      break
-  }
-
-  let buttonAction
-  switch (evolutionState) {
-    case 'EVOLVING':
-      buttonAction = pauseEvolution
-      break
-    case 'EMPTY':
-    case 'PAUSING':
-      buttonAction = startEvolution
-      break
-    default:
-      break
-  }
+  const settings = useSettings()
 
   return (
     <>
-      <h2>Parameters</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.
-      </p>
+      <h2>Settings</h2>
       <Paper elevation={0} className={classes.inputBox}>
         <FormControl component="fieldset">
           <FormLabel component="legend">Kernel functions</FormLabel>
@@ -99,7 +53,7 @@ const Parameters = ({ classes }) => {
                 key={kernelId}
                 control={
                   <Checkbox
-                    checked={parameters.kernels[kernelId]}
+                    checked={settings.kernels[kernelId]}
                     onChange={() => dispatch(toggleKernel(kernelId))}
                     value={kernelId}
                   />
@@ -117,7 +71,7 @@ const Parameters = ({ classes }) => {
                 key={settingId}
                 label={networkSettingsById[settingId]}
                 type="number"
-                value={parameters.network[settingId]}
+                value={settings.network[settingId]}
                 onChange={e =>
                   dispatch(setNetworkSetting(settingId, e.target.valueAsNumber))
                 }
@@ -132,7 +86,7 @@ const Parameters = ({ classes }) => {
           <RadioGroup
             aria-label="Algorithm"
             name="algorithm"
-            value={parameters.algorithm.id}
+            value={settings.algorithm.id}
             className={classes.group}
             onChange={e => dispatch(setAlgorithm(e.target.value))}
           >
@@ -155,28 +109,9 @@ const Parameters = ({ classes }) => {
             />
           </RadioGroup>
         </FormControl>
-        <div>
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => dispatch(resetEvolution())}
-          >
-            reset
-          </Button>
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => dispatch(buttonAction())}
-          >
-            {buttonLabel}
-          </Button>
-        </div>
-        <p>
-          Step: {currentStep}, loss: {loss}
-        </p>
       </Paper>
     </>
   )
 }
 
-export default withStyles(styles)(Parameters)
+export default withStyles(styles)(Settings)

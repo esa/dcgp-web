@@ -4,27 +4,15 @@ import {
   START_EVOLUTION,
   PAUSE_EVOLUTION,
   LOSS_THRESHOLD,
-  TOGGLE_KERNEL,
-  NETWORK_CHANGE,
   INITIAL_EVOLUTION,
   setInitialEvolution,
-  setRows,
-  setColumns,
-  setArity,
-  setLevelsBack,
-  setSeed,
   WORKER_MESSAGE_OUT,
   sendWorkerMessage,
   RESET_EVOLUTION,
-  resetEvolution,
 } from './actions'
-import {
-  activeKernelsSelector,
-  parametersSelector,
-  currentStepSelector,
-  dcgpSelector,
-  lossSelector,
-} from './selectors'
+import { setSeed } from '../settings/actions'
+import { currentStepSelector, dcgpSelector, lossSelector } from './selectors'
+import { activeKernelsSelector, settingsSelector } from '../settings/selectors'
 // eslint-disable-next-line import/default
 import Worker from './dcgp.worker'
 
@@ -61,7 +49,7 @@ export const handleWorkerMessages = store => next => action => {
   next(action)
 }
 
-export const evolution = store => next => action => {
+export const handleEvolution = store => next => action => {
   if (action.type === PAUSE_EVOLUTION) {
     store.dispatch(sendWorkerMessage(action))
   }
@@ -90,7 +78,7 @@ export const evolution = store => next => action => {
     next(action)
 
     const activeKernelIds = activeKernelsSelector(state)
-    const parameters = parametersSelector(state)
+    const parameters = settingsSelector(state)
     const currentStep = currentStepSelector(state)
 
     store.dispatch(
@@ -112,7 +100,7 @@ export const evolution = store => next => action => {
 
     const dcgp = dcgpSelector(state)
     const activeKernelIds = activeKernelsSelector(state)
-    const parameters = parametersSelector(state)
+    const parameters = settingsSelector(state)
 
     const {
       seed,
@@ -152,49 +140,4 @@ export const evolution = store => next => action => {
   next(action)
 }
 
-export const handleKernelChange = store => next => action => {
-  next(action)
-
-  if (action.type === TOGGLE_KERNEL) {
-    store.dispatch(resetEvolution())
-  }
-}
-
-export const handleNetworkChange = store => next => action => {
-  next(action)
-
-  if (action.type === NETWORK_CHANGE) {
-    const { dispatch } = store
-    const {
-      payload: { settingId, value },
-    } = action
-
-    switch (settingId) {
-      case 'rows':
-        dispatch(setRows(value))
-        break
-      case 'columns':
-        dispatch(setColumns(value))
-        break
-      case 'arity':
-        dispatch(setArity(value))
-        break
-      case 'levelsBack':
-        dispatch(setLevelsBack(value))
-        break
-      default:
-        throw new Error(`settingId ${settingId} is not allowed`)
-    }
-
-    dispatch(resetEvolution())
-  }
-}
-
-export default [
-  setWorker,
-  handleWorkerMessages,
-  handleKernelChange,
-  handleKernelChange,
-  evolution,
-  handleNetworkChange,
-]
+export default [setWorker, handleWorkerMessages, handleEvolution]

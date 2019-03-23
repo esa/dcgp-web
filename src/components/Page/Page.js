@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const Page = styled.article`
+const Page = styled.main`
   margin-left: auto;
   margin-right: auto;
   max-width: 980px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding: 50px 20px;
 `
 
 Page.propType = {

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from 'styled-components'
+import { NIGHT } from './colors'
 
 const theme = createMuiTheme({
   typography: {
@@ -20,6 +22,7 @@ const theme = createMuiTheme({
     ].join(','),
   },
   palette: {
+    type: 'dark',
     primary: {
       // light: '#757ce8',
       // main: '#008542',
@@ -32,15 +35,20 @@ const theme = createMuiTheme({
       dark: '#822433',
       contrastText: '#fff',
     },
+    grey: {
+      '200': '#212121',
+    },
   },
 })
 
-const ThemeProvider = ({ children }) => (
-  <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+const Theme = ({ children }) => (
+  <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={NIGHT}>{children}</ThemeProvider>
+  </MuiThemeProvider>
 )
 
-ThemeProvider.propTypes = {
+Theme.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default ThemeProvider
+export default Theme

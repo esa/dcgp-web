@@ -1,34 +1,17 @@
 import { createSelector } from 'reselect'
 
-export const parametersSelector = createSelector(
-  state => state.dcgp.parameters,
-  parameters => parameters
-)
-
-export const activeKernelsSelector = createSelector(
-  state => state.dcgp.parameters.kernels,
-  kernels =>
-    Object.keys(kernels).reduce((pre, cur) => {
-      if (kernels[cur]) {
-        pre.push(cur)
-      }
-
-      return pre
-    }, [])
-)
-
 export const dcgpSelector = createSelector(
-  state => state.dcgp.instance,
+  state => state.evolution.instance,
   dcgp => dcgp
 )
 
 export const stepsSelector = createSelector(
-  state => state.dcgp.evolution.steps,
+  state => state.evolution.steps,
   steps => steps
 )
 
 export const currentStepSelector = createSelector(
-  state => state.dcgp.evolution.steps,
+  state => state.evolution.steps,
   steps => {
     if (!steps.length) {
       return 0
@@ -39,8 +22,8 @@ export const currentStepSelector = createSelector(
 )
 
 export const lossSelector = createSelector(
-  state => state.dcgp.evolution.steps,
-  state => state.dcgp.evolution.initial,
+  state => state.evolution.steps,
+  state => state.evolution.initial,
   (steps, initial) => {
     if (!steps.length) {
       if (initial) {
@@ -55,7 +38,7 @@ export const lossSelector = createSelector(
 )
 
 export const evolutionStateSelector = createSelector(
-  state => state.dcgp.evolution,
+  state => state.evolution,
   evolution => {
     if (evolution.isEvolving) {
       return 'EVOLVING'
