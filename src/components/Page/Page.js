@@ -4,8 +4,12 @@ import styled from 'styled-components'
 const Page = styled.main`
   margin-left: auto;
   margin-right: auto;
-  max-width: 980px;
+  max-width: 1180px;
   padding: 50px 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 30px;
 `
 
 Page.propType = {

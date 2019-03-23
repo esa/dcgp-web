@@ -6,6 +6,7 @@
     Expression: Expression,
   },
   isEvolving: Bool,
+  isDone: Bool,
   initial: {
     loss: Number,
     chromosome: [Number],
@@ -39,6 +40,20 @@ function isEvolving(state = false, action) {
     case actions.START_EVOLUTION:
       return true
     case actions.PAUSE_EVOLUTION:
+    case actions.RESET_EVOLUTION:
+    case actions.DONE_EVOLUTION:
+      return false
+    default:
+      return state
+  }
+}
+
+function isDone(state = false, action) {
+  const { type } = action
+
+  switch (type) {
+    case actions.DONE_EVOLUTION:
+      return true
     case actions.RESET_EVOLUTION:
       return false
     default:
@@ -75,6 +90,7 @@ function steps(state = [], action) {
 const evolution = combineReducers({
   instance,
   isEvolving,
+  isDone,
   initial,
   steps,
 })

@@ -8,7 +8,7 @@ import {
   RESET_EVOLUTION,
   LOSS_THRESHOLD,
   evolutionProgress,
-  pauseEvolution,
+  doneEvolution,
 } from './actions'
 
 let isEvolving = false
@@ -104,7 +104,8 @@ function runEvolutionAlgorithm(action, dcgp) {
       await sendProgress(resultObj)
 
       if (resultObj.loss <= LOSS_THRESHOLD) {
-        postMessage(pauseEvolution())
+        postMessage(doneEvolution())
+        isEvolving = false
       }
     }
   }

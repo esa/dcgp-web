@@ -29,7 +29,7 @@
 import { combineReducers } from 'redux'
 import * as actions from './actions'
 
-function seed(state = 1234, action) {
+function seed(state = 12, action) {
   switch (action.type) {
     case actions.SET_SEED:
       return action.payload

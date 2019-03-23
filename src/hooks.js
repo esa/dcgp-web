@@ -1,14 +1,10 @@
 import { useContext, useState, useEffect, useMemo } from 'react'
 import { ReactReduxContext } from 'react-redux'
 
-export const useRedux = () => useContext(ReactReduxContext)
-
-export const useDispatch = () => {
-  const {
-    store: { dispatch },
-  } = useRedux()
-
-  return dispatch
+export const useRedux = () => {
+  const redux = useContext(ReactReduxContext)
+  // console.log(redux);
+  return redux.store
 }
 
 export const useMediaQuery = query => {

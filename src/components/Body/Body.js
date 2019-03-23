@@ -4,9 +4,9 @@ import Navigation from '../Navigation'
 import Footer from '../Footer'
 import Page from '../Page'
 import Divider from '../Divider'
-import Dataset from '../../dataset/components/Dataset'
-import Settings from '../../settings/components/Settings'
-import Evolution from '../../evolution/components/Evolution'
+import { Dataset } from '../../dataset'
+import { Kernels, Network, Algorithm } from '../../settings'
+import { Evolution } from '../../evolution'
 
 const Body = () => {
   return (
@@ -15,9 +15,13 @@ const Body = () => {
       <Navigation handleMenuToggle={console.log} />
       <Page>
         <Dataset />
-        <Divider />
-        <Settings />
+        <div css="grid-column-start: span 4;">
+          <Divider />
+        </div>
         <Evolution />
+        <Kernels />
+        <Network />
+        <Algorithm />
       </Page>
       <Footer />
     </>

@@ -5,6 +5,21 @@ export const settingsSelector = createSelector(
   settings => settings
 )
 
+export const networkSelector = createSelector(
+  state => state.settings.network,
+  settings => settings
+)
+
+export const kernelsSelector = createSelector(
+  state => state.settings.kernels,
+  settings => settings
+)
+
+export const algorithmSelector = createSelector(
+  state => state.settings.algorithm,
+  settings => settings
+)
+
 export const activeKernelsSelector = createSelector(
   state => state.settings.kernels,
   kernels =>

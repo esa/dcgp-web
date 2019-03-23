@@ -15,7 +15,7 @@ const Dataset = ({ classes }) => {
   const [dataFunc, setDataFunc] = useState('linear')
 
   return (
-    <>
+    <div css="grid-column-start: span 4;">
       <h2>Select data</h2>
       <FormControl component="fieldset">
         <RadioGroup
@@ -42,7 +42,7 @@ const Dataset = ({ classes }) => {
           />
         </RadioGroup>
       </FormControl>
-    </>
+    </div>
   )
 }
 

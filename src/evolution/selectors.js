@@ -10,6 +10,11 @@ export const stepsSelector = createSelector(
   steps => steps
 )
 
+export const isDoneSelector = createSelector(
+  state => state.evolution.isDone,
+  steps => steps
+)
+
 export const currentStepSelector = createSelector(
   state => state.evolution.steps,
   steps => {
