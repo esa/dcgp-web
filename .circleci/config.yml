@@ -1,0 +1,106 @@
+version: 2
+jobs:
+
+  build:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restoring NPM packages from cache
+          keys:
+          - v1-npm-{{ checksum "package.json" }}
+          - v1-npm-
+
+      - run:
+          name: Install packages
+          command: npm install
+
+      - save_cache:
+          name: Saving NPM packages to cache
+          paths:
+            - node_modules
+          key: v1-npm-{{ checksum "package.json" }}
+
+      - run:
+          name: Build artifacts
+          command: npm run build
+
+      - store_artifacts:
+          path: build
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - build
+
+  checks:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restoring NPM packages from cache
+          keys:
+          - v1-npm-{{ checksum "package.json" }}
+          - v1-npm-
+
+      - run:
+          name: Install packages
+          command: npm install
+
+      - save_cache:
+          name: Saving NPM packages to cache
+          paths:
+            - node_modules
+          key: v1-npm-{{ checksum "package.json" }}
+
+      - run:
+          name: Lint code
+          command: npm run lint
+
+      - run:
+          name: Test code
+          command: npm run test
+
+  deploy:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/repo
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: ~/repo
+
+      - run:
+          name: Install packages
+          command: npm install -g --silent gh-pages@2.0.1
+
+      - add_ssh_keys:
+          fingerprints:
+            - "03:a6:33:ce:56:c8:d4:60:71:9d:6a:3d:fb:90:37:b7"
+
+      - run:
+          name: Deploy app
+          command: gh-pages -d build
+
+
+workflows:
+  version: 2
+  # The main workflow tests PR's and deploys master
+  main:
+    jobs:
+      - build
+      - checks
+      - deploy:
+          requires:
+            - build
+            - checks
+          filters:
+            branches:
+              only: master
