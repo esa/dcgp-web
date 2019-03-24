@@ -77,17 +77,13 @@ jobs:
       - attach_workspace:
           at: ~/repo
 
-      - run:
-          name: Install packages
-          command: npm install -g --silent gh-pages@2.0.1
-
       - add_ssh_keys:
           fingerprints:
             - "03:a6:33:ce:56:c8:d4:60:71:9d:6a:3d:fb:90:37:b7"
 
       - run:
           name: Deploy app
-          command: gh-pages -d build
+          command: npx gh-pages -d build
 
 
 workflows:
