@@ -83,7 +83,10 @@ jobs:
 
       - run:
           name: Deploy app
-          command: npx gh-pages -d build
+          command: |
+            git config --global user.email "$MAIL"
+            git config --global user.name "Mike Heddes"
+            npx gh-pages -d build
 
 
 workflows:
