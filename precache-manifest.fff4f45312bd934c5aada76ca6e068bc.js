@@ -8,15 +8,15 @@ self.__precacheManifest = [
     "url": "/dcgp-web/static/js/runtime~main.d86d1b5f.js"
   },
   {
-    "revision": "0bc7079475d6f2c7772c",
-    "url": "/dcgp-web/static/js/main.0bc70794.chunk.js"
+    "revision": "3163a95bef1acfff8f8c",
+    "url": "/dcgp-web/static/js/main.3163a95b.chunk.js"
   },
   {
-    "revision": "a78dc4e8fbb629d126c4",
-    "url": "/dcgp-web/static/js/2.a78dc4e8.chunk.js"
+    "revision": "0c11883d73ee15eedde1",
+    "url": "/dcgp-web/static/js/2.0c11883d.chunk.js"
   },
   {
-    "revision": "3b02b1e40bfddcb22756dc94d68d9149",
+    "revision": "cb0d3a1a943f1f0d480bae05b02cf697",
     "url": "/dcgp-web/index.html"
   },
   {
