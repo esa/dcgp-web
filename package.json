@@ -20,9 +20,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
-    "@material-ui/styles": "^3.0.0-alpha.10",
     "dcgp": "^0.4.5",
-    "gh-pages": "^2.0.1",
     "history": "^4.7.2",
     "katex": "^0.10.1",
     "polished": "^3.0.3",
@@ -32,7 +30,7 @@
     "react-katex": "^2.0.2",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.5",
+    "react-scripts": "^2.1.8",
     "react-transition-group": "^2.6.0",
     "recharts": "^1.5.0",
     "redux": "^4.0.1",
@@ -53,6 +51,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-react-hooks": "^1.5.0",
+    "gh-pages": "^2.0.1",
     "prettier": "^1.16.4",
     "react-app-rewired": "^2.1.0",
     "worker-loader": "^2.0.0"
