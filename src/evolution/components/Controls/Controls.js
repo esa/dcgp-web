@@ -20,18 +20,6 @@ const ControlWrapper = styled.div`
   }
 `
 
-// const getAction = evolutionState => {
-//   switch (evolutionState) {
-//     case 'EVOLVING':
-//       return pauseEvolution
-//     case 'EMPTY':
-//     case 'PAUSING':
-//       return startEvolution
-//     default:
-//       break
-//   }
-// }
-
 const Controls = () => {
   const { dispatch, getState } = useRedux()
   const state = getState()
@@ -44,7 +32,7 @@ const Controls = () => {
   return (
     <ControlWrapper>
       <CircleButton onClick={handleReset} title="Reset">
-        <Reset />
+        <Reset size={null} />
       </CircleButton>
       <PlayPauseButton
         isPlaying={evolutionState === 'EVOLVING'}
@@ -52,7 +40,7 @@ const Controls = () => {
         handlePause={handlePause}
       />
       <CircleButton onClick={console.log} title="Next step">
-        <Next />
+        <Next size={null} />
       </CircleButton>
     </ControlWrapper>
   )

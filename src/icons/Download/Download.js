@@ -1,11 +1,11 @@
 import React from 'react'
 import Base from '../Base'
 
-const Next = props => (
+const Download = props => (
   <Base {...props}>
-    <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
     <path d="M0 0h24v24H0z" fill="none" />
   </Base>
 )
 
-export default Next
+export default Download

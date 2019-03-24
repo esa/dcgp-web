@@ -16,7 +16,7 @@ const PlayPauseButton = ({
     size={58}
     padding={10}
   >
-    {isPlaying ? <Pause /> : <Play />}
+    {isPlaying ? <Pause size={null} /> : <Play size={null} />}
   </CircleButton>
 )
 

@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+import CheckBox from '../../../icons/CheckBox'
 import { useRedux } from '../../../hooks'
+import { capitalize } from '../../../utils/string'
 import { toggleKernel, kernelNamesById } from '../../actions'
 import { kernelsSelector } from '../../selectors'
 import Container from '../Container'
+import { List, Row } from './style'
 
 const kernelIds = Object.keys(kernelNamesById)
 
@@ -21,21 +21,18 @@ const Kernels = () => {
 
   return (
     <Container title="Kernels">
-      <FormGroup>
+      <List>
         {kernelIds.map(kernelId => (
-          <FormControlLabel
+          <Row
             key={kernelId}
-            control={
-              <Checkbox
-                checked={kernels[kernelId]}
-                onChange={handleChange(kernelId)}
-                value={kernelId}
-              />
-            }
-            label={kernelNamesById[kernelId]}
-          />
+            checked={kernels[kernelId]}
+            onClick={handleChange(kernelId)}
+          >
+            <CheckBox checked={kernels[kernelId]} />
+            {capitalize(kernelNamesById[kernelId])}
+          </Row>
         ))}
-      </FormGroup>
+      </List>
     </Container>
   )
 }
