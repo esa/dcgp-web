@@ -1,14 +1,17 @@
 {
-  "main.js": "/dcgp-web/static/js/main.f6d3868c.chunk.js",
-  "main.js.map": "/dcgp-web/static/js/main.f6d3868c.chunk.js.map",
+  "main.js": "/dcgp-web/static/js/main.829433c0.chunk.js",
+  "main.js.map": "/dcgp-web/static/js/main.829433c0.chunk.js.map",
   "runtime~main.js": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js",
   "runtime~main.js.map": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js.map",
-  "static/js/2.0b0e212c.chunk.js": "/dcgp-web/static/js/2.0b0e212c.chunk.js",
-  "static/js/2.0b0e212c.chunk.js.map": "/dcgp-web/static/js/2.0b0e212c.chunk.js.map",
-  "a4663ce38ac8930a5246.worker.js": "/dcgp-web/a4663ce38ac8930a5246.worker.js",
-  "a4663ce38ac8930a5246.worker.js.map": "/dcgp-web/a4663ce38ac8930a5246.worker.js.map",
+  "static/css/2.4e4721d5.chunk.css": "/dcgp-web/static/css/2.4e4721d5.chunk.css",
+  "static/js/2.5820b1e9.chunk.js": "/dcgp-web/static/js/2.5820b1e9.chunk.js",
+  "static/js/2.5820b1e9.chunk.js.map": "/dcgp-web/static/js/2.5820b1e9.chunk.js.map",
+  "4d17ad61cfa9f1f91846.worker.js": "/dcgp-web/4d17ad61cfa9f1f91846.worker.js",
+  "4d17ad61cfa9f1f91846.worker.js.map": "/dcgp-web/4d17ad61cfa9f1f91846.worker.js.map",
   "index.html": "/dcgp-web/index.html",
-  "precache-manifest.dea2c576e89e5bf0fef092e518b8a61f.js": "/dcgp-web/precache-manifest.dea2c576e89e5bf0fef092e518b8a61f.js",
+  "precache-manifest.2c4c25219b75017511ffe8c9ab6888f0.js": "/dcgp-web/precache-manifest.2c4c25219b75017511ffe8c9ab6888f0.js",
   "service-worker.js": "/dcgp-web/service-worker.js",
-  "static/media/dcgp.wasm": "/dcgp-web/static/media/dcgp.f0dc0180.wasm"
+  "static/css/2.4e4721d5.chunk.css.map": "/dcgp-web/static/css/2.4e4721d5.chunk.css.map",
+  "static/media/katex.min.css": "/dcgp-web/static/media/KaTeX_Typewriter-Regular.e52da442.woff",
+  "static/media/dcgp.wasm": "/dcgp-web/static/media/dcgp.707447f7.wasm"
 }
