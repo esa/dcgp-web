@@ -7,6 +7,7 @@ import Divider from '../Divider'
 import { Dataset } from '../../dataset'
 import { Kernels, Network, Algorithm } from '../../settings'
 import { Evolution } from '../../evolution'
+import { Plot } from '../../visualisation'
 
 const Body = () => {
   return (
@@ -22,6 +23,7 @@ const Body = () => {
         <Kernels />
         <Network />
         <Algorithm />
+        <Plot />
       </Page>
       <Footer />
     </>

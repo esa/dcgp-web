@@ -13,6 +13,7 @@ import {
 import { setSeed } from '../settings/actions'
 import { currentStepSelector, dcgpSelector, lossSelector } from './selectors'
 import { activeKernelsSelector, settingsSelector } from '../settings/selectors'
+import { inputsSelector, labelsSelector } from '../dataset/selectors'
 // eslint-disable-next-line import/default
 import Worker from './dcgp.worker'
 
@@ -80,6 +81,8 @@ export const handleEvolution = store => next => action => {
     const activeKernelIds = activeKernelsSelector(state)
     const parameters = settingsSelector(state)
     const currentStep = currentStepSelector(state)
+    const inputs = inputsSelector(state)
+    const labels = labelsSelector(state)
 
     store.dispatch(
       sendWorkerMessage({
@@ -89,6 +92,8 @@ export const handleEvolution = store => next => action => {
           activeKernelIds,
           parameters,
           step: currentStep,
+          inputs,
+          labels,
         },
       })
     )
@@ -101,6 +106,8 @@ export const handleEvolution = store => next => action => {
     const dcgp = dcgpSelector(state)
     const activeKernelIds = activeKernelsSelector(state)
     const parameters = settingsSelector(state)
+    const inputs = inputsSelector(state)
+    const labeles = labelsSelector(state)
 
     const {
       seed,
@@ -121,17 +128,16 @@ export const handleEvolution = store => next => action => {
       seed
     )
 
-    // some simple dataset: y = 2x + 2
-    const inputs = [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1]]
-    const outputs = [[2], [4], [6], [8], [10]]
-
     const resultObj = dcgp.algorithms[algorithmId](
       myExpression,
       1,
       0,
       inputs,
-      outputs
+      labeles
     )
+
+    myKernelSet.destroy()
+    myExpression.destroy()
 
     next({ ...action, payload: { ...action.payload, ...resultObj } })
     return
