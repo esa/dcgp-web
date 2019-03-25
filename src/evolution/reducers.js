@@ -87,12 +87,10 @@ function steps(state = [], action) {
   }
 }
 
-const evolution = combineReducers({
+export default combineReducers({
   instance,
   isEvolving,
   isDone,
   initial,
   steps,
 })
-
-export default evolution

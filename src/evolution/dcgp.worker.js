@@ -34,7 +34,7 @@ function handleMessages(event, dcgp) {
 }
 
 function runEvolutionAlgorithm(action, dcgp) {
-  const { parameters, activeKernelIds, step } = action.payload
+  const { parameters, activeKernelIds, step, inputs, labels } = action.payload
 
   const {
     seed,
@@ -54,10 +54,6 @@ function runEvolutionAlgorithm(action, dcgp) {
     seed
   )
 
-  // some simple dataset: y = 2x + 2
-  const inputs = [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1]]
-  const outputs = [[2], [4], [6], [8], [10]]
-
   let index = 0
 
   // by wrapping each loop in a setTimeout
@@ -73,7 +69,7 @@ function runEvolutionAlgorithm(action, dcgp) {
           offsprings,
           maxGenerations,
           inputs,
-          outputs
+          labels
         )
 
         resolve(resultObj)
