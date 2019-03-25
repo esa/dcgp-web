@@ -8,10 +8,12 @@ import Container from '../Container'
 
 const networkSettingIds = Object.keys(networkSettingsById)
 
+const mapStateToProps = {
+  network: networkSelector,
+}
+
 const Network = () => {
-  const { dispatch, getState } = useRedux()
-  const state = getState()
-  const network = networkSelector(state)
+  const { dispatch, network } = useRedux(mapStateToProps)
 
   const handleChange = useCallback(
     settingId => event =>

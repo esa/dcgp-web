@@ -9,10 +9,12 @@ import { List, Row } from './style'
 
 const kernelIds = Object.keys(kernelNamesById)
 
+const mapStateToProps = {
+  kernels: kernelsSelector,
+}
+
 const Kernels = () => {
-  const { dispatch, getState } = useRedux()
-  const state = getState()
-  const kernels = kernelsSelector(state)
+  const { dispatch, kernels } = useRedux(mapStateToProps)
 
   const handleChange = useCallback(
     kernelId => () => dispatch(toggleKernel(kernelId)),

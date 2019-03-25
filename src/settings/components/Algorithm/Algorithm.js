@@ -7,10 +7,12 @@ import { setAlgorithm, ONE_PLUS_LAMBDA } from '../../actions'
 import { algorithmSelector } from '../../selectors'
 import Container from '../Container'
 
+const mapStateToProps = {
+  algorithm: algorithmSelector,
+}
+
 const Algorithm = () => {
-  const { dispatch, getState } = useRedux()
-  const state = getState()
-  const algorithm = algorithmSelector(state)
+  const { dispatch, algorithm } = useRedux(mapStateToProps)
 
   const handleChange = useCallback(
     event => dispatch(setAlgorithm(event.target.value)),

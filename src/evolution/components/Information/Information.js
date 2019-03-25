@@ -24,11 +24,13 @@ const Heading = styled.b`
   margin-right: 0.25em;
 `
 
+const mapStateToProps = {
+  currentStep: currentStepSelector,
+  loss: lossSelector,
+}
+
 const Information = () => {
-  const { getState } = useRedux()
-  const state = getState()
-  const currentStep = currentStepSelector(state)
-  const loss = lossSelector(state)
+  const { currentStep, loss } = useRedux(mapStateToProps)
 
   return (
     <List>
