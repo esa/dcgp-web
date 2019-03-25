@@ -58,11 +58,13 @@ const getData = (data, isDone) => {
   }
 }
 
+const mapStateToProps = {
+  steps: stepsSelector,
+  isDone: isDoneSelector,
+}
+
 const Evolve = () => {
-  const { getState } = useRedux()
-  const state = getState()
-  const steps = stepsSelector(state)
-  const isDone = isDoneSelector(state)
+  const { steps, isDone } = useRedux(mapStateToProps)
 
   // remove lest entry from steps when done
   // because the log scale doesn't handle 0
