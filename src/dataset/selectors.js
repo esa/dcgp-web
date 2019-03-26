@@ -1,13 +1,17 @@
 import { createSelector } from 'reselect'
 
+export const inputKeysSelectore = state => state.dataPoints.inputs
+export const outputKeysSelectore = state => state.dataPoints.outputs
+export const pointsSelectore = state => state.dataPoints.points
+
 export const inputsSelector = createSelector(
-  state => state.dataPoints.inputs,
-  state => state.dataPoints.points,
+  inputKeysSelectore,
+  pointsSelectore,
   (inputs, points) => points.map(point => inputs.map(input => point[input]))
 )
 
 export const labelsSelector = createSelector(
-  state => state.dataPoints.outputs,
-  state => state.dataPoints.points,
+  outputKeysSelectore,
+  pointsSelectore,
   (outputs, points) => points.map(point => outputs.map(output => point[output]))
 )

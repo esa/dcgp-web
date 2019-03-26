@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react'
-import TextField from '@material-ui/core/TextField'
-import FormGroup from '@material-ui/core/FormGroup'
 import { useRedux } from '../../../hooks'
 import { setNetworkSetting, networkSettingsById } from '../../actions'
 import { networkSelector } from '../../selectors'
+import QuantityCounter from '../../../components/QuantityCounter'
+import { capitalize } from '../../../utils/string'
 import Container from '../Container'
+import List, { Row } from '../List'
 
 const networkSettingIds = Object.keys(networkSettingsById)
 
@@ -21,18 +22,19 @@ const Network = () => {
 
   return (
     <Container title="Network">
-      <FormGroup>
+      <List>
         {networkSettingIds.map(settingId => (
-          <TextField
-            key={settingId}
-            label={networkSettingsById[settingId]}
-            type="number"
-            value={network[settingId]}
-            onChange={handleChange(settingId)}
-            min={1}
-          />
+          <Row key={settingId}>
+            {capitalize(networkSettingsById[settingId])}
+            <div css="flex-grow: 1;" />
+            <QuantityCounter
+              value={network[settingId]}
+              onChange={handleChange(settingId)}
+              min={1}
+            />
+          </Row>
         ))}
-      </FormGroup>
+      </List>
     </Container>
   )
 }
