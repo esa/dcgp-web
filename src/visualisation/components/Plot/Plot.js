@@ -11,19 +11,27 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { useRedux } from '../../../hooks'
-import GridContainer from '../../../components/GridContainer'
 import Divider from '../../../components/Divider'
 import { dcgpSelector, chromosomeSelector } from '../../../evolution/selectors'
+import {
+  inputKeysSelector,
+  outputKeysSelector,
+  pointsSelector,
+  equationSelector,
+} from '../../../dataset/selectors'
 import {
   activeKernelsSelector,
   settingsSelector,
 } from '../../../settings/selectors'
-import { StyledLineChart } from './style'
+import { StyledLineChart, GridContainer } from './style'
 
 const Plot = () => {
   const { getState } = useRedux()
   const state = getState()
-  const { inputs, outputs, points, equation } = state.dataPoints
+  const inputs = inputKeysSelector(state)
+  const outputs = outputKeysSelector(state)
+  const points = pointsSelector(state)
+  const equation = equationSelector(state)
   const dcgp = dcgpSelector(state)
   const chromosome = chromosomeSelector(state)
   const activeKernelIds = activeKernelsSelector(state)
@@ -84,36 +92,42 @@ const Plot = () => {
     : points
 
   return (
-    <GridContainer span={2}>
-      <div css="margin: 0 5px 0 0;">
-        <ResponsiveContainer height={300}>
-          <StyledLineChart
-            data={data}
-            margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-          >
-            <CartesianGrid />
-            <XAxis dataKey={inputs[0]} type="number" />
-            <YAxis />
-            <Legend verticalAlign="top" height={36} />
-            <Line
-              name="labels"
-              dataKey={outputs[0]}
-              dot={{ fill: theme.primary, r: 4 }}
-              stroke={theme.primary}
-            />
-            <Line
-              name="predictions"
-              dataKey="prediction"
-              dot={{ fill: theme.secundary, r: 4 }}
-              stroke={theme.secundary}
-            />
-          </StyledLineChart>
-        </ResponsiveContainer>
+    <GridContainer>
+      <div css="margin: 0 5px; position: relative; padding-bottom: 65%;">
+        <div css="width: 100%; height: 100%; position: absolute;">
+          <ResponsiveContainer>
+            <StyledLineChart
+              data={data}
+              margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+            >
+              <CartesianGrid />
+              <XAxis dataKey={inputs[0]} type="number" />
+              <YAxis />
+              <Legend verticalAlign="top" height={36} />
+              <Line
+                name="labels"
+                type="monotone"
+                dataKey={outputs[0]}
+                dot={{ fill: theme.primary, r: 4 }}
+                stroke={theme.primary}
+              />
+              <Line
+                name="predictions"
+                dataKey="prediction"
+                type="monotone"
+                dot={{ fill: theme.secundary, r: 4 }}
+                stroke={theme.secundary}
+              />
+            </StyledLineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
       <Divider css="margin: 15px 0;" />
-      <p>
-        Label equation: <InlineMath>{equation}</InlineMath>
-      </p>
+      {equation && (
+        <p>
+          Label equation: <InlineMath>{equation}</InlineMath>
+        </p>
+      )}
     </GridContainer>
   )
 }

@@ -73,28 +73,30 @@ const Evolve = () => {
       <Controls />
       <Divider />
       <Information />
-      <div css="margin: 0 5px;">
-        <ResponsiveContainer height={150}>
-          <StyledLineChart
-            data={data}
-            margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-          >
-            <XAxis
-              dataKey="step"
-              type="number"
-              domain={[0, dataMax => Math.max(dataMax, 1000)]}
-              hide
-            />
-            <YAxis
-              scale="log"
-              domain={[dataMin => dataMin * 0.9, dataMax => dataMax * 1.1]}
-              hide
-            />
-            <CartesianGrid vertical={false} />
-            <ReferenceLine x={0} />
-            <Line type="stepAfter" dataKey="loss" dot={false} />
-          </StyledLineChart>
-        </ResponsiveContainer>
+      <div css="margin: 0 5px; position: relative; padding-bottom: 65%;">
+        <div css="width: 100%; height: 100%; position: absolute;">
+          <ResponsiveContainer style={{ position: 'absolute' }}>
+            <StyledLineChart
+              data={data}
+              margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+            >
+              <XAxis
+                dataKey="step"
+                type="number"
+                domain={[0, dataMax => Math.max(dataMax, 1000)]}
+                hide
+              />
+              <YAxis
+                scale="log"
+                domain={[dataMin => dataMin * 0.9, dataMax => dataMax * 1.1]}
+                hide
+              />
+              <CartesianGrid vertical={false} />
+              <ReferenceLine x={0} />
+              <Line type="stepAfter" dataKey="loss" dot={false} />
+            </StyledLineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </GridContainer>
   )

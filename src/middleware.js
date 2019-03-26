@@ -3,5 +3,6 @@
 // and the corresponding talk by Nir Kaufman: https://www.youtube.com/watch?v=JUuic7mEs-s
 import evolution from './evolution/middleware'
 import settings from './settings/middleware'
+import dataset from './dataset/middleware'
 
-export default [...evolution, ...settings]
+export default [...evolution, ...settings, ...dataset]

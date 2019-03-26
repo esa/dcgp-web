@@ -85,7 +85,7 @@ function network(state = initialNetworkState, action) {
 }
 
 const initialAlgorithmState = {
-  id: actions.ONE_PLUS_LAMBDA,
+  id: 'onePlusLambda',
   offsprings: 4,
   maxGenerations: 1000,
 }

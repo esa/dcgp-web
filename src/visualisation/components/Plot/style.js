@@ -1,5 +1,7 @@
 import styled from 'styled-components'
+import { up } from 'styled-breakpoints'
 import { LineChart } from 'recharts'
+import unStyledGridContainer from '../../../components/GridContainer'
 
 export const StyledLineChart = styled(LineChart)`
   .recharts-curve {
@@ -29,5 +31,13 @@ export const StyledLineChart = styled(LineChart)`
   .recharts-legend-item-text {
     font-size: 14px;
     color: ${({ theme }) => theme.text.regular};
+  }
+`
+
+export const GridContainer = styled(unStyledGridContainer)`
+  grid-column-end: span 1;
+
+  ${up('sm')} {
+    grid-column-end: span 2;
   }
 `

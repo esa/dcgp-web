@@ -1,48 +1,37 @@
 import React, { useCallback } from 'react'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Radio from '@material-ui/core/Radio'
 import { useRedux } from '../../../hooks'
-import { setAlgorithm, ONE_PLUS_LAMBDA } from '../../actions'
+import { setAlgorithm, algorithmsById } from '../../actions'
 import { algorithmSelector } from '../../selectors'
 import Container from '../Container'
+import Radio from '../../../icons/Radio'
+import List from '../List'
+import { Row } from './style'
+import { capitalize } from '../../../utils/string'
+
+const algorithmIds = Object.keys(algorithmsById)
 
 const Algorithm = () => {
   const { dispatch, getState } = useRedux()
   const state = getState()
   const algorithm = algorithmSelector(state)
 
-  const handleChange = useCallback(
-    event => dispatch(setAlgorithm(event.target.value)),
-    [dispatch]
-  )
+  const handleChange = useCallback(id => () => dispatch(setAlgorithm(id)), [
+    dispatch,
+  ])
 
   return (
     <Container title="Algorithm">
-      <RadioGroup
-        aria-label="Algorithm"
-        name="algorithm"
-        value={algorithm.id}
-        onChange={handleChange}
-      >
-        <FormControlLabel
-          value={ONE_PLUS_LAMBDA}
-          control={<Radio />}
-          label="one plus lambda"
-        />
-        <FormControlLabel
-          value="null"
-          control={<Radio />}
-          label="TBA"
-          disabled
-        />
-        <FormControlLabel
-          value="null"
-          control={<Radio />}
-          label="TBA"
-          disabled
-        />
-      </RadioGroup>
+      <List>
+        {algorithmIds.map(algorithmId => (
+          <Row key={algorithmId} onClick={handleChange(algorithmId)}>
+            <Radio checked={algorithm.id === algorithmId} />
+            {capitalize(algorithmsById[algorithmId].label)}
+          </Row>
+        ))}
+      </List>
+      <span css="font-size: 0.9em; opacity: 0.7; margin-top: 15px; display: block;">
+        More algorithms comming soon.
+      </span>
     </Container>
   )
 }

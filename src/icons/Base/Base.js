@@ -8,6 +8,8 @@ const Base = styled.svg.attrs(({ size }) => ({
   viewBox: '0 0 24 24',
 }))`
   fill: currentColor;
+  color: ${({ checked, theme }) => (checked ? theme.primary : 'inherit')};
+  user-select: none;
 `
 
 Base.propTypes = {

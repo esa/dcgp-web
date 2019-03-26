@@ -13,8 +13,8 @@ const Text = styled.p`
 const Footer = ({ className, children, ...restProps }) => (
   <footer className={className} {...restProps}>
     <Text>
-      Copyright © {new Date().getFullYear()} European Space Agency. All rights
-      reserved.
+      Copyright © {new Date().getFullYear()} European Space Agency.{' '}
+      <span css="display: inline-block;">All rights reserved.</span>
     </Text>
   </footer>
 )
