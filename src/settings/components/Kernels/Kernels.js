@@ -5,7 +5,8 @@ import { capitalize } from '../../../utils/string'
 import { toggleKernel, kernelNamesById } from '../../actions'
 import { kernelsSelector } from '../../selectors'
 import Container from '../Container'
-import { List, Row } from './style'
+import List from '../List'
+import { Row } from './style'
 
 const kernelIds = Object.keys(kernelNamesById)
 
