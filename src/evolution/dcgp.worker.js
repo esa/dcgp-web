@@ -34,7 +34,14 @@ function handleMessages(event, dcgp) {
 }
 
 function runEvolutionAlgorithm(action, dcgp) {
-  const { parameters, activeKernelIds, step, inputs, labels } = action.payload
+  const {
+    parameters,
+    activeKernelIds,
+    step,
+    inputs,
+    labels,
+    chromosome,
+  } = action.payload
 
   const {
     seed,
@@ -53,6 +60,10 @@ function runEvolutionAlgorithm(action, dcgp) {
     myKernelSet,
     seed
   )
+
+  if (chromosome) {
+    myExpression.setChromosome(chromosome)
+  }
 
   let index = 0
 

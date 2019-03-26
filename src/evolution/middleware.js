@@ -11,7 +11,12 @@ import {
   RESET_EVOLUTION,
 } from './actions'
 import { setSeed } from '../settings/actions'
-import { currentStepSelector, dcgpSelector, lossSelector } from './selectors'
+import {
+  currentStepSelector,
+  dcgpSelector,
+  lossSelector,
+  chromosomeSelector,
+} from './selectors'
 import { activeKernelsSelector, settingsSelector } from '../settings/selectors'
 import { inputsSelector, labelsSelector } from '../dataset/selectors'
 // eslint-disable-next-line import/default
@@ -81,6 +86,7 @@ export const handleEvolution = store => next => action => {
     const activeKernelIds = activeKernelsSelector(state)
     const parameters = settingsSelector(state)
     const currentStep = currentStepSelector(state)
+    const chromosome = chromosomeSelector(state)
     const inputs = inputsSelector(state)
     const labels = labelsSelector(state)
 
@@ -94,6 +100,7 @@ export const handleEvolution = store => next => action => {
           step: currentStep,
           inputs,
           labels,
+          chromosome,
         },
       })
     )
