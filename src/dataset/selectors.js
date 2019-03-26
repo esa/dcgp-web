@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
 
-export const datasetIdSelectore = state => state.datasets.id
+export const datasetIdSelector = state => state.datasets.id
 
 export const selectedDatasetSelector = createSelector(
-  datasetIdSelectore,
+  datasetIdSelector,
   state => state.datasets.byId,
   (id, datasets) => datasets[id]
 )

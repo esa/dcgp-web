@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Radio from '../../../icons/Radio'
 import { capitalize } from '../../../utils/string'
 import { pointsPresetsById, changeDataset } from '../../actions'
-import { datasetIdSelectore } from '../../selectors'
+import { datasetIdSelector } from '../../selectors'
 import { useRedux } from '../../../hooks'
 
 const presetIds = Object.keys(pointsPresetsById)
@@ -35,7 +35,7 @@ const Label = styled.span`
 `
 
 const mapStateToProps = {
-  datasetId: datasetIdSelectore,
+  datasetId: datasetIdSelector,
 }
 
 const Dataset = () => {

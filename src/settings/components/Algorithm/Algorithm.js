@@ -14,10 +14,6 @@ const mapStateToProps = {
   algorithm: algorithmSelector,
 }
 
-const mapStateToProps = {
-  algorithm: algorithmSelector,
-}
-
 const Algorithm = () => {
   const { dispatch, algorithm } = useRedux(mapStateToProps)
 
