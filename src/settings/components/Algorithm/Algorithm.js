@@ -10,10 +10,12 @@ import { capitalize } from '../../../utils/string'
 
 const algorithmIds = Object.keys(algorithmsById)
 
+const mapStateToProps = {
+  algorithm: algorithmSelector,
+}
+
 const Algorithm = () => {
-  const { dispatch, getState } = useRedux()
-  const state = getState()
-  const algorithm = algorithmSelector(state)
+  const { dispatch, algorithm } = useRedux(mapStateToProps)
 
   const handleChange = useCallback(id => () => dispatch(setAlgorithm(id)), [
     dispatch,

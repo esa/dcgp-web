@@ -1,27 +1,15 @@
 import { createSelector } from 'reselect'
 
-export const settingsSelector = createSelector(
-  state => state.settings,
-  settings => settings
-)
+export const settingsSelector = state => state.settings
 
-export const networkSelector = createSelector(
-  state => state.settings.network,
-  settings => settings
-)
+export const networkSelector = state => state.settings.network
 
-export const kernelsSelector = createSelector(
-  state => state.settings.kernels,
-  settings => settings
-)
+export const kernelsSelector = state => state.settings.kernels
 
-export const algorithmSelector = createSelector(
-  state => state.settings.algorithm,
-  settings => settings
-)
+export const algorithmSelector = state => state.settings.algorithm
 
 export const activeKernelsSelector = createSelector(
-  state => state.settings.kernels,
+  kernelsSelector,
   kernels =>
     Object.keys(kernels).reduce((pre, cur) => {
       if (kernels[cur]) {

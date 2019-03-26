@@ -20,10 +20,12 @@ const ControlWrapper = styled.div`
   }
 `
 
+const mapStateToProps = {
+  evolutionState: evolutionStateSelector,
+}
+
 const Controls = () => {
-  const { dispatch, getState } = useRedux()
-  const state = getState()
-  const evolutionState = evolutionStateSelector(state)
+  const { dispatch, evolutionState } = useRedux(mapStateToProps)
 
   const handleReset = useCallback(() => dispatch(resetEvolution()), [dispatch])
   const handlePlay = useCallback(() => dispatch(startEvolution()), [dispatch])
