@@ -25,34 +25,45 @@ import {
 } from '../../../settings/selectors'
 import { StyledLineChart, GridContainer } from './style'
 
+// const throttle = (func, limit) => {
+//   let inThrottle
+//   return function() {
+//     const args = arguments
+//     const context = this
+//     if (!inThrottle) {
+//       func.apply(context, args)
+//       inThrottle = true
+//       setTimeout(() => {
+//         inThrottle = false
+//       }, limit)
+//     }
+//   }
+// }
+
+const mapStateToProps = {
+  inputs: inputKeysSelector,
+  outputs: outputKeysSelector,
+  points: pointsSelector,
+  equation: equationSelector,
+  dcgp: dcgpSelector,
+  chromosome: chromosomeSelector,
+  activeKernelIds: activeKernelsSelector,
+  parameters: settingsSelector,
+}
+
 const Plot = () => {
-  const { getState } = useRedux()
-  const state = getState()
-  const inputs = inputKeysSelector(state)
-  const outputs = outputKeysSelector(state)
-  const points = pointsSelector(state)
-  const equation = equationSelector(state)
-  const dcgp = dcgpSelector(state)
-  const chromosome = chromosomeSelector(state)
-  const activeKernelIds = activeKernelsSelector(state)
-  const parameters = settingsSelector(state)
+  const {
+    inputs,
+    outputs,
+    points,
+    equation,
+    dcgp,
+    chromosome,
+    activeKernelIds,
+    parameters,
+  } = useRedux(mapStateToProps)
 
   const theme = useContext(ThemeContext)
-
-  // const throttle = (func, limit) => {
-  //   let inThrottle
-  //   return function() {
-  //     const args = arguments
-  //     const context = this
-  //     if (!inThrottle) {
-  //       func.apply(context, args)
-  //       inThrottle = true
-  //       setTimeout(() => {
-  //         inThrottle = false
-  //       }, limit)
-  //     }
-  //   }
-  // }
 
   let predictions
 

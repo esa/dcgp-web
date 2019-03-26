@@ -34,10 +34,12 @@ const Label = styled.span`
   margin-left: 8px;
 `
 
+const mapStateToProps = {
+  datasetId: datasetIdSelectore,
+}
+
 const Dataset = () => {
-  const { dispatch, getState } = useRedux()
-  const state = getState()
-  const datasetId = datasetIdSelectore(state)
+  const { dispatch, datasetId } = useRedux(mapStateToProps)
   const handleClick = useCallback(id => () => dispatch(changeDataset(id)), [
     dispatch,
   ])
