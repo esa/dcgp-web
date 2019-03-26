@@ -33,10 +33,26 @@ export const SET_ARITY = prefix + 'SET_ARITY'
 export const SET_LEVELS_BACK = prefix + 'SET_LEVELS_BACK'
 
 export const networkSettingsById = {
-  rows: 'rows',
-  columns: 'columns',
-  arity: 'arity',
-  levelsBack: 'levels back',
+  rows: {
+    label: 'rows',
+    min: 1,
+    max: 10,
+  },
+  columns: {
+    label: 'columns',
+    min: 1,
+    max: 100,
+  },
+  arity: {
+    label: 'arity',
+    min: 2,
+    max: 5,
+  },
+  levelsBack: {
+    label: 'levels back',
+    min: 1,
+    max: 101,
+  },
 }
 
 export const setRows = rows => ({
@@ -68,8 +84,17 @@ export const setNetworkSetting = (settingId, value) => ({
 })
 
 export const SET_ALGORITHM = prefix + 'SET_ALGORITHM'
+
 // name of the function exported by dcgp.js
-export const ONE_PLUS_LAMBDA = 'onePlusLambda'
+export const algorithmsById = {
+  onePlusLambda: {
+    label: 'one plus lambda',
+    settings: {
+      offsprings: 4,
+      maxGenerations: 1000,
+    },
+  },
+}
 
 export const setAlgorithm = algorithmId => ({
   type: SET_ALGORITHM,

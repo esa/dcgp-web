@@ -10,15 +10,18 @@ for (let index = xBounds.start; index <= xBounds.end; index += xBounds.step) {
   inputPoints.push(index)
 }
 
-const points = inputPoints.map(input => ({
-  y: 2 * input + 2,
-  '1': 1,
-  x: input,
-}))
+const points = inputPoints.map(input => {
+  const calc = Math.sin(input) / input
+
+  return {
+    y: isNaN(calc) ? 1 : calc,
+    x: input,
+  }
+})
 
 export default {
-  equation: 'y = 2x+2',
-  inputs: ['x', '1'],
+  equation: 'y = sin(x) / x',
+  inputs: ['x'],
   outputs: ['y'],
   points,
 }

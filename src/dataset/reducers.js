@@ -1,32 +1,39 @@
 /*
 {
-  equation: String,
-  inputs: [String],
-  outputs: [String],
-  points: [{
-    [String]: Number,
-  }]
+  datasetId: String,
+  datasets: {
+    [String]: {
+      inputs: [String],
+      outputs: [String],
+      equation: ?String,
+      points: [{
+        [String]: Number,
+      }],
+    },
+  },
 }
 */
 
 import { combineReducers } from 'redux'
 import * as actions from './actions'
-import linearPointsPreset from './pointsPresets/linear'
+import linearPreset from './pointsPresets/linear'
+import sincPreset from './pointsPresets/sinc'
 
-function equation(state = linearPointsPreset.equation, action) {
+function id(state = 'sinc', action) {
   const { type, payload } = action
 
   switch (type) {
-    case actions.SET_EQUATION:
+    case actions.CHANGE_DATASET:
       return payload
-    case actions.REMOVE_EQUATION:
-      return null
     default:
       return state
   }
 }
 
-function inputs(state = linearPointsPreset.inputs, action) {
+const linear = (state = linearPreset) => state
+const sinc = (state = sincPreset) => state
+
+function inputs(state = [], action) {
   const { type, payload } = action
 
   switch (type) {
@@ -41,7 +48,7 @@ function inputs(state = linearPointsPreset.inputs, action) {
   }
 }
 
-function outputs(state = linearPointsPreset.outputs, action) {
+function outputs(state = [], action) {
   const { type, payload } = action
 
   switch (type) {
@@ -56,7 +63,7 @@ function outputs(state = linearPointsPreset.outputs, action) {
   }
 }
 
-function points(state = linearPointsPreset.points, action) {
+function points(state = [], action) {
   const { type, payload } = action
 
   switch (type) {
@@ -67,9 +74,19 @@ function points(state = linearPointsPreset.points, action) {
   }
 }
 
-export default combineReducers({
-  equation,
-  inputs,
+const client = combineReducers({
   outputs,
+  inputs,
   points,
+})
+
+const byId = combineReducers({
+  linear,
+  sinc,
+  client,
+})
+
+export default combineReducers({
+  id,
+  byId,
 })

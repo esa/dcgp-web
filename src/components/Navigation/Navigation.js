@@ -2,11 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import AppBar from '../AppBar'
-import Toolbar from '../Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import CircleButton from '../CircleButton'
+// import Toolbar from '../Toolbar'
 import { useMediaQuery } from '../../hooks'
 import GitHub from '../../icons/GitHub'
+import Menu from '../../icons/Menu'
+import { up } from 'styled-breakpoints'
 
 const Title = styled.h1`
   font-size: 20px;
@@ -14,16 +15,31 @@ const Title = styled.h1`
   margin: 0;
 `
 
-const IconLink = styled.a`
-  width: 48px;
-  height: 48px;
-  padding: 12px;
+const Padding = styled.div`
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  width: 100%;
   box-sizing: border-box;
-  color: ${({ theme }) => theme.title};
+  padding: 0px 20px;
 
-  svg {
-    fill: currentColor;
+  ${up('sm')} {
+    padding: 0 50px;
   }
+
+  ${up('md')} {
+    padding: 0 130px;
+  }
+`
+
+const Width = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1180px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
 `
 
 const Navigation = ({ handleMenuToggle }) => {
@@ -31,26 +47,35 @@ const Navigation = ({ handleMenuToggle }) => {
 
   return (
     <AppBar>
-      <Toolbar>
-        <div css="margin-left: -12px;margin-right: 24px;">
-          <IconButton
-            color="inherit"
-            aria-label="Menu"
+      <Padding>
+        <Width>
+          <CircleButton
             onClick={handleMenuToggle}
+            title="Menu"
+            size={48}
+            padding={12}
+            variant="ghost"
+            css="margin-left: -12px;"
           >
-            <MenuIcon />
-          </IconButton>
-        </div>
-        <Title>
-          {isWideEnough
-            ? 'differentiable cartesian genetic programming'
-            : 'dcgp'}
-        </Title>
-        <div css="flex-grow: 1;" />
-        <IconLink href="https://github.com/mikeheddes/dcgp.js">
-          <GitHub />
-        </IconLink>
-      </Toolbar>
+            <Menu size={null} />
+          </CircleButton>
+          <Title css="flex-grow: 1; margin-left: 30px;">
+            {isWideEnough
+              ? 'differentiable cartesian genetic programming'
+              : 'dcgp'}
+          </Title>
+          <CircleButton
+            as="a"
+            title="GitHub"
+            size={48}
+            padding={12}
+            variant="ghost"
+            href="https://github.com/mikeheddes/dcgp.js"
+          >
+            <GitHub size={null} />
+          </CircleButton>
+        </Width>
+      </Padding>
     </AppBar>
   )
 }

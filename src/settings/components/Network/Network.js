@@ -15,8 +15,7 @@ const Network = () => {
   const network = networkSelector(state)
 
   const handleChange = useCallback(
-    settingId => event =>
-      dispatch(setNetworkSetting(settingId, event.target.valueAsNumber)),
+    settingId => newValue => dispatch(setNetworkSetting(settingId, newValue)),
     [dispatch]
   )
 
@@ -25,12 +24,13 @@ const Network = () => {
       <List>
         {networkSettingIds.map(settingId => (
           <Row key={settingId}>
-            {capitalize(networkSettingsById[settingId])}
+            {capitalize(networkSettingsById[settingId].label)}
             <div css="flex-grow: 1;" />
             <QuantityCounter
               value={network[settingId]}
               onChange={handleChange(settingId)}
-              min={1}
+              min={networkSettingsById[settingId].min}
+              max={networkSettingsById[settingId].max}
             />
           </Row>
         ))}

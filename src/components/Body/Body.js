@@ -16,7 +16,7 @@ const Body = () => {
       <Navigation handleMenuToggle={console.log} />
       <Page>
         <Dataset />
-        <div css="grid-column-start: span 4;">
+        <div css="grid-column: full;">
           <Divider />
         </div>
         <Evolution />

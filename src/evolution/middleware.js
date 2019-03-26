@@ -125,8 +125,8 @@ export const handleEvolution = store => next => action => {
     // this should move to dcgp.worker.js
     const myKernelSet = new dcgp.KernelSet(activeKernelIds)
     const myExpression = new dcgp.Expression(
-      2,
-      1,
+      inputs[0].length,
+      labeles[0].length,
       rows,
       columns,
       levelsBack,

@@ -1,49 +1,60 @@
-import React, { useState } from 'react'
-import Radio from '@material-ui/core/Radio'
-import { withStyles } from '@material-ui/core/styles'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormControl from '@material-ui/core/FormControl'
+import React, { useCallback } from 'react'
+import styled from 'styled-components'
+import Radio from '../../../icons/Radio'
+import { capitalize } from '../../../utils/string'
+import { pointsPresetsById, changeDataset } from '../../actions'
+import { datasetIdSelectore } from '../../selectors'
+import { useRedux } from '../../../hooks'
 
-const styles = () => ({
-  group: {
-    flexDirection: 'row',
-  },
-})
+const presetIds = Object.keys(pointsPresetsById)
 
-const Dataset = ({ classes }) => {
-  const [dataFunc, setDataFunc] = useState('linear')
+const Heading = styled.h2`
+  margin: 0;
+  margin-bottom: 20px;
+  font-weight: 600;
+`
+
+const List = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+`
+
+const Item = styled.li`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 15px;
+  cursor: pointer;
+`
+
+const Label = styled.span`
+  margin-left: 8px;
+`
+
+const Dataset = () => {
+  const { dispatch, getState } = useRedux()
+  const state = getState()
+  const datasetId = datasetIdSelectore(state)
+  const handleClick = useCallback(id => () => dispatch(changeDataset(id)), [
+    dispatch,
+  ])
 
   return (
-    <div css="grid-column-start: span 4;">
-      <h2>Select data</h2>
-      <FormControl component="fieldset">
-        <RadioGroup
-          aria-label="Function"
-          name="function"
-          value={dataFunc}
-          className={classes.group}
-          onChange={event => {
-            setDataFunc(event.target.value)
-          }}
-        >
-          <FormControlLabel value="linear" control={<Radio />} label="Linear" />
-          <FormControlLabel
-            value="parabolic"
-            control={<Radio />}
-            label="Parabolic"
-            disabled
-          />
-          <FormControlLabel
-            value="random"
-            control={<Radio />}
-            label="Random"
-            disabled
-          />
-        </RadioGroup>
-      </FormControl>
+    <div css="grid-column: full;">
+      <Heading>Select data</Heading>
+      <List>
+        {presetIds.map(id => (
+          <Item key={id} onClick={handleClick(id)}>
+            <Radio checked={datasetId === id} />
+            <Label>{capitalize(pointsPresetsById[id].label)}</Label>
+          </Item>
+        ))}
+      </List>
     </div>
   )
 }
 
-export default withStyles(styles)(Dataset)
+export default Dataset

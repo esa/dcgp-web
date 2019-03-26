@@ -1,14 +1,9 @@
 import styled from 'styled-components'
-import IconBase from '../../icons/Base'
+import { transparentize as fade } from 'polished'
 
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-
-  ${IconBase} {
-    cursor: pointer;
-    user-select: none;
-  }
 `
 
 export const Input = styled.input.attrs({ type: 'number' })`
@@ -41,11 +36,20 @@ export const Button = styled.button`
   font: inherit;
   cursor: pointer;
   outline: inherit;
-  transition: opacity 150ms ease;
+  transition: color 150ms ease;
   display: flex;
 
   &:active {
-    transition: opacity 80ms ease-out;
-    opacity: 0.7;
+    transition: color 80ms ease-out;
+    color: ${({ theme }) => fade(0.3, theme.primary)};
+  }
+
+  &[disabled] {
+    color: ${({ theme }) => theme.text.subtle};
+    cursor: default;
+
+    &:active {
+      color: ${({ theme }) => theme.text.subtle};
+    }
   }
 `

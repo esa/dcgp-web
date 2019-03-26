@@ -1,50 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from 'styled-components'
 import { NIGHT } from './colors'
+import breakpoints from './breakpoints'
 
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true,
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-  },
-  palette: {
-    type: 'dark',
-    primary: {
-      // light: '#757ce8',
-      // main: '#008542',
-      main: '#822433',
-      contrastText: '#fff',
-    },
-    secondary: {
-      // light: '#ff7961',
-      main: '#D0103A',
-      dark: '#822433',
-      contrastText: '#fff',
-    },
-    grey: {
-      '200': '#212121',
-    },
-  },
-})
+const theme = {
+  ...NIGHT,
+  breakpoints,
+}
 
 const Theme = ({ children }) => (
-  <MuiThemeProvider theme={theme}>
-    <ThemeProvider theme={NIGHT}>{children}</ThemeProvider>
-  </MuiThemeProvider>
+  <ThemeProvider theme={theme}>{children}</ThemeProvider>
 )
 
 Theme.propTypes = {

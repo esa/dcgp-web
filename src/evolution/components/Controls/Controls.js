@@ -4,7 +4,7 @@ import { useRedux } from '../../../hooks'
 import { startEvolution, pauseEvolution, resetEvolution } from '../../actions'
 import { evolutionStateSelector } from '../../selectors'
 import PlayPauseButton from '../PlayPauseButton'
-import CircleButton from '../CircleButton'
+import CircleButton from '../../../components/CircleButton'
 import Reset from '../../../icons/Reset'
 import Next from '../../../icons/Next'
 

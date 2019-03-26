@@ -1,9 +1,12 @@
 import { createGlobalStyle } from 'styled-components'
+import styledNormalize from 'styled-normalize'
 
 export default createGlobalStyle`
+  ${styledNormalize};
+
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+
   body {
-    margin: 0;
-    padding: 0;
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.title};
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -13,7 +16,7 @@ export default createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
   }
 
-  code {
+  code, pre {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
       monospace;
   }

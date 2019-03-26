@@ -51,8 +51,8 @@ function runEvolutionAlgorithm(action, dcgp) {
 
   const myKernelSet = new dcgp.KernelSet(activeKernelIds)
   const myExpression = new dcgp.Expression(
-    2,
-    1,
+    inputs[0].length,
+    labels[0].length,
     rows,
     columns,
     levelsBack,
