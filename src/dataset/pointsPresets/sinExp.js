@@ -1,7 +1,7 @@
 const xBounds = {
-  start: -10,
-  end: 10,
-  step: 1,
+  start: 0,
+  end: 4,
+  step: 0.15,
 }
 
 const inputPoints = []
@@ -11,16 +11,16 @@ for (let index = xBounds.start; index <= xBounds.end; index += xBounds.step) {
 }
 
 const points = inputPoints.map(x => {
-  const calc = Math.sin(x) / x
+  const calc = Math.sin(Math.exp(x))
 
   return {
-    y: isNaN(calc) ? 1 : calc,
+    y: isNaN(calc) ? 0 : calc,
     x,
   }
 })
 
 export default {
-  equation: 'y = \\sin(x) \\div x',
+  equation: 'y = \\sin(\\exp(x))',
   inputs: ['x'],
   outputs: ['y'],
   points,

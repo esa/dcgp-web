@@ -18,6 +18,8 @@ import { combineReducers } from 'redux'
 import * as actions from './actions'
 import linearPreset from './pointsPresets/linear'
 import sincPreset from './pointsPresets/sinc'
+import sinExpPreset from './pointsPresets/sinExp'
+import noisyParabolaPreset from './pointsPresets/noisyParabola'
 
 function id(state = 'sinc', action) {
   const { type, payload } = action
@@ -32,6 +34,8 @@ function id(state = 'sinc', action) {
 
 const linear = (state = linearPreset) => state
 const sinc = (state = sincPreset) => state
+const sinExp = (state = sinExpPreset) => state
+const noisyParabola = (state = noisyParabolaPreset) => state
 
 function inputs(state = [], action) {
   const { type, payload } = action
@@ -83,6 +87,8 @@ const client = combineReducers({
 const byId = combineReducers({
   linear,
   sinc,
+  sinExp,
+  noisyParabola,
   client,
 })
 

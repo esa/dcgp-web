@@ -1,7 +1,7 @@
 const xBounds = {
-  start: -10,
-  end: 10,
-  step: 1,
+  start: -4,
+  end: 4,
+  step: 0.3,
 }
 
 const inputPoints = []
@@ -11,17 +11,19 @@ for (let index = xBounds.start; index <= xBounds.end; index += xBounds.step) {
 }
 
 const points = inputPoints.map(x => {
-  const calc = Math.sin(x) / x
+  // 0.5(x - 2) ^ 2 + 2(x - 2)
+  const calc = 0.5 * Math.pow(x - 2, 2) + 2 * (x - 2) + Math.random()
 
   return {
     y: isNaN(calc) ? 1 : calc,
     x,
+    '1': 1,
   }
 })
 
 export default {
-  equation: 'y = \\sin(x) \\div x',
-  inputs: ['x'],
+  equation: 'y = 0.5(x - 2)^2 + 2(x - 2) + noise',
+  inputs: ['x', '1'],
   outputs: ['y'],
   points,
 }
