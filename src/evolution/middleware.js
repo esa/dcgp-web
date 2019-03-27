@@ -72,6 +72,10 @@ export const handleEvolution = store => next => action => {
     store.dispatch(setInitialEvolution())
     return
   }
+  
+  if (action.type === STEP_EVOLUTION) {
+    store.dispatch(pauseEvolution())
+  }
 
   if (action.type === START_EVOLUTION || action.type === STEP_EVOLUTION) {
     const state = store.getState()
