@@ -10,6 +10,7 @@ import {
   sendWorkerMessage,
   RESET_EVOLUTION,
   STEP_EVOLUTION,
+  pauseEvolution,
 } from './actions'
 import { setSeed } from '../settings/actions'
 import {
