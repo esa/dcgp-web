@@ -13,6 +13,12 @@ export const pointsPresetsById = {
   sinc: {
     label: 'cardinal sine',
   },
+  sinExp: {
+    label: 'sine of exponent',
+  },
+  noisyParabola: {
+    label: 'noisy parabola',
+  },
 }
 
 export const setPoints = points => ({

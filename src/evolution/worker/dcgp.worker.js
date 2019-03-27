@@ -58,8 +58,10 @@ const sendMessage = message => {
 }
 
 const destroyInstance = () => {
-  expression.destroy()
-  expression = undefined
+  if (expression) {
+    expression.destroy()
+    expression = undefined
+  }
 }
 
 const step = ({ parameters, inputs, labels }) => {
