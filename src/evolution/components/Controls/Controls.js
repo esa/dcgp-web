@@ -1,7 +1,12 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { useRedux } from '../../../hooks'
-import { startEvolution, pauseEvolution, resetEvolution } from '../../actions'
+import {
+  startEvolution,
+  pauseEvolution,
+  resetEvolution,
+  stepEvolution,
+} from '../../actions'
 import { evolutionStateSelector } from '../../selectors'
 import PlayPauseButton from '../PlayPauseButton'
 import CircleButton from '../../../components/CircleButton'
@@ -30,6 +35,7 @@ const Controls = () => {
   const handleReset = useCallback(() => dispatch(resetEvolution()), [dispatch])
   const handlePlay = useCallback(() => dispatch(startEvolution()), [dispatch])
   const handlePause = useCallback(() => dispatch(pauseEvolution()), [dispatch])
+  const handleStep = useCallback(() => dispatch(stepEvolution()), [dispatch])
 
   return (
     <ControlWrapper>
@@ -41,7 +47,7 @@ const Controls = () => {
         handlePlay={handlePlay}
         handlePause={handlePause}
       />
-      <CircleButton onClick={console.log} title="Next step">
+      <CircleButton onClick={handleStep} title="Next step">
         <Next size={null} />
       </CircleButton>
     </ControlWrapper>

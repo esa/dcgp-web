@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 
-jest.mock('../../evolution/dcgp.worker.js')
+jest.mock('../../evolution/worker/dcgp.worker.js')
 
 // MUI's useMediaQuery hooks uses window.matchMedia
 // https://github.com/mui-org/material-ui/blob/next/packages/material-ui/src/useMediaQuery/useMediaQuery.js
@@ -12,6 +12,8 @@ beforeAll(() => {
     addListener: () => {},
     removeListener: () => {},
   })
+
+  global.console.error = () => {}
 })
 
 afterAll(() => {

@@ -9,6 +9,7 @@ import {
   WORKER_MESSAGE_OUT,
   sendWorkerMessage,
   RESET_EVOLUTION,
+  STEP_EVOLUTION,
 } from './actions'
 import { setSeed } from '../settings/actions'
 import {
@@ -20,7 +21,7 @@ import {
 import { activeKernelsSelector, settingsSelector } from '../settings/selectors'
 import { inputsSelector, labelsSelector } from '../dataset/selectors'
 // eslint-disable-next-line import/default
-import Worker from './dcgp.worker'
+import Worker from './worker/dcgp.worker'
 
 export const setWorker = ({ dispatch }) => {
   const worker = new Worker()
@@ -72,7 +73,7 @@ export const handleEvolution = store => next => action => {
     return
   }
 
-  if (action.type === START_EVOLUTION) {
+  if (action.type === START_EVOLUTION || action.type === STEP_EVOLUTION) {
     const state = store.getState()
 
     const loss = lossSelector(state)
