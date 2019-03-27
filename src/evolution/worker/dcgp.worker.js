@@ -43,6 +43,7 @@ function handleMessages(event) {
       break
     case STEP_EVOLUTION:
       isRunning = false
+      hasReset = false
       oneStep(action)
       break
     default:
