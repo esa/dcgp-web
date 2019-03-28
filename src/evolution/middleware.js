@@ -27,6 +27,7 @@ import {
   inputsSelector,
   labelsSelector,
   predictionKeysSelector,
+  predictionsSubscribersSelector,
 } from '../dataset/selectors'
 // eslint-disable-next-line import/default
 import Worker from './worker/dcgp.worker'
@@ -164,8 +165,9 @@ export const handleEvolution = store => next => action => {
     const state = store.getState()
     const secondLastLoss = secondLastlossSelector(state)
     const lastLoss = lossSelector(state)
+    const predicitionSubscribers = predictionsSubscribersSelector(state)
 
-    if (secondLastLoss && secondLastLoss > lastLoss) {
+    if (secondLastLoss && secondLastLoss > lastLoss && predicitionSubscribers) {
       throttledPredictionRequest(store)
     }
   }
