@@ -13,6 +13,20 @@ const Title = styled.h1`
   font-size: 20px;
   font-weight: 600;
   margin: 0;
+  margin-left: 8px;
+  flex-grow: 1;
+
+  ${up('sm')} {
+    margin-left: 15px;
+  }
+
+  ${up('md')} {
+    margin-left: 20px;
+  }
+
+  ${up('lg')} {
+    margin-left: 30px;
+  }
 `
 
 const Padding = styled.div`
@@ -59,7 +73,7 @@ const Navigation = ({ handleMenuToggle }) => {
           >
             <Menu size={null} />
           </CircleButton>
-          <Title css="flex-grow: 1; margin-left: 30px;">
+          <Title>
             {isWideEnough
               ? 'differentiable cartesian genetic programming'
               : 'dcgp'}

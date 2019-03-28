@@ -33,6 +33,17 @@ export const lossSelector = createSelector(
   }
 )
 
+export const secondLastlossSelector = createSelector(
+  stepsSelector,
+  steps => {
+    if (steps.length < 2) {
+      return null
+    }
+
+    return steps[steps.length - 2].loss
+  }
+)
+
 export const chromosomeSelector = createSelector(
   state => state.evolution.steps,
   state => state.evolution.initial,

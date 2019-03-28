@@ -39,3 +39,11 @@ export const labelsSelector = createSelector(
   pointsSelector,
   (outputs, points) => points.map(point => outputs.map(output => point[output]))
 )
+
+export const predictionsSubscribersSelector = state =>
+  state.datasets.prediction.subscribers
+
+export const predictionPointsSelector = state =>
+  state.datasets.prediction.points
+
+export const predictionKeysSelector = state => state.datasets.prediction.keys

@@ -1,8 +1,8 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createSelector } from 'reselect'
 import configureStore from './store'
 
-const store = configureStore(/* provide initial state if any */)
+export const store = configureStore(/* provide initial state if any */)
 
 const getPropsSelector = mapStateToProps => {
   const selectors = Object.values(mapStateToProps)
@@ -22,17 +22,13 @@ export const useRedux = mapStateToProps => {
     mapStateToProps,
   ])
   const [props, setProps] = useState(() => propsSelector(store.getState()))
-  const prevProps = useRef(props)
 
   useEffect(() => {
     const handleChange = () => {
       const state = store.getState()
       const newProps = propsSelector(state)
 
-      if (prevProps.current !== newProps) {
-        prevProps.current = newProps
-        setProps(newProps)
-      }
+      setProps(newProps)
     }
 
     const unsubsribe = store.subscribe(handleChange)
