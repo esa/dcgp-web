@@ -18,6 +18,7 @@ const List = styled.ul`
   list-style: none;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   padding: 0;
   margin: 0;
 `
@@ -28,6 +29,7 @@ const Item = styled.li`
   align-items: center;
   margin-right: 15px;
   cursor: pointer;
+  line-height: 2.4;
 `
 
 const Label = styled.span`
