@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from 'styled-components'
 import 'katex/dist/katex.min.css'
 import { InlineMath } from 'react-katex'
@@ -11,96 +11,40 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { useRedux } from '../../../hooks'
+import { usePredictions } from '../../../dataset/hooks'
 import Divider from '../../../components/Divider'
-import { dcgpSelector, chromosomeSelector } from '../../../evolution/selectors'
 import {
   inputKeysSelector,
   outputKeysSelector,
   pointsSelector,
   equationSelector,
 } from '../../../dataset/selectors'
-import {
-  activeKernelsSelector,
-  settingsSelector,
-} from '../../../settings/selectors'
 import { StyledLineChart, GridContainer } from './style'
-
-// const throttle = (func, limit) => {
-//   let inThrottle
-//   return function() {
-//     const args = arguments
-//     const context = this
-//     if (!inThrottle) {
-//       func.apply(context, args)
-//       inThrottle = true
-//       setTimeout(() => {
-//         inThrottle = false
-//       }, limit)
-//     }
-//   }
-// }
 
 const mapStateToProps = {
   inputs: inputKeysSelector,
   outputs: outputKeysSelector,
   points: pointsSelector,
   equation: equationSelector,
-  dcgp: dcgpSelector,
-  chromosome: chromosomeSelector,
-  activeKernelIds: activeKernelsSelector,
-  parameters: settingsSelector,
 }
 
 const Plot = () => {
-  const {
-    inputs,
-    outputs,
-    points,
-    equation,
-    dcgp,
-    chromosome,
-    activeKernelIds,
-    parameters,
-  } = useRedux(mapStateToProps)
+  const { inputs, outputs, points, equation } = useRedux(mapStateToProps)
+
+  const { predictions, keys: predictionKeys } = usePredictions()
+
+  const data = useMemo(() => {
+    if (predictions.length) {
+      return points.map((point, i) => ({
+        ...point,
+        ...predictions[i],
+      }))
+    } else {
+      return points
+    }
+  }, [predictions, points])
 
   const theme = useContext(ThemeContext)
-
-  let predictions
-
-  const {
-    seed,
-    network: { rows, columns, arity, levelsBack },
-  } = parameters
-
-  // TODO: throttle prediction calculations
-  if (dcgp.KernelSet && dcgp.Expression && chromosome) {
-    // TODO: move to dcgp.worker.js
-    const myKernelSet = new dcgp.KernelSet(activeKernelIds)
-    const myExpression = new dcgp.Expression(
-      inputs.length,
-      outputs.length,
-      rows,
-      columns,
-      levelsBack,
-      arity,
-      myKernelSet,
-      seed
-    )
-
-    myExpression.setChromosome(chromosome)
-
-    predictions = points.map(point => {
-      const result = myExpression.getResult(inputs.map(input => point[input]))
-      return result[0]
-    })
-
-    myKernelSet.destroy()
-    myExpression.destroy()
-  }
-
-  const data = predictions
-    ? points.map((point, i) => ({ ...point, prediction: predictions[i] }))
-    : points
 
   return (
     <GridContainer>
@@ -113,7 +57,7 @@ const Plot = () => {
             >
               <CartesianGrid />
               <XAxis dataKey={inputs[0]} type="number" />
-              <YAxis />
+              <YAxis width={45} />
               <Legend verticalAlign="top" height={36} />
               <Line
                 name="labels"
@@ -124,10 +68,11 @@ const Plot = () => {
               />
               <Line
                 name="predictions"
-                dataKey="prediction"
+                dataKey={predictionKeys[0]}
                 type="monotone"
                 dot={{ fill: theme.secundary, r: 4 }}
                 stroke={theme.secundary}
+                animationDuration={500}
               />
             </StyledLineChart>
           </ResponsiveContainer>

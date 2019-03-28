@@ -1,7 +1,7 @@
 const xBounds = {
   start: 0,
   end: 4,
-  step: 0.15,
+  step: 0.075,
 }
 
 const inputPoints = []

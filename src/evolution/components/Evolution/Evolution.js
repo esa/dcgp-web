@@ -95,7 +95,12 @@ const Evolve = () => {
               />
               <CartesianGrid vertical={false} />
               <ReferenceLine x={0} />
-              <Line type="stepAfter" dataKey="loss" dot={false} />
+              <Line
+                type="stepAfter"
+                dataKey="loss"
+                dot={false}
+                animationDuration={1000}
+              />
             </StyledLineChart>
           </ResponsiveContainer>
         </div>

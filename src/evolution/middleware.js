@@ -9,20 +9,46 @@ import {
   WORKER_MESSAGE_OUT,
   sendWorkerMessage,
   RESET_EVOLUTION,
+  DONE_EVOLUTION,
   STEP_EVOLUTION,
   pauseEvolution,
+  EVOLUTION_PROGRESS,
 } from './actions'
+import { calcPredictions, CALC_PREDICTIONS } from '../dataset/actions'
 import { setSeed } from '../settings/actions'
+import { addPayload } from '../utils/actions'
 import {
   currentStepSelector,
-  dcgpSelector,
   lossSelector,
-  chromosomeSelector,
+  secondLastlossSelector,
 } from './selectors'
 import { activeKernelsSelector, settingsSelector } from '../settings/selectors'
-import { inputsSelector, labelsSelector } from '../dataset/selectors'
+import {
+  inputsSelector,
+  labelsSelector,
+  predictionKeysSelector,
+} from '../dataset/selectors'
 // eslint-disable-next-line import/default
 import Worker from './worker/dcgp.worker'
+import throttle from '../utils/throttle'
+
+const predictionRequest = store => {
+  const state = store.getState()
+
+  const inputs = inputsSelector(state)
+  const predictionKeys = predictionKeysSelector(state)
+
+  store.dispatch(
+    calcPredictions({
+      inputs,
+      predictionKeys,
+    })
+  )
+}
+
+const throttledPredictionRequest = throttle(store => {
+  predictionRequest(store)
+}, Math.round(1000 / 2))
 
 export const setWorker = ({ dispatch }) => {
   const worker = new Worker()
@@ -43,10 +69,7 @@ export const setWorker = ({ dispatch }) => {
 export const handleWorkerMessages = store => next => action => {
   if (action.type === SET_DCGP_INSTANCE) {
     initializer(action.payload.module).then(dcgp => {
-      next({
-        ...action,
-        payload: { ...action.payload, ...dcgp },
-      })
+      next(addPayload(action, dcgp))
 
       store.dispatch(setInitialEvolution())
     })
@@ -80,7 +103,6 @@ export const handleEvolution = store => next => action => {
 
   if (action.type === START_EVOLUTION || action.type === STEP_EVOLUTION) {
     const state = store.getState()
-
     const loss = lossSelector(state)
 
     if (loss !== null && loss <= LOSS_THRESHOLD) {
@@ -92,67 +114,70 @@ export const handleEvolution = store => next => action => {
     const activeKernelIds = activeKernelsSelector(state)
     const parameters = settingsSelector(state)
     const currentStep = currentStepSelector(state)
-    const chromosome = chromosomeSelector(state)
     const inputs = inputsSelector(state)
     const labels = labelsSelector(state)
 
     store.dispatch(
-      sendWorkerMessage({
-        ...action,
-        payload: {
-          ...action.payload,
+      sendWorkerMessage(
+        addPayload(action, {
           activeKernelIds,
           parameters,
           step: currentStep,
           inputs,
           labels,
-          chromosome,
-        },
-      })
+        })
+      )
     )
+
     return
   }
 
   if (action.type === INITIAL_EVOLUTION) {
+    if (!action.payload) {
+      const state = store.getState()
+
+      const activeKernelIds = activeKernelsSelector(state)
+      const parameters = settingsSelector(state)
+      const inputs = inputsSelector(state)
+      const labels = labelsSelector(state)
+
+      store.dispatch(
+        sendWorkerMessage(
+          addPayload(action, {
+            activeKernelIds,
+            parameters,
+            inputs,
+            labels,
+          })
+        )
+      )
+
+      throttledPredictionRequest(store)
+    } else {
+      next(action)
+    }
+
+    return
+  }
+
+  if (action.type === EVOLUTION_PROGRESS) {
     const state = store.getState()
+    const secondLastLoss = secondLastlossSelector(state)
+    const lastLoss = lossSelector(state)
 
-    const dcgp = dcgpSelector(state)
-    const activeKernelIds = activeKernelsSelector(state)
-    const parameters = settingsSelector(state)
-    const inputs = inputsSelector(state)
-    const labeles = labelsSelector(state)
+    if (secondLastLoss && secondLastLoss > lastLoss) {
+      throttledPredictionRequest(store)
+    }
+  }
 
-    const {
-      seed,
-      network: { rows, columns, arity, levelsBack },
-      algorithm: { id: algorithmId },
-    } = parameters
+  if (action.type === CALC_PREDICTIONS) {
+    store.dispatch(sendWorkerMessage(action))
+  }
 
-    // this should move to dcgp.worker.js
-    const myKernelSet = new dcgp.KernelSet(activeKernelIds)
-    const myExpression = new dcgp.Expression(
-      inputs[0].length,
-      labeles[0].length,
-      rows,
-      columns,
-      levelsBack,
-      arity,
-      myKernelSet,
-      seed
-    )
+  if (action.type === DONE_EVOLUTION) {
+    next(action)
 
-    const resultObj = dcgp.algorithms[algorithmId](
-      myExpression,
-      1,
-      0,
-      inputs,
-      labeles
-    )
-
-    myKernelSet.destroy()
-    myExpression.destroy()
-
-    next({ ...action, payload: { ...action.payload, ...resultObj } })
+    predictionRequest(store)
     return
   }
 
