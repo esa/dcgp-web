@@ -156,9 +156,4 @@ export const handleControls = store => next => action => {
   next(action)
 }
 
-const logger = store => next => action => {
-  next(action)
-  console.log(action.type, store.getState().step)
-}
-
-export default [handleExpression, handleControls, logger]
+export default [handleExpression, handleControls]
