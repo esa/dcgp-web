@@ -48,12 +48,12 @@ export const handleExpression = store => next => action => {
   }
 
   if (type === EVOLUTION_PROGRESS) {
-    next(action)
-
     const { payload: result } = action
     const { hasReset } = store.getState()
 
     if (!hasReset) {
+      next(action)
+
       if (action.meta && action.meta.throttle) {
         if (result.loss <= LOSS_THRESHOLD) {
           postMessage(action)
