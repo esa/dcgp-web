@@ -1,4 +1,5 @@
 /* eslint-env worker */
+import * as math from 'mathjs'
 import {
   SET_DCGP_INSTANCE,
   setDcgpInstance,
@@ -13,7 +14,11 @@ import {
   EVOLUTION_PROGRESS,
   setInitialEvolution,
 } from '../actions'
-import { CALC_PREDICTIONS, setPredictionPoints } from '../../dataset/actions'
+import {
+  CALC_PREDICTIONS,
+  setPredictionPoints,
+  setPredictionEquations,
+} from '../../dataset/actions'
 import { addPayload } from '../../utils/actions'
 import { step, loop, createExpression, getInitialResult } from './utils'
 import throttle from '../../utils/throttle'
@@ -73,10 +78,10 @@ export const handleExpression = store => next => action => {
   if (type === CALC_PREDICTIONS) {
     next(action)
 
-    const { inputs, predictionKeys, chromosome } = action.payload
+    const { inputs, inputKeys, predictionKeys, chromosome } = action.payload
     const { expression } = store.getState()
 
-    if (!expression || !inputs || !predictionKeys) {
+    if (!expression || !inputs || !predictionKeys || !inputKeys) {
       return
     }
 
@@ -93,11 +98,19 @@ export const handleExpression = store => next => action => {
         .reduce((prev, cur, i) => ({ ...prev, [predictionKeys[i]]: cur }), {})
     )
 
+    const equations = expression.getEquation(inputKeys).map(eq =>
+      math
+        .simplify(eq)
+        .toTex()
+        .replace(/Infinity/g, ' \\infty')
+    )
+
     if (chromosome) {
       expression.setChromosome(currentChromosome)
     }
 
     postMessage(setPredictionPoints(predictions))
+    postMessage(setPredictionEquations(equations))
 
     return
   }

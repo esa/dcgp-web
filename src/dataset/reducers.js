@@ -15,7 +15,8 @@
     keys: [String],
     points: [{
       [String]: Number,
-    }]
+    }],
+    equation: String,
     subscribers: Number,
   },
 }
@@ -127,6 +128,19 @@ function predictionPoints(state = [], action) {
   }
 }
 
+function equations(state = [], action) {
+  const { type } = action
+
+  switch (type) {
+    case actions.SET_PREDICTION_EQUATIONS:
+      return action.payload
+    case RESET_EVOLUTION:
+      return []
+    default:
+      return state
+  }
+}
+
 function subscribers(state = 0, action) {
   const { type } = action
 
@@ -143,6 +157,7 @@ function subscribers(state = 0, action) {
 const prediction = combineReducers({
   keys,
   points: predictionPoints,
+  equations,
   subscribers,
 })
 

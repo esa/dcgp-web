@@ -25,6 +25,7 @@ import {
 import { activeKernelsSelector, settingsSelector } from '../settings/selectors'
 import {
   inputsSelector,
+  inputKeysSelector,
   labelsSelector,
   predictionKeysSelector,
   predictionsSubscribersSelector,
@@ -37,11 +38,13 @@ const predictionRequest = store => {
   const state = store.getState()
 
   const inputs = inputsSelector(state)
+  const inputKeys = inputKeysSelector(state)
   const predictionKeys = predictionKeysSelector(state)
 
   store.dispatch(
     calcPredictions({
       inputs,
+      inputKeys,
       predictionKeys,
     })
   )

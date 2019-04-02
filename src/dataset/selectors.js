@@ -47,3 +47,6 @@ export const predictionPointsSelector = state =>
   state.datasets.prediction.points
 
 export const predictionKeysSelector = state => state.datasets.prediction.keys
+
+export const predictionEquationsSelector = state =>
+  state.datasets.prediction.equations

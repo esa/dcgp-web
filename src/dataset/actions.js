@@ -46,6 +46,7 @@ export const ADD_PREDICTION_SUBSCRIBER = prefix + 'ADD_PREDICTION_SUBSCRIBER'
 export const REMOVE_PREDICTION_SUBSCRIBER =
   prefix + 'REMOVE_PREDICTION_SUBSCRIBER'
 export const CALC_PREDICTIONS = prefix + 'CALC_PREDICTIONS'
+export const SET_PREDICTION_EQUATIONS = prefix + 'SET_PREDICTION_EQUATIONS'
 
 export const setPredictionKeys = keys => ({
   type: SET_PREDICTION_KEYS,
@@ -75,7 +76,12 @@ export const removePredictionSubscriber = id => ({
   payload: id,
 })
 
-export const calcPredictions = payload => ({
+export const calcPredictions = points => ({
   type: CALC_PREDICTIONS,
-  payload,
+  payload: points,
+})
+
+export const setPredictionEquations = equations => ({
+  type: SET_PREDICTION_EQUATIONS,
+  payload: equations,
 })
