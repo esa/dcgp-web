@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react'
 import { ThemeContext } from 'styled-components'
 import 'katex/dist/katex.min.css'
-import { InlineMath } from 'react-katex'
+import { BlockMath } from 'react-katex'
 import {
   Line,
   XAxis,
@@ -18,6 +18,7 @@ import {
   outputKeysSelector,
   pointsSelector,
   equationSelector,
+  predictionEquationsSelector,
 } from '../../../dataset/selectors'
 import { StyledLineChart, GridContainer } from './style'
 
@@ -26,10 +27,13 @@ const mapStateToProps = {
   outputs: outputKeysSelector,
   points: pointsSelector,
   equation: equationSelector,
+  predictionEquations: predictionEquationsSelector,
 }
 
 const Plot = () => {
-  const { inputs, outputs, points, equation } = useRedux(mapStateToProps)
+  const { inputs, outputs, points, equation, predictionEquations } = useRedux(
+    mapStateToProps
+  )
 
   const { predictions, keys: predictionKeys } = usePredictions()
 
@@ -80,9 +84,18 @@ const Plot = () => {
       </div>
       <Divider css="margin: 15px 0;" />
       {equation && (
-        <p>
-          Label equation: <InlineMath>{equation}</InlineMath>
-        </p>
+        <>
+          <p>Label equation:</p>
+          <BlockMath>{equation}</BlockMath>
+        </>
+      )}
+      {predictionEquations.length > 0 && (
+        <>
+          <p>Prediction equation:</p>
+          <div css="overflow-x: auto;">
+            <BlockMath>{predictionEquations[0]}</BlockMath>
+          </div>
+        </>
       )}
     </GridContainer>
   )
