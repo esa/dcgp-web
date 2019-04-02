@@ -6,6 +6,7 @@ const CircleButton = styled.button`
   color: ${({ theme }) => theme.title};
   border-radius: 50%;
   background: none;
+  -webkit-appearance: none;
 
   ${({ variant, theme }) => {
     if (variant === 'regular') {

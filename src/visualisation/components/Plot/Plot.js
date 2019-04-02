@@ -1,4 +1,5 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useRef } from 'react'
+import copy from 'copy-to-clipboard'
 import { ThemeContext } from 'styled-components'
 import 'katex/dist/katex.min.css'
 import { BlockMath } from 'react-katex'
@@ -20,7 +21,7 @@ import {
   equationSelector,
   predictionEquationsSelector,
 } from '../../../dataset/selectors'
-import { StyledLineChart, GridContainer } from './style'
+import { StyledLineChart, GridContainer, CopyButton } from './style'
 
 const mapStateToProps = {
   inputs: inputKeysSelector,
@@ -31,9 +32,17 @@ const mapStateToProps = {
 }
 
 const Plot = () => {
+  const copyButton = useRef(null)
+
   const { inputs, outputs, points, equation, predictionEquations } = useRedux(
     mapStateToProps
   )
+
+  const handleCopy = () => {
+    if (predictionEquations.length) {
+      copy(predictionEquations[0])
+    }
+  }
 
   const { predictions, keys: predictionKeys } = usePredictions()
 
@@ -69,6 +78,7 @@ const Plot = () => {
                 dataKey={outputs[0]}
                 dot={{ fill: theme.primary, r: 4 }}
                 stroke={theme.primary}
+                animationDuration={500}
               />
               <Line
                 name="predictions"
@@ -85,13 +95,20 @@ const Plot = () => {
       <Divider css="margin: 15px 0;" />
       {equation && (
         <>
-          <p>Label equation:</p>
+          <div css="display: flex; margin-bottom: 15px;">
+            <span css="flex-grow: 1;">Label equation:</span>
+          </div>
           <BlockMath>{equation}</BlockMath>
         </>
       )}
       {predictionEquations.length > 0 && (
         <>
-          <p>Prediction equation:</p>
+          <div css="display: flex; margin: 30px 0 15px;">
+            <span css="flex-grow: 1;">Prediction equation:</span>
+            <CopyButton ref={copyButton} onClick={handleCopy}>
+              Copy LaTeX
+            </CopyButton>
+          </div>
           <div css="overflow-x: auto;">
             <BlockMath>{predictionEquations[0]}</BlockMath>
           </div>
