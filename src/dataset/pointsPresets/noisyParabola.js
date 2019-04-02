@@ -12,7 +12,7 @@ for (let index = xBounds.start; index <= xBounds.end; index += xBounds.step) {
 
 const points = inputPoints.map(x => {
   // 0.5(x - 2) ^ 2 + 2(x - 2)
-  const calc = 0.5 * Math.pow(x - 2, 2) + 2 * (x - 2) + Math.random()
+  const calc = 0.5 * Math.pow(x - 2, 2) + 2 * (x - 2) + Math.random() - 0.5 // -0.5 to remove random bias
 
   return {
     y: isNaN(calc) ? 1 : calc,
