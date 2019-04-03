@@ -4,3 +4,5 @@
 
 # dcgp website
 Web interface to use dcgp and inspect its chromosomes. The goal of this project is to make it more convenient to use [differential Cartesian Genetic Programming](https://github.com/darioizzo/dcgp) (dCGP) and to make tools that help with inspecting a chromosome. The underlaying idea is that dCGP will move one step further from an academic experiment towards a product (software tool) helpful for engineering.
+
+<img width="1425" alt="Screenshot" src="https://user-images.githubusercontent.com/26207957/55515211-4e330780-566a-11e9-87bb-66d04b7b732a.png">
