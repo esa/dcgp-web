@@ -45,7 +45,6 @@ export const GridContainer = styled(unStyledGridContainer)`
 
 export const CopyButton = styled.button`
   color: ${({ theme }) => theme.primary};
-  border-radius: 50%;
   background: none;
   border: none;
   padding: 0;

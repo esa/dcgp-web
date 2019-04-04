@@ -109,7 +109,7 @@ const Plot = () => {
               Copy LaTeX
             </CopyButton>
           </div>
-          <div css="overflow-x: auto;">
+          <div css="overflow-x: auto; overflow-y: hidden;">
             <BlockMath>{predictionEquations[0]}</BlockMath>
           </div>
         </>

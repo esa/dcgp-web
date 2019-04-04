@@ -61,8 +61,8 @@ function expression(state = null, action) {
   const { type, payload } = action
 
   switch (type) {
-    case actions.INITIAL_EVOLUTION:
-      return payload.expression
+    case actions.SET_EXPRESSION:
+      return payload
     case actions.RESET_EVOLUTION:
       return null
     default:

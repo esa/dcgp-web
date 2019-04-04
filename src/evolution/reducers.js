@@ -65,7 +65,7 @@ function initial(state = {}, action) {
   const { type, payload } = action
 
   switch (type) {
-    case actions.INITIAL_EVOLUTION:
+    case actions.SET_INITIAL_EVOLUTION:
       return payload
     case actions.RESET_EVOLUTION:
       return {}
