@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/dcgp-web/static/media/KaTeX_Fraktur-Regular.b48160ea.woff"
   },
   {
-    "revision": "e947d2a03dffc21e5b6f",
-    "url": "/dcgp-web/static/js/main.dab5f695.chunk.js"
+    "revision": "07e540e35e4a818930e7",
+    "url": "/dcgp-web/static/js/main.0973660c.chunk.js"
   },
   {
     "revision": "bce47876efef2be1f02bfe02a2b2ed29",
@@ -32,32 +32,32 @@ self.__precacheManifest = [
     "url": "/dcgp-web/static/media/KaTeX_Size1-Regular.4f07fe62.woff"
   },
   {
+    "revision": "df807e937cd2fd479b06d1a51fa9b54a",
+    "url": "/dcgp-web/static/media/KaTeX_Size2-Regular.df807e93.woff2"
+  },
+  {
     "revision": "50bcc9e86ee7ca2673acc9bb19786d87",
     "url": "/dcgp-web/static/media/KaTeX_Size2-Regular.50bcc9e8.woff"
   },
   {
-    "revision": "df807e937cd2fd479b06d1a51fa9b54a",
-    "url": "/dcgp-web/static/media/KaTeX_Size2-Regular.df807e93.woff2"
+    "revision": "b583d1f1222c9560bb72a688d5f081c7",
+    "url": "/dcgp-web/static/media/KaTeX_Size3-Regular.b583d1f1.woff2"
   },
   {
     "revision": "4f2160f04d44c2d05a4da9a9a78bc2ed",
     "url": "/dcgp-web/static/media/KaTeX_Size3-Regular.4f2160f0.woff"
   },
   {
-    "revision": "2f811a580b2d028e2920d50a2f8eb42d",
-    "url": "/dcgp-web/static/media/KaTeX_Size3-Regular.2f811a58.ttf"
-  },
-  {
     "revision": "104294e4cee02c072980a209b88c3029",
     "url": "/dcgp-web/static/media/KaTeX_Size4-Regular.104294e4.woff2"
   },
   {
-    "revision": "f9b5a33d9539cfac7cd6a52ad68ca673",
-    "url": "/dcgp-web/static/media/KaTeX_Size4-Regular.f9b5a33d.woff"
+    "revision": "2f811a580b2d028e2920d50a2f8eb42d",
+    "url": "/dcgp-web/static/media/KaTeX_Size3-Regular.2f811a58.ttf"
   },
   {
-    "revision": "b583d1f1222c9560bb72a688d5f081c7",
-    "url": "/dcgp-web/static/media/KaTeX_Size3-Regular.b583d1f1.woff2"
+    "revision": "f9b5a33d9539cfac7cd6a52ad68ca673",
+    "url": "/dcgp-web/static/media/KaTeX_Size4-Regular.f9b5a33d.woff"
   },
   {
     "revision": "9e74aa81afcd2a2c51e6fdda41905bbd",
@@ -88,6 +88,10 @@ self.__precacheManifest = [
     "url": "/dcgp-web/static/media/KaTeX_SansSerif-Regular.8de2dee1.woff2"
   },
   {
+    "revision": "46b2d8cfe4fd0021561890cf34a99e86",
+    "url": "/dcgp-web/static/media/KaTeX_Script-Regular.46b2d8cf.woff"
+  },
+  {
     "revision": "a8506f1b1fb95010d2e46a2ce5edc453",
     "url": "/dcgp-web/static/media/KaTeX_SansSerif-Regular.a8506f1b.woff"
   },
@@ -98,10 +102,6 @@ self.__precacheManifest = [
   {
     "revision": "686db35f856dc151987748d946b577f2",
     "url": "/dcgp-web/static/media/KaTeX_Size1-Regular.686db35f.ttf"
-  },
-  {
-    "revision": "46b2d8cfe4fd0021561890cf34a99e86",
-    "url": "/dcgp-web/static/media/KaTeX_Script-Regular.46b2d8cf.woff"
   },
   {
     "revision": "3f883bff6b52775d6f96de5cc9d50052",
@@ -196,12 +196,12 @@ self.__precacheManifest = [
     "url": "/dcgp-web/static/media/KaTeX_SansSerif-Italic.40d559e3.ttf"
   },
   {
-    "revision": "b3881ceea63499db39bfebca1edd0df7",
-    "url": "/dcgp-web/static/media/KaTeX_Script-Regular.b3881cee.ttf"
-  },
-  {
     "revision": "7ba33ebb57e020a4948ef3da67a961fe",
     "url": "/dcgp-web/static/media/KaTeX_SansSerif-Regular.7ba33ebb.ttf"
+  },
+  {
+    "revision": "b3881ceea63499db39bfebca1edd0df7",
+    "url": "/dcgp-web/static/media/KaTeX_Script-Regular.b3881cee.ttf"
   },
   {
     "revision": "1ba8a24a34177c2ffb565c9215073d79",
@@ -252,19 +252,19 @@ self.__precacheManifest = [
     "url": "/dcgp-web/static/media/KaTeX_Math-Italic.f47a61c8.ttf"
   },
   {
-    "revision": "a626581c4b8f1e6b57d6",
-    "url": "/dcgp-web/static/js/2.6e24c825.chunk.js"
+    "revision": "fd0956c2a48d1d2ec4d6",
+    "url": "/dcgp-web/static/js/2.c275e48d.chunk.js"
   },
   {
-    "revision": "a626581c4b8f1e6b57d6",
+    "revision": "fd0956c2a48d1d2ec4d6",
     "url": "/dcgp-web/static/css/2.4e4721d5.chunk.css"
   },
   {
-    "revision": "1e305d6ed4aa498ea441d69480305e5a",
+    "revision": "ebc934400ddc5bba2c29afdcd580a862",
     "url": "/dcgp-web/index.html"
   },
   {
-    "revision": "c2c048985f34c63454371fe40d0083db",
-    "url": "/dcgp-web/03bedb10d584529a1d81.worker.js"
+    "revision": "a5ab0a341a4f283cb477bbaea295e947",
+    "url": "/dcgp-web/4f78960f0ca67d7c3204.worker.js"
   }
 ];
