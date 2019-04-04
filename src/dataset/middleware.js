@@ -4,14 +4,17 @@ import {
   setPredictionKeys,
 } from './actions'
 import { resetEvolution } from '../evolution/actions'
-import { outputKeysSelector, inputKeysSelector } from './selectors'
-import { generatePredictionKeys } from '../utils/string'
+import { outputKeysSelector } from './selectors'
 
 const dispatchSetPredictionKeys = store => {
   const state = store.getState()
-  const inputKeys = inputKeysSelector(state)
   const outputKeys = outputKeysSelector(state)
-  const predictionKeys = generatePredictionKeys(inputKeys, outputKeys)
+  // TODO: ensure that the prediction keys are unique.
+  // Symbol(x) doesnt work because it cannot be transfered over web workers
+  // Making the keys unique on the main thread and keeping the keys seperated
+  // on the web worker might work.
+  const predictionKeys = outputKeys.map(key => key + '_PREDICTION')
+
   store.dispatch(setPredictionKeys(predictionKeys))
 }
 

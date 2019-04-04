@@ -22,12 +22,17 @@ export const PAUSE_EVOLUTION = prefix + 'PAUSE_EVOLUTION'
 export const RESET_EVOLUTION = prefix + 'RESET_EVOLUTION'
 export const STEP_EVOLUTION = prefix + 'STEP_EVOLUTION'
 export const DONE_EVOLUTION = prefix + 'DONE_EVOLUTION'
-export const INITIAL_EVOLUTION = prefix + 'INITIAL_EVOLUTION'
+export const GET_INITIAL_EVOLUTION = prefix + 'GET_INITIAL_EVOLUTION'
+export const SET_INITIAL_EVOLUTION = prefix + 'SET_INITIAL_EVOLUTION'
 export const LOSS_THRESHOLD = 1e-14
 export const EVOLUTION_PROGRESS = prefix + 'EVOLUTION_PROGRESS'
 
+export const getInitialEvolution = () => ({
+  type: GET_INITIAL_EVOLUTION,
+})
+
 export const setInitialEvolution = resultObj => ({
-  type: INITIAL_EVOLUTION,
+  type: SET_INITIAL_EVOLUTION,
   payload: resultObj,
 })
 
@@ -54,4 +59,11 @@ export const doneEvolution = () => ({
 export const evolutionProgress = resultObj => ({
   type: EVOLUTION_PROGRESS,
   payload: resultObj,
+})
+
+export const SET_EXPRESSION = prefix + 'SET_EXPRESSION'
+
+export const setExpression = expression => ({
+  type: SET_EXPRESSION,
+  payload: expression,
 })
