@@ -1,21 +1,6 @@
 /* eslint-env worker */
 import { evolutionProgress } from '../actions'
-
-/**
- * Interupts the event loop to handle other events first.
- *
- * @async
- * @function interupt
- * @param {function} func - The function to be called when the event loop continues.
- * @param  {...any} args - The arguments for the function `func`.
- * @return {Promise<any>} The return of the function `func` called with arguments `args`.
- */
-export const interupt = async (func, ...args) =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      resolve(func(...args))
-    }, 1)
-  })
+import { interupt } from '../../utils/async'
 
 export const createExpression = (
   { parameters, activeKernelIds, inputs, labels },
@@ -90,7 +75,9 @@ export const loop = async (store, action) => {
     const progressAction = evolutionProgress(result)
     progressAction.meta = { throttle: true }
 
-    await interupt(store.dispatch, progressAction)
+    await interupt()
+
+    store.dispatch(progressAction)
 
     if (!checkIfEvolving(store)) {
       break

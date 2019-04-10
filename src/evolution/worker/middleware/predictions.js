@@ -29,7 +29,8 @@ const handlePredictions = store => next => action => {
         .reduce((prev, cur, i) => ({ ...prev, [predictionKeys[i]]: cur }), {})
     )
 
-    const equations = expression.getEquation(inputKeys).map(eq =>
+    const naiveEquations = expression.getEquation(inputKeys)
+    const simplifiedEquations = naiveEquations.map(eq =>
       math
         .simplify(eq)
         .toTex()
@@ -41,7 +42,7 @@ const handlePredictions = store => next => action => {
     }
 
     postMessage(setPredictionPoints(predictions))
-    postMessage(setPredictionEquations(equations))
+    postMessage(setPredictionEquations(simplifiedEquations))
 
     return
   }

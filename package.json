@@ -19,7 +19,7 @@
   "homepage": "https://mikeheddes.github.io/dcgp-web",
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
-    "dcgp": "^0.4.7",
+    "dcgp": "^0.5.1",
     "history": "^4.7.2",
     "katex": "^0.10.1",
     "mathjs": "^5.8.0",
@@ -34,6 +34,7 @@
     "recharts": "^1.5.0",
     "redux": "^4.0.1",
     "reselect": "^4.0.0",
+    "resize-observer-polyfill": "^1.5.1",
     "styled-breakpoints": "^6.5.5",
     "styled-components": "^4.2.0",
     "styled-normalize": "^8.0.6"
