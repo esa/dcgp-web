@@ -29,6 +29,10 @@ import linearPreset from './pointsPresets/linear'
 import sincPreset from './pointsPresets/sinc'
 import sinExpPreset from './pointsPresets/sinExp'
 import noisyParabolaPreset from './pointsPresets/noisyParabola'
+import eckerle4Preset from './pointsPresets/eckerle4'
+import chwirut2Preset from './pointsPresets/chwirut2'
+import hahn1Preset from './pointsPresets/hahn1'
+import gauss2Preset from './pointsPresets/gauss2'
 
 function id(state = 'sinc', action) {
   const { type, payload } = action
@@ -45,6 +49,10 @@ const linear = (state = linearPreset) => state
 const sinc = (state = sincPreset) => state
 const sinExp = (state = sinExpPreset) => state
 const noisyParabola = (state = noisyParabolaPreset) => state
+const eckerle4 = (state = eckerle4Preset) => state
+const chwirut2 = (state = chwirut2Preset) => state
+const hahn1 = (state = hahn1Preset) => state
+const gauss2 = (state = gauss2Preset) => state
 
 function inputs(state = [], action) {
   const { type, payload } = action
@@ -98,6 +106,10 @@ const byId = combineReducers({
   sinc,
   sinExp,
   noisyParabola,
+  eckerle4,
+  chwirut2,
+  hahn1,
+  gauss2,
   client,
 })
 

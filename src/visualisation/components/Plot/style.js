@@ -9,6 +9,10 @@ export const StyledLineChart = styled(LineChart)`
     stroke-width: 1px;
   }
 
+  .legend-item-0 path {
+    stroke: ${({ theme }) => theme.primary};
+  }
+
   .recharts-line-dots circle {
     stroke: ${({ theme }) => theme.surface.regular};
     stroke-width: 2px;
