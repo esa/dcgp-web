@@ -54,6 +54,8 @@ Degrees of Freedom:                               229
 Number of Observations:                           236
 */
 
+const MIN_POINT_DISTANCE = 10
+
 const points = [
   { y: 0.591, x: 24.41 },
   { y: 1.547, x: 34.82 },
@@ -298,7 +300,7 @@ const points = [
       prev.push(cur)
     }
 
-    if (cur.x - prev[prev.length - 1].x > 10) {
+    if (cur.x - prev[prev.length - 1].x > MIN_POINT_DISTANCE) {
       prev.push(cur)
     }
 
