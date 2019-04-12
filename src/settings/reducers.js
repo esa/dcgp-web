@@ -39,12 +39,12 @@ function seed(state = 12, action) {
 }
 
 const initialKernelState = {
-  sum: false,
+  sum: true,
   diff: true,
   mul: true,
   pdiv: true,
-  sin: true,
-  cos: true,
+  sin: false,
+  cos: false,
   log: false,
   exp: false,
 }
@@ -62,7 +62,7 @@ function kernels(state = initialKernelState, action) {
 
 const initialNetworkState = {
   rows: 1, // min 1
-  columns: 25, // min 1
+  columns: 10, // min 1
   arity: 2, // min 2
   levelsBack: 5, // min 1
 }

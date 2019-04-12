@@ -7,17 +7,29 @@ export const CHANGE_DATASET = prefix + 'CHANGE_DATASET'
 export const SET_POINTS_PRESET = prefix + 'SET_POINTS_PRESET'
 
 export const pointsPresetsById = {
-  linear: {
-    label: 'linear',
-  },
+  // linear: {
+  //   label: 'Linear',
+  // },
   sinc: {
-    label: 'cardinal sine',
+    label: 'Cardinal sine',
   },
   sinExp: {
-    label: 'sine of exponent',
+    label: 'Sine of exponent',
   },
   noisyParabola: {
-    label: 'noisy parabola',
+    label: 'Noisy parabola',
+  },
+  eckerle4: {
+    label: 'Circular interference transmittance',
+  },
+  chwirut2: {
+    label: 'Ultrasonic reference block',
+  },
+  hahn1: {
+    label: 'Copper thermal expansion',
+  },
+  gauss2: {
+    label: 'Blended gaussians',
   },
 }
 

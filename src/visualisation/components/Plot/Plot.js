@@ -69,7 +69,11 @@ const Plot = () => {
               margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
             >
               <CartesianGrid />
-              <XAxis dataKey={inputs[0]} type="number" />
+              <XAxis
+                dataKey={inputs[0]}
+                domain={['auto', 'auto']}
+                type="number"
+              />
               <YAxis width={45} />
               <Legend verticalAlign="top" height={36} />
               <Line
@@ -77,14 +81,14 @@ const Plot = () => {
                 type="monotone"
                 dataKey={outputs[0]}
                 dot={{ fill: theme.primary, r: 4 }}
-                stroke={theme.primary}
-                animationDuration={500}
+                stroke="transparent"
+                animationDuration={0}
               />
               <Line
                 name="predictions"
                 dataKey={predictionKeys[0]}
                 type="monotone"
-                dot={{ fill: theme.secundary, r: 4 }}
+                dot={{ r: 0 }}
                 stroke={theme.secundary}
                 animationDuration={500}
               />
@@ -98,7 +102,9 @@ const Plot = () => {
           <div css="display: flex; margin-bottom: 15px;">
             <span css="flex-grow: 1;">Label equation:</span>
           </div>
-          <BlockMath>{equation}</BlockMath>
+          <div css="overflow-x: auto; overflow-y: hidden;">
+            <BlockMath>{equation}</BlockMath>
+          </div>
         </>
       )}
       {predictionEquations.length > 0 && (
