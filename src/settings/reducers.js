@@ -16,13 +16,13 @@
     rows: Number,
     columns: Number,
     arity: Number,
-    levelsBack: Number
-  }
+    levelsBack: Number,
+  },
   algorithm: {
-    id: String
-    offsprings: Number,
-    maxGenerations: Number,
-  }
+    id: String,
+    [string]: Number,
+  },
+  constants: [Number],
 }
 */
 
@@ -42,7 +42,7 @@ const initialKernelState = {
   sum: true,
   diff: true,
   mul: true,
-  pdiv: true,
+  div: true,
   sin: false,
   cos: false,
   log: false,
@@ -85,9 +85,8 @@ function network(state = initialNetworkState, action) {
 }
 
 const initialAlgorithmState = {
-  id: 'onePlusLambda',
-  offsprings: 4,
-  maxGenerations: 1000,
+  id: 'muPlusLambda',
+  ...actions.algorithmsById.muPlusLambda.settings,
 }
 
 function algorithm(state = initialAlgorithmState, action) {
@@ -101,11 +100,30 @@ function algorithm(state = initialAlgorithmState, action) {
   }
 }
 
+function constants(state = [], action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case actions.ADD_CONSTANT:
+      return [...state, payload]
+    case actions.SET_CONSTANT:
+      return payload
+    case actions.REMOVE_CONSTANT:
+      return state.filter((val, i) => i !== payload)
+    case actions.CHANGE_CONSTANT:
+      state[payload.index] = payload.value
+      return [...state]
+    default:
+      return state
+  }
+}
+
 const settings = combineReducers({
   seed,
   kernels,
   network,
   algorithm,
+  constants,
 })
 
 export default settings

@@ -5,6 +5,7 @@ export const dcgpSelector = state => state.evolution.instance
 export const stepsSelector = state => state.evolution.steps
 
 export const isDoneSelector = state => state.evolution.isDone
+export const isEvolvingSelector = state => state.evolution.isEvolving
 
 export const currentStepSelector = createSelector(
   stepsSelector,

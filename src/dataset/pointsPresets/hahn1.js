@@ -308,7 +308,8 @@ const points = [
   }, [])
 
 export default {
-  equation: 'y = \\frac{C_1+C_2*x+C_3*x^2+C_4*x^3}{1+C_5*x+C_6*x^2+C_7*x^3}',
+  equation:
+    'y = \\frac{C_1+C_2 \\cdot x+C_3 \\cdot x^2+C_4 \\cdot x^3}{1+C_5 \\cdot x+C_6 \\cdot x^2+C_7 \\cdot x^3}',
   inputs: ['x'],
   outputs: ['y'],
   points,

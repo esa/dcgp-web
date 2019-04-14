@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import Radio from '../../../icons/Radio'
+import { capitalize } from '../../../utils/string'
 import { pointsPresetsById, changeDataset } from '../../actions'
 import { datasetIdSelector } from '../../selectors'
 import { useRedux } from '../../../hooks'
@@ -52,7 +53,7 @@ const Dataset = () => {
         {presetIds.map(id => (
           <Item key={id} onClick={handleClick(id)}>
             <Radio checked={datasetId === id} />
-            <Label>{pointsPresetsById[id].label}</Label>
+            <Label>{capitalize(pointsPresetsById[id].label)}</Label>
           </Item>
         ))}
       </List>

@@ -5,6 +5,7 @@ import {
   inputKeysSelector,
   predictionKeysSelector,
 } from '../../dataset/selectors'
+import { constantsSelector } from '../../settings/selectors'
 import { calcPredictions, CALC_PREDICTIONS } from '../../dataset/actions'
 
 export const predictionRequest = store => {
@@ -13,12 +14,14 @@ export const predictionRequest = store => {
   const inputs = inputsSelector(state)
   const inputKeys = inputKeysSelector(state)
   const predictionKeys = predictionKeysSelector(state)
+  const constants = constantsSelector(state)
 
   store.dispatch(
     calcPredictions({
       inputs,
       inputKeys,
       predictionKeys,
+      constants,
     })
   )
 }

@@ -2,9 +2,9 @@ import { SET_DCGP_INSTANCE, setDcgpInstance } from '../../actions'
 
 const handleInstance = store => next => action => {
   if (action.type === SET_DCGP_INSTANCE) {
-    const { payload: dcgp } = action
+    const { payload: dcgpModule } = action
 
-    postMessage(setDcgpInstance({ module: dcgp.module }))
+    postMessage(setDcgpInstance({ module: dcgpModule }))
   }
 
   next(action)

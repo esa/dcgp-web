@@ -10,6 +10,7 @@ import { currentStepSelector, lossSelector } from '../selectors'
 import {
   activeKernelsSelector,
   settingsSelector,
+  constantsSelector,
 } from '../../settings/selectors'
 import { inputsSelector, labelsSelector } from '../../dataset/selectors'
 
@@ -33,6 +34,7 @@ export const handlePlay = store => next => action => {
     const currentStep = currentStepSelector(state)
     const inputs = inputsSelector(state)
     const labels = labelsSelector(state)
+    const constants = constantsSelector(state)
 
     store.dispatch(
       sendWorkerMessage(
@@ -42,6 +44,7 @@ export const handlePlay = store => next => action => {
           step: currentStep,
           inputs,
           labels,
+          constants,
         })
       )
     )

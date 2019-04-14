@@ -6,6 +6,7 @@ import QuantityCounter from '../../../components/QuantityCounter'
 import { capitalize } from '../../../utils/string'
 import Container from '../Container'
 import List, { Row } from '../List'
+import Constants from '../Constants'
 
 const networkSettingIds = Object.keys(networkSettingsById)
 
@@ -37,6 +38,7 @@ const Network = () => {
           </Row>
         ))}
       </List>
+      <Constants />
     </Container>
   )
 }

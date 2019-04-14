@@ -7,14 +7,12 @@ export const Wrapper = styled.div`
 `
 
 export const Input = styled.input.attrs({ type: 'number' })`
-  -webkit-appearance: none;
+  appearance: none;
   margin: 0 4px;
   color: ${({ theme }) => theme.title};
   border: none;
   background-image: none;
   background-color: transparent;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
   box-shadow: none;
   outline: none;
   font-size: inherit;
@@ -23,7 +21,7 @@ export const Input = styled.input.attrs({ type: 'number' })`
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+    appearance: none;
     margin: 0;
   }
 `

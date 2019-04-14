@@ -16,17 +16,6 @@
 import { combineReducers } from 'redux'
 import * as actions from '../actions'
 
-function instance(state = {}, action) {
-  const { type, payload } = action
-
-  switch (type) {
-    case actions.SET_DCGP_INSTANCE:
-      return payload
-    default:
-      return state
-  }
-}
-
 function isEvolving(state = false, action) {
   const { type } = action
 
@@ -84,7 +73,6 @@ function step(state = 0, action) {
 }
 
 export default combineReducers({
-  instance,
   isEvolving,
   hasReset,
   expression,
