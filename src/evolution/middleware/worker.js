@@ -19,12 +19,14 @@ const handleWorker = store => {
     }
 
     if (action.type === SET_DCGP_INSTANCE) {
+      next(action)
       // initializer(action.payload.module).then(dcgp => {
       //   next(addPayload(action, dcgp))
 
       //   store.dispatch(getInitialEvolution())
       // })
       store.dispatch(getInitialEvolution())
+      return
     }
 
     next(action)

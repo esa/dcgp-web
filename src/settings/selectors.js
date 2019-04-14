@@ -19,3 +19,5 @@ export const activeKernelsSelector = createSelector(
       return pre
     }, [])
 )
+
+export const constantsSelector = state => state.settings.constants

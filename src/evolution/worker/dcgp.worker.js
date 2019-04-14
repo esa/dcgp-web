@@ -1,5 +1,5 @@
 /* eslint-env worker */
-import initializer from 'dcgp'
+import { initialise } from 'dcgp'
 import dcgpUrl from 'dcgp/dcgp.wasm'
 import configureStore from './store'
 import { setDcgpInstance } from '../actions'
@@ -7,9 +7,9 @@ import { setDcgpInstance } from '../actions'
 const store = configureStore(/* preloaded state */)
 
 const main = async () => {
-  const dcgp = await initializer(fetch(dcgpUrl))
+  const dcgpModule = await initialise(fetch(dcgpUrl))
 
-  store.dispatch(setDcgpInstance(dcgp))
+  store.dispatch(setDcgpInstance(dcgpModule))
 
   onmessage = event => {
     store.dispatch(event.data)

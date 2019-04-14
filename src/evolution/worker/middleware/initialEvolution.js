@@ -4,19 +4,20 @@ import {
   SET_INITIAL_EVOLUTION,
   setExpression,
 } from '../../actions'
-import { createExpression, getInitialResult } from '../utils'
+import { createExpression } from '../utils'
 
 const handleInitialEvolution = store => next => action => {
   if (action.type === GET_INITIAL_EVOLUTION) {
     next(action)
-    const { instance: dcgp } = store.getState()
 
-    const expression = createExpression(action.payload, dcgp)
+    const expression = createExpression(action.payload)
     store.dispatch(setExpression(expression))
 
-    const initialResult = getInitialResult(action.payload, expression, dcgp)
-    store.dispatch(setInitialEvolution(initialResult))
+    const { inputs, labels, constants } = action.payload
+    const loss = expression.loss(inputs, labels, constants)
+    const { chromosome } = expression
 
+    store.dispatch(setInitialEvolution({ loss, chromosome }))
     return
   }
 

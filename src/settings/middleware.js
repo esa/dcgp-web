@@ -1,11 +1,15 @@
 import {
   TOGGLE_KERNEL,
   NETWORK_CHANGE,
+  ADD_CONSTANT,
+  MAX_CONSTANTS,
   setRows,
   setColumns,
   setArity,
   setLevelsBack,
+  REMOVE_CONSTANT,
 } from './actions'
+import { constantsSelector } from './selectors'
 import { resetEvolution } from '../evolution/actions'
 
 export const handleKernelChange = store => next => action => {
@@ -56,4 +60,27 @@ export const handleNetworkChange = store => next => action => {
   }
 }
 
-export default [handleKernelChange, handleNetworkChange]
+export const handleConstants = store => next => action => {
+  if (action.type === ADD_CONSTANT) {
+    const constants = constantsSelector(store.getState())
+
+    if (constants.length >= MAX_CONSTANTS) return
+
+    const initialConstant = constants.length + 1
+
+    next({ ...action, payload: initialConstant })
+
+    store.dispatch(resetEvolution())
+    return
+  }
+
+  if (action.type === REMOVE_CONSTANT) {
+    next(action)
+    store.dispatch(resetEvolution())
+    return
+  }
+
+  next(action)
+}
+
+export default [handleConstants, handleKernelChange, handleNetworkChange]

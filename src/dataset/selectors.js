@@ -31,13 +31,13 @@ export const pointsSelector = createSelector(
 export const inputsSelector = createSelector(
   inputKeysSelector,
   pointsSelector,
-  (inputs, points) => points.map(point => inputs.map(input => point[input]))
+  (inputs, points) => inputs.map(input => points.map(point => point[input]))
 )
 
 export const labelsSelector = createSelector(
   outputKeysSelector,
   pointsSelector,
-  (outputs, points) => points.map(point => outputs.map(output => point[output]))
+  (outputs, points) => outputs.map(output => points.map(point => point[output]))
 )
 
 export const predictionsSubscribersSelector = state =>

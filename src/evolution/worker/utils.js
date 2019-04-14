@@ -1,20 +1,24 @@
 /* eslint-env worker */
+import { KernelSet, Expression, algorithms } from 'dcgp'
 import { evolutionProgress } from '../actions'
 import { interupt } from '../../utils/async'
 
-export const createExpression = (
-  { parameters, activeKernelIds, inputs, labels },
-  dcgp
-) => {
+export const createExpression = ({
+  parameters,
+  activeKernelIds,
+  inputs,
+  labels,
+  constants,
+}) => {
   const {
     seed,
     network: { rows, columns, arity, levelsBack },
   } = parameters
 
-  const myKernelSet = new dcgp.KernelSet(activeKernelIds)
-  const myExpression = new dcgp.Expression(
-    inputs[0].length,
-    labels[0].length,
+  const myKernelSet = new KernelSet(activeKernelIds)
+  const myExpression = new Expression(
+    inputs.length + constants.length,
+    labels.length,
     rows,
     columns,
     levelsBack,
@@ -28,27 +32,17 @@ export const createExpression = (
   return myExpression
 }
 
-export const getInitialResult = (
-  { parameters, inputs, labels },
-  expression,
-  dcgp
-) => {
-  const { id: algorithmId } = parameters.algorithm
+export const step = ({ parameters, inputs, labels, constants }, expression) => {
+  const { id: algorithmId, maxSteps, lambda, mu } = parameters.algorithm
 
-  const result = dcgp.algorithms[algorithmId](expression, 1, 0, inputs, labels)
-
-  return result
-}
-
-export const step = ({ parameters, inputs, labels }, expression, dcgp) => {
-  const { id: algorithmId, maxGenerations, offsprings } = parameters.algorithm
-
-  const result = dcgp.algorithms[algorithmId](
+  const result = algorithms[algorithmId](
     expression,
-    offsprings,
-    maxGenerations,
+    mu,
+    lambda,
+    maxSteps,
     inputs,
-    labels
+    labels,
+    constants
   )
 
   return result
@@ -65,12 +59,12 @@ const getCurrentStep = store => {
 }
 
 export const loop = async (store, action) => {
-  const { expression, instance: dcgp } = store.getState()
-  const { maxGenerations } = action.payload.parameters.algorithm
+  const { expression } = store.getState()
+  const { maxSteps } = action.payload.parameters.algorithm
 
   while (true) {
-    const result = step(action.payload, expression, dcgp)
-    result.step = getCurrentStep(store) + maxGenerations
+    const result = step(action.payload, expression)
+    result.step = getCurrentStep(store) + maxSteps
 
     const progressAction = evolutionProgress(result)
     progressAction.meta = { throttle: true }

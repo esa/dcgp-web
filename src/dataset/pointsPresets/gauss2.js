@@ -324,7 +324,7 @@ const points = [
 
 export default {
   equation:
-    'y = C_1*\\exp( -C_2*x ) + C_3*exp\\left(\\frac{-(x-C_4)^2}{C_5^2}\\right) + C_6*exp\\left(\\frac{-(x-C_7)^2}{C_8^2}\\right)',
+    'y = C_1 \\cdot \\exp( -C_2 \\cdot x ) + C_3 \\cdot exp\\left(\\frac{-(x-C_4)^2}{C_5^2}\\right) + C_6 \\cdot \\exp\\left(\\frac{-(x-C_7)^2}{C_8^2}\\right)',
   inputs: ['x'],
   outputs: ['y'],
   points,

@@ -9,7 +9,7 @@ export const kernelNamesById = {
   sum: 'addition',
   diff: 'subtraction',
   mul: 'multiplication',
-  pdiv: 'divide',
+  div: 'division',
   sin: 'sine',
   cos: 'cosine',
   log: 'logarithm',
@@ -87,11 +87,12 @@ export const SET_ALGORITHM = prefix + 'SET_ALGORITHM'
 
 // name of the function exported by dcgp.js
 export const algorithmsById = {
-  onePlusLambda: {
-    label: 'one plus lambda',
+  muPlusLambda: {
+    label: 'Mu plus lambda',
     settings: {
-      offsprings: 4,
-      maxGenerations: 1000,
+      mu: 1,
+      lambda: 4,
+      maxSteps: 1000,
     },
   },
 }
@@ -99,4 +100,32 @@ export const algorithmsById = {
 export const setAlgorithm = algorithmId => ({
   type: SET_ALGORITHM,
   payload: algorithmId,
+})
+
+export const ADD_CONSTANT = prefix + 'ADD_CONSTANT'
+export const SET_CONSTANT = prefix + 'SET_CONSTANT'
+export const REMOVE_CONSTANT = prefix + 'REMOVE_CONSTANT'
+export const CHANGE_CONSTANT = prefix + 'CHANGE_CONSTANT'
+export const MAX_CONSTANTS = 10
+
+export const addConstant = () => ({
+  type: ADD_CONSTANT,
+})
+
+export const setdConstant = constants => ({
+  type: SET_CONSTANT,
+  payload: constants,
+})
+
+export const removeConstant = index => ({
+  type: REMOVE_CONSTANT,
+  payload: index,
+})
+
+export const changeConstant = (index, value) => ({
+  type: CHANGE_CONSTANT,
+  payload: {
+    index,
+    value,
+  },
 })

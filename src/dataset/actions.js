@@ -11,25 +11,25 @@ export const pointsPresetsById = {
   //   label: 'Linear',
   // },
   sinc: {
-    label: 'Cardinal sine',
+    label: 'cardinal sine',
   },
   sinExp: {
-    label: 'Sine of exponent',
+    label: 'sine of exponent',
   },
   noisyParabola: {
-    label: 'Noisy parabola',
+    label: 'noisy parabola',
   },
   eckerle4: {
-    label: 'Circular interference transmittance',
+    label: 'circular interference transmittance',
   },
   chwirut2: {
-    label: 'Ultrasonic reference block',
+    label: 'ultrasonic reference block',
   },
   hahn1: {
-    label: 'Copper thermal expansion',
+    label: 'copper thermal expansion',
   },
   gauss2: {
-    label: 'Blended gaussians',
+    label: 'blended gaussians',
   },
 }
 

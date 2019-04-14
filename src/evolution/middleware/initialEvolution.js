@@ -4,6 +4,7 @@ import { predictionRequest } from './predictions'
 import {
   activeKernelsSelector,
   settingsSelector,
+  constantsSelector,
 } from '../../settings/selectors'
 import { inputsSelector, labelsSelector } from '../../dataset/selectors'
 
@@ -16,6 +17,7 @@ export const handleInitialEvolution = store => next => action => {
     const parameters = settingsSelector(state)
     const inputs = inputsSelector(state)
     const labels = labelsSelector(state)
+    const constants = constantsSelector(state)
 
     store.dispatch(
       sendWorkerMessage(
@@ -24,6 +26,7 @@ export const handleInitialEvolution = store => next => action => {
           parameters,
           inputs,
           labels,
+          constants,
         })
       )
     )
