@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/dcgp-web/static/media/KaTeX_Fraktur-Regular.b48160ea.woff"
   },
   {
-    "revision": "a7f74065d9ec84f1e74a",
-    "url": "/dcgp-web/static/js/main.306d8b53.chunk.js"
+    "revision": "f2a7d5e77860bc33792e",
+    "url": "/dcgp-web/static/js/main.0f55ffad.chunk.js"
   },
   {
     "revision": "bce47876efef2be1f02bfe02a2b2ed29",
@@ -260,7 +260,7 @@ self.__precacheManifest = [
     "url": "/dcgp-web/static/css/2.4e4721d5.chunk.css"
   },
   {
-    "revision": "c809d4334b2fa7924906edd052a4afac",
+    "revision": "af44c81b5a7300b7cb62a2491e124c39",
     "url": "/dcgp-web/index.html"
   },
   {
