@@ -35,21 +35,25 @@ export const SET_LEVELS_BACK = prefix + 'SET_LEVELS_BACK'
 export const networkSettingsById = {
   rows: {
     label: 'rows',
+    advanced: false,
     min: 1,
     max: 10,
   },
   columns: {
     label: 'columns',
+    advanced: false,
     min: 1,
     max: 100,
   },
   arity: {
     label: 'arity',
+    advanced: false,
     min: 2,
     max: 5,
   },
   levelsBack: {
     label: 'levels back',
+    advanced: false,
     min: 1,
     max: 101,
   },
@@ -88,12 +92,26 @@ export const SET_ALGORITHM = prefix + 'SET_ALGORITHM'
 // name of the function exported by dcgp.js
 export const algorithmsById = {
   muPlusLambda: {
-    label: 'Mu plus lambda',
+    label: 'mu plus lambda',
+    maxSteps: 1000,
     settings: {
-      mu: 1,
-      lambda: 4,
-      maxSteps: 1000,
+      mu: {
+        label: 'mu',
+        advanced: true,
+        min: 1,
+        max: 10,
+      },
+      lambda: {
+        label: 'lambda',
+        advanced: true,
+        min: 1,
+        max: 10,
+      },
     },
+  },
+  gradientDescent: {
+    label: 'gradient descent',
+    maxSteps: 1000,
   },
 }
 
@@ -112,7 +130,7 @@ export const addConstant = () => ({
   type: ADD_CONSTANT,
 })
 
-export const setdConstant = constants => ({
+export const setConstant = constants => ({
   type: SET_CONSTANT,
   payload: constants,
 })

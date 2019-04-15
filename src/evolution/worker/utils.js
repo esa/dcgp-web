@@ -2,6 +2,7 @@
 import { KernelSet, Expression, algorithms } from 'dcgp'
 import { evolutionProgress } from '../actions'
 import { interupt } from '../../utils/async'
+import { algorithmsById } from '../../settings/actions'
 
 export const createExpression = ({
   parameters,
@@ -32,20 +33,47 @@ export const createExpression = ({
   return myExpression
 }
 
-export const step = ({ parameters, inputs, labels, constants }, expression) => {
-  const { id: algorithmId, maxSteps, lambda, mu } = parameters.algorithm
+export const step = (
+  { parameters, inputs, labels, constants },
+  expression,
+  algorithm
+) => {
+  const { maxSteps } = algorithmsById[algorithm]
 
-  const result = algorithms[algorithmId](
-    expression,
-    mu,
-    lambda,
-    maxSteps,
-    inputs,
-    labels,
-    constants
-  )
+  if (algorithm === 'muPlusLambda') {
+    return algorithms.muPlusLambda(
+      expression,
+      1,
+      4,
+      maxSteps,
+      inputs,
+      labels,
+      constants
+    )
+  }
+  if (algorithm === 'gradientDescent') {
+    const learningRate = 0.003
+    const result = algorithms.gradientDescent(
+      expression,
+      learningRate,
+      maxSteps,
+      inputs,
+      labels,
+      constants
+    )
 
-  return result
+    result.constants = result.constants.map((val, i) =>
+      isNaN(val) || val === Infinity || val === -Infinity ? constants[i] : val
+    )
+
+    if (isNaN(result.loss)) {
+      result.loss = expression.loss(inputs, labels, result.constants)
+    }
+
+    return result
+  }
+
+  throw new Error('not supported algorithm selected')
 }
 
 const checkIfEvolving = store => {
@@ -59,11 +87,11 @@ const getCurrentStep = store => {
 }
 
 export const loop = async (store, action) => {
-  const { expression } = store.getState()
-  const { maxSteps } = action.payload.parameters.algorithm
-
   while (true) {
-    const result = step(action.payload, expression)
+    const { expression, algorithm } = store.getState()
+    const { maxSteps } = algorithmsById[algorithm]
+
+    const result = step(action.payload, expression, algorithm)
     result.step = getCurrentStep(store) + maxSteps
 
     const progressAction = evolutionProgress(result)
