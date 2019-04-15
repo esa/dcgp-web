@@ -11,6 +11,7 @@ const Page = styled.main`
   grid-template-columns: [full-start] 1fr [full-end];
   grid-template-rows: auto;
   grid-gap: 20px;
+  transition: padding 300ms ease-out;
 
   ${up('sm')} {
     grid-template-columns: [full-start] repeat(2, 1fr) [full-end];
@@ -19,8 +20,8 @@ const Page = styled.main`
 
   ${up('md')} {
     grid-gap: 30px;
-    padding-left: 130px;
-    padding-right: 130px;
+    padding-left: ${({ isOpen }) => (isOpen ? 30 : 130)}px;
+    padding-right: ${({ isOpen }) => (isOpen ? 30 : 130)}px;
   }
 
   ${up('lg')} {

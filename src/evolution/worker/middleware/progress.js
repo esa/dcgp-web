@@ -4,6 +4,7 @@ import {
   doneEvolution,
 } from '../../actions'
 import throttle from '../../../utils/throttle'
+import { setConstants } from '../../../settings/actions'
 
 const throttledPostMessage = throttle(message => {
   postMessage(message)
@@ -13,6 +14,10 @@ const handleProgress = store => next => action => {
   if (action.type === EVOLUTION_PROGRESS) {
     const { payload: result } = action
     const { hasReset } = store.getState()
+
+    if (action.payload.constants) {
+      store.dispatch(setConstants(action.payload.constants))
+    }
 
     if (!hasReset) {
       next(action)

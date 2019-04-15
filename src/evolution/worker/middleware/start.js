@@ -1,5 +1,5 @@
 import { START_EVOLUTION, getInitialEvolution } from '../../actions'
-import { setAlgorithm } from '../../../settings/actions'
+import { setAlgorithm, setConstants } from '../../../settings/actions'
 import { loop } from '../utils'
 
 const handleStart = store => next => action => {
@@ -8,6 +8,7 @@ const handleStart = store => next => action => {
 
     const algorithmId = action.payload.parameters.algorithm.id
     store.dispatch(setAlgorithm(algorithmId))
+    store.dispatch(setConstants(action.payload.constants))
 
     if (!isEvolving) {
       next(action)
