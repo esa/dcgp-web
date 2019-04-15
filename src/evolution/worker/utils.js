@@ -33,11 +33,7 @@ export const createExpression = ({
   return myExpression
 }
 
-export const step = (
-  { parameters, inputs, labels, constants },
-  expression,
-  algorithm
-) => {
+export const step = ({ inputs, labels }, expression, algorithm, constants) => {
   const { maxSteps } = algorithmsById[algorithm]
 
   if (algorithm === 'muPlusLambda') {
@@ -88,10 +84,10 @@ const getCurrentStep = store => {
 
 export const loop = async (store, action) => {
   while (true) {
-    const { expression, algorithm } = store.getState()
+    const { expression, algorithm, constants } = store.getState()
     const { maxSteps } = algorithmsById[algorithm]
 
-    const result = step(action.payload, expression, algorithm)
+    const result = step(action.payload, expression, algorithm, constants)
     result.step = getCurrentStep(store) + maxSteps
 
     const progressAction = evolutionProgress(result)

@@ -4,7 +4,11 @@ import {
   LOSS_THRESHOLD,
   doneEvolution,
 } from '../../actions'
-import { algorithmsById, setAlgorithm } from '../../../settings/actions'
+import {
+  algorithmsById,
+  setAlgorithm,
+  setConstants,
+} from '../../../settings/actions'
 import { step } from '../utils'
 
 const handleStep = store => next => action => {
@@ -14,6 +18,7 @@ const handleStep = store => next => action => {
 
     const algorithmId = action.payload.parameters.algorithm.id
     store.dispatch(setAlgorithm(algorithmId))
+    store.dispatch(setConstants(action.payload.constants))
 
     const { maxSteps } = algorithmsById[algorithmId]
 

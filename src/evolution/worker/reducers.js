@@ -11,12 +11,13 @@
   expression: Expression,
   steps: Number,
   algorithm: String,
+  constants: [Number],
 }
 */
 
 import { combineReducers } from 'redux'
 import * as actions from '../actions'
-import { SET_ALGORITHM } from '../../settings/actions'
+import { SET_ALGORITHM, SET_CONSTANT } from '../../settings/actions'
 
 function isEvolving(state = false, action) {
   const { type } = action
@@ -85,10 +86,22 @@ function algorithm(state = null, action) {
   }
 }
 
+function constants(state = [], action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case SET_CONSTANT:
+      return payload
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   isEvolving,
   hasReset,
   expression,
   step,
   algorithm,
+  constants,
 })

@@ -130,7 +130,7 @@ export const addConstant = () => ({
   type: ADD_CONSTANT,
 })
 
-export const setConstant = constants => ({
+export const setConstants = constants => ({
   type: SET_CONSTANT,
   payload: constants,
 })
