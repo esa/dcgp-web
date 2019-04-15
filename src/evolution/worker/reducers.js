@@ -10,11 +10,13 @@
   hasReset: Bool,
   expression: Expression,
   steps: Number,
+  algorithm: String,
 }
 */
 
 import { combineReducers } from 'redux'
 import * as actions from '../actions'
+import { SET_ALGORITHM } from '../../settings/actions'
 
 function isEvolving(state = false, action) {
   const { type } = action
@@ -72,9 +74,21 @@ function step(state = 0, action) {
   }
 }
 
+function algorithm(state = null, action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case SET_ALGORITHM:
+      return payload
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   isEvolving,
   hasReset,
   expression,
   step,
+  algorithm,
 })

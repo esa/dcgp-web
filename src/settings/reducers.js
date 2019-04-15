@@ -20,7 +20,11 @@
   },
   algorithm: {
     id: String,
-    [string]: Number,
+    byId: {
+      [String]: {
+        [String]: Number,
+      },
+    },
   },
   constants: [Number],
 }
@@ -84,21 +88,53 @@ function network(state = initialNetworkState, action) {
   }
 }
 
-const initialAlgorithmState = {
-  id: 'muPlusLambda',
-  ...actions.algorithmsById.muPlusLambda.settings,
-}
-
-function algorithm(state = initialAlgorithmState, action) {
+function algorithmId(state = 'muPlusLambda', action) {
   const { type, payload } = action
 
   switch (type) {
     case actions.SET_ALGORITHM:
-      return { ...state, id: payload }
+      return payload
     default:
       return state
   }
 }
+
+const initialMuPlusLambdaState = {
+  mu: 1,
+  lambda: 4,
+}
+
+function muPlusLambda(state = initialMuPlusLambdaState, action) {
+  const { type } = action
+
+  switch (type) {
+    default:
+      return state
+  }
+}
+
+const initialGradientDescentState = {
+  learningRate: 0.001,
+}
+
+function gradientDescent(state = initialGradientDescentState, action) {
+  const { type } = action
+
+  switch (type) {
+    default:
+      return state
+  }
+}
+
+const algorithmById = combineReducers({
+  muPlusLambda,
+  gradientDescent,
+})
+
+const algorithm = combineReducers({
+  id: algorithmId,
+  byId: algorithmById,
+})
 
 function constants(state = [], action) {
   const { type, payload } = action
