@@ -31,9 +31,6 @@ const Algorithm = () => {
           </Row>
         ))}
       </List>
-      <span css="font-size: 0.9em; opacity: 0.7; margin-top: 15px; display: block;">
-        More algorithms comming soon.
-      </span>
     </Container>
   )
 }
