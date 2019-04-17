@@ -20,12 +20,14 @@ const Page = styled.main`
 
   ${up('md')} {
     grid-gap: 30px;
-    padding-left: ${({ isOpen }) => (isOpen ? 30 : 130)}px;
-    padding-right: ${({ isOpen }) => (isOpen ? 30 : 130)}px;
+    padding-left: 130px;
+    padding-right: 130px;
   }
 
   ${up('lg')} {
     grid-template-columns: [full-start] repeat(4, 1fr) [full-end];
+    ${({ isOpen }) => isOpen && 'padding-left: 30px'};
+    ${({ isOpen }) => isOpen && 'padding-right: 30px'};
   }
 `
 
