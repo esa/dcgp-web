@@ -48,15 +48,30 @@ const handlePredictions = store => next => action => {
       predictions.push(predictionObj)
     }
 
-    const constantKeys = constants.map((val, i) => `C${i + 1}`)
+    // Set the constants keys to be some recognisable string
+    // that is not likely to be in the equation.
+    // This is because the simplifier doesn't allow some characters
+    // or interprets the equation differently.
+    const constantKeys = constants.map((val, i) => `VAR${i + 1}ENDBRACE`)
 
     const naiveEquations = expression.equations(...inputKeys, ...constantKeys)
     const simplifiedEquations = naiveEquations.map(eq =>
       math
-        .simplify(eq)
+        .simplify(eq, [
+          { l: 'n+0', r: 'n' },
+          { l: 'n^0', r: '1' },
+          { l: '0*n', r: '0' },
+          { l: 'n/n', r: '1' },
+          { l: 'n^1', r: 'n' },
+          { l: '+n1', r: 'n1' },
+          { l: 'n--n1', r: 'n+n1' },
+        ])
         .toTex()
         .replace(/Infinity/g, ' \\infty')
-        .replace(/C/g, 'C_')
+        // replace the 'unique' constant key values to be the
+        // correct LaTeX representation.
+        .replace(/ENDBRACE/g, '}')
+        .replace(/VAR/g, 'C_{')
     )
 
     if (chromosome) {
