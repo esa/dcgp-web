@@ -22,7 +22,12 @@ const handleStep = store => next => action => {
 
     const { maxSteps } = algorithmsById[algorithmId]
 
-    const result = step(action.payload, expression, algorithmId)
+    const result = step(
+      action.payload,
+      expression,
+      algorithmId,
+      action.payload.constants
+    )
 
     store.dispatch(
       evolutionProgress({

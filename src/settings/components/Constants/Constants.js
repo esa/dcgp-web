@@ -31,7 +31,19 @@ const Constants = () => {
 
   return (
     <>
-      <SubHeader>Constants</SubHeader>
+      <SubHeader>
+        <span css="flex-grow: 1;">Constants</span>
+        <CircleButton
+          title="Add constant"
+          variant="ghost"
+          size={24}
+          padding={0}
+          onClick={handleAddConstant}
+          disabled={constants.length >= MAX_CONSTANTS}
+        >
+          <Plus />
+        </CircleButton>
+      </SubHeader>
       <List css="margin-top: 8px; margin-bottom: 8px;">
         {constants.map((constant, i) => (
           <Row key={i}>
@@ -54,17 +66,6 @@ const Constants = () => {
           </Row>
         ))}
       </List>
-      <CircleButton
-        css="margin-left: -2px;"
-        title="Add constant"
-        variant="ghost"
-        size={24}
-        padding={0}
-        onClick={handleAddConstant}
-        disabled={constants.length >= MAX_CONSTANTS}
-      >
-        <Plus />
-      </CircleButton>
     </>
   )
 }

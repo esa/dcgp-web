@@ -48,10 +48,8 @@ export const step = ({ inputs, labels }, expression, algorithm, constants) => {
     )
   }
   if (algorithm === 'gradientDescent') {
-    const learningRate = 0.003
     const result = algorithms.gradientDescent(
       expression,
-      learningRate,
       maxSteps,
       inputs,
       labels,
