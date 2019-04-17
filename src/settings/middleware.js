@@ -3,6 +3,8 @@ import {
   NETWORK_CHANGE,
   ADD_CONSTANT,
   MAX_CONSTANTS,
+  RESET_CONSTANTS,
+  setConstants,
   SET_ALGORITHM,
   setRows,
   setColumns,
@@ -10,7 +12,7 @@ import {
   setLevelsBack,
   REMOVE_CONSTANT,
 } from './actions'
-import { constantsSelector } from './selectors'
+import { constantsSelector, networkSelector } from './selectors'
 import { resetEvolution, sendWorkerMessage } from '../evolution/actions'
 import { isEvolvingSelector } from '../evolution/selectors'
 
@@ -47,6 +49,11 @@ export const handleNetworkChange = store => next => action => {
         break
       case 'columns':
         dispatch(setColumns(value))
+        // set the levels back if it will be higher than coloms + 1
+        // value + 1 because the levelsBack may also reach the inputs
+        if (value + 1 < networkSelector(store.getState()).levelsBack) {
+          dispatch(setLevelsBack(value + 1))
+        }
         break
       case 'arity':
         dispatch(setArity(value))
@@ -73,6 +80,18 @@ export const handleConstants = store => next => action => {
     next({ ...action, payload: initialConstant })
 
     store.dispatch(resetEvolution())
+    return
+  }
+
+  if (action.type === RESET_CONSTANTS) {
+    const constants = constantsSelector(store.getState())
+    next(action)
+
+    const newConstants = Array(constants.length)
+      .fill(0)
+      .map((val, i) => i + 1)
+
+    next(setConstants(newConstants))
     return
   }
 
