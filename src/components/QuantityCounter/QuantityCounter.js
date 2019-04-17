@@ -1,9 +1,17 @@
 import React, { useCallback } from 'react'
+import PropTypes from 'prop-types'
 import AddCircle from '../../icons/AddCircle'
 import SubtractCircle from '../../icons/SubtractCircle'
 import { Wrapper, Input, Button } from './style'
 
-const QuantityCounter = ({ value, onChange, min, max }) => {
+const QuantityCounter = ({
+  value,
+  onChange,
+  min,
+  max,
+  tabIndex,
+  ...restProps
+}) => {
   const handleInputChange = useCallback(
     event => {
       const val = event.target.valueAsNumber
@@ -25,24 +33,40 @@ const QuantityCounter = ({ value, onChange, min, max }) => {
   const handleIncrement = () => onChange(value + 1)
 
   return (
-    <Wrapper>
+    <Wrapper {...restProps}>
       <Button
         onClick={handleDecrement}
         title="Decrement"
         disabled={value <= min}
+        tabIndex={-1}
       >
         <SubtractCircle />
       </Button>
-      <Input value={value} min={min} max={max} onChange={handleInputChange} />
+      <Input
+        value={value}
+        min={min}
+        max={max}
+        onChange={handleInputChange}
+        tabIndex={tabIndex}
+      />
       <Button
         onClick={handleIncrement}
         title="Increment"
         disabled={value >= max}
+        tabIndex={-1}
       >
         <AddCircle />
       </Button>
     </Wrapper>
   )
+}
+
+QuantityCounter.defaultProps = {
+  tabIndex: 0,
+}
+
+QuantityCounter.propTypes = {
+  tabIndex: PropTypes.number.isRequired,
 }
 
 export default QuantityCounter
