@@ -10,6 +10,15 @@ import Constants from '../Constants'
 
 const networkSettingIds = Object.keys(networkSettingsById)
 
+const calcMaxValue = (settingId, values) => {
+  if (settingId === 'levelsBack') {
+    // columns + 1 because the levelsBack may also reach the inputs
+    return Math.min(values.columns + 1, networkSettingsById[settingId].max)
+  }
+
+  return networkSettingsById[settingId].max
+}
+
 const mapStateToProps = {
   network: networkSelector,
 }
@@ -33,7 +42,7 @@ const Network = () => {
               value={network[settingId]}
               onChange={handleChange(settingId)}
               min={networkSettingsById[settingId].min}
-              max={networkSettingsById[settingId].max}
+              max={calcMaxValue(settingId, network)}
             />
           </Row>
         ))}

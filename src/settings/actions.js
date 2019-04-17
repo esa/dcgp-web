@@ -122,12 +122,17 @@ export const setAlgorithm = algorithmId => ({
 
 export const ADD_CONSTANT = prefix + 'ADD_CONSTANT'
 export const SET_CONSTANT = prefix + 'SET_CONSTANT'
+export const RESET_CONSTANTS = prefix + 'RESET_CONSTANTS'
 export const REMOVE_CONSTANT = prefix + 'REMOVE_CONSTANT'
 export const CHANGE_CONSTANT = prefix + 'CHANGE_CONSTANT'
 export const MAX_CONSTANTS = 10
 
 export const addConstant = () => ({
   type: ADD_CONSTANT,
+})
+
+export const resetConstants = () => ({
+  type: RESET_CONSTANTS,
 })
 
 export const setConstants = constants => ({

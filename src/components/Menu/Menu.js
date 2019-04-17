@@ -1,5 +1,6 @@
+import { dependencies } from '../../../package.json'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Divider from '../Divider'
 import Download from '../../icons/Download'
 import NewPage from '../../icons/NewPage'
@@ -21,35 +22,46 @@ export const Row = styled.li`
   min-height: 36px;
   background-color: transparent;
   transition: background-color 100ms ease-out;
-  cursor: pointer;
   padding-left: 20px;
   padding-right: 15px;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.surface.regular};
-  }
+  ${({ clickable }) =>
+    clickable &&
+    css`
+      cursor: pointer;
+
+      &:hover {
+        background-color: ${({ theme }) => theme.surface.regular};
+      }
+    `}
 `
 
 const Grow = styled.span`
   flex-grow: 1;
 `
 
+const Code = styled.code`
+  font-size: 0.93em;
+`
+
 const Menu = ({ isOpen, ...restProps }) => {
   return (
     <div {...restProps}>
       <List css="margin: 0;">
+        <Row>
+          <Code>dcpg.js {dependencies.dcgp.replace('^', '')}</Code>
+        </Row>
+        <Divider variant="content" size={1} css="margin: 8px 0px 8px 20px;" />
         <Row>Advanced mode</Row>
-        <Divider size={1} css="margin: 8px 0;" />
         <Row>
           <Grow>Download expression</Grow>
           <Download size={20} />
         </Row>
-        <Divider size={1} css="margin: 8px 0;" />
         <a
           css="text-decoration: none;"
           href="https://github.com/mikeheddes/dcgp-web"
         >
-          <Row>
+          <Row clickable>
             <Grow>GitHub repository</Grow>
             <NewPage size={20} />
           </Row>
@@ -58,12 +70,13 @@ const Menu = ({ isOpen, ...restProps }) => {
           css="text-decoration: none;"
           href="https://github.com/mikeheddes/dcgp-web/issues/new"
         >
-          <Row>
+          <Row clickable>
             <Grow>Report an issue</Grow>
             <NewPage size={20} />
           </Row>
         </a>
       </List>
+      <div css="margin-top: auto;" />
     </div>
   )
 }

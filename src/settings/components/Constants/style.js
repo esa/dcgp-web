@@ -11,7 +11,7 @@ export const SubHeader = styled.h3`
   align-items: center;
 `
 
-export const Input = styled.input.attrs({ type: 'number' })`
+export const Input = styled.input.attrs({ type: 'text' })`
   flex-grow: 1;
   appearance: none;
   margin: 0 15px;

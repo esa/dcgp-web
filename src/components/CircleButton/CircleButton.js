@@ -49,6 +49,12 @@ const CircleButton = styled.button`
     transition: background-color 80ms ease-out;
     background-color: ${({ theme }) => fade(0.95, theme.title)};
   }
+
+  &:disabled {
+    color: ${({ theme }) => fade(0.6, theme.title)};
+    background-color: transparent;
+    cursor: default;
+  }
 `
 
 CircleButton.propTypes = {

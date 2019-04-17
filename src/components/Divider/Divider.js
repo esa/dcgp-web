@@ -10,15 +10,20 @@ const Divider = styled.hr`
   border-width: ${({ size }) => size}px;
   border-top-style: solid;
   border-right-style: solid;
-  border-color: ${({ theme }) => theme.border.divider};
+  border-color: ${({ theme, variant }) => {
+    if (variant === 'divider') return theme.border.divider
+    if (variant === 'content') return theme.border.content
+  }};
 `
 
 Divider.defaultProps = {
   size: 2,
+  variant: 'divider',
 }
 
 Divider.propTypes = {
   size: PropTypes.number,
+  variant: PropTypes.oneOf(['divider', 'content']),
 }
 
 export default Divider
