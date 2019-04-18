@@ -65,6 +65,7 @@ const handlePredictions = store => next => action => {
           { l: 'n^1', r: 'n' },
           { l: '+n1', r: 'n1' },
           { l: 'n--n1', r: 'n+n1' },
+          ...math.simplify.rules,
         ])
         .toTex()
         .replace(/Infinity/g, ' \\infty')

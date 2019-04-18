@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useRedux } from '../../../hooks'
 import { constantsSelector } from '../../selectors'
 import { isEvolvingSelector } from '../../../evolution/selectors'
@@ -16,6 +16,59 @@ import Reset from '../../../icons/Reset'
 import CircleButton from '../../../components/CircleButton'
 import { SubHeader, Input } from './style'
 
+// Allows typing negative numbers
+const makeHandleChangeConstant = dispatch => i => e => {
+  const inputValue = e.target.value
+
+  if (inputValue === '-' || inputValue === '') {
+    dispatch(changeConstant(i, inputValue))
+    return
+  }
+
+  if (inputValue.endsWith('.') && !isNaN(parseFloat(inputValue + '0'))) {
+    dispatch(changeConstant(i, inputValue))
+    return
+  }
+
+  if (inputValue.endsWith('0') && !isNaN(parseFloat(inputValue))) {
+    dispatch(changeConstant(i, inputValue))
+    return
+  }
+
+  const parsedValue = parseFloat(inputValue)
+
+  if (isNaN(parsedValue)) {
+    return
+  }
+
+  dispatch(changeConstant(i, parsedValue))
+}
+
+// Allows typing negative numbers
+const makeHandleKeyDownConstant = (dispatch, constants) => i => e => {
+  let currentValue = constants[i]
+
+  if (currentValue === '-') {
+    currentValue = 0
+  }
+
+  if (typeof currentValue === 'string') {
+    currentValue = parseFloat(currentValue)
+  }
+
+  currentValue = isNaN(currentValue) ? 0 : currentValue
+
+  // ArrowUp
+  if (e.keyCode === 38) {
+    dispatch(changeConstant(i, currentValue + 1))
+  }
+
+  // ArrowDown
+  if (e.keyCode === 40) {
+    dispatch(changeConstant(i, currentValue - 1))
+  }
+}
+
 const mapStateToProps = {
   constants: constantsSelector,
   isEvolving: isEvolvingSelector,
@@ -23,34 +76,13 @@ const mapStateToProps = {
 
 const Constants = () => {
   const { constants, isEvolving, dispatch } = useRedux(mapStateToProps)
-  const handleAddConstant = useCallback(() => dispatch(addConstant()))
-  const handleRemoveConstant = useCallback(i => () =>
-    dispatch(removeConstant(i))
-  )
-  const handleResetConstants = useCallback(() => dispatch(resetConstants()))
 
-  // Allows typing negative numbers
-  const handleChangeConstant = useCallback(i => e => {
-    const inputValue = e.target.value
+  const handleAddConstant = () => dispatch(addConstant())
+  const handleRemoveConstant = i => () => dispatch(removeConstant(i))
+  const handleResetConstants = () => dispatch(resetConstants())
 
-    if (inputValue === '-' || inputValue === '') {
-      dispatch(changeConstant(i, inputValue))
-      return
-    }
-
-    if (inputValue.endsWith('.') && !isNaN(parseFloat(inputValue + '0'))) {
-      dispatch(changeConstant(i, inputValue))
-      return
-    }
-
-    const parsedValue = parseFloat(inputValue)
-
-    if (isNaN(parsedValue)) {
-      return
-    }
-
-    dispatch(changeConstant(i, parsedValue))
-  })
+  const handleChangeConstant = makeHandleChangeConstant(dispatch)
+  const handleKeyDownConstant = makeHandleKeyDownConstant(dispatch, constants)
 
   return (
     <>
@@ -86,6 +118,7 @@ const Constants = () => {
               disabled={isEvolving}
               value={constant}
               onChange={handleChangeConstant(i)}
+              onKeyDown={handleKeyDownConstant(i)}
               tabIndex={i + 1}
             />
             <CircleButton
