@@ -16,7 +16,7 @@ export const createExpression = ({
     network: { rows, columns, arity, levelsBack },
   } = parameters
 
-  const myKernelSet = new KernelSet(activeKernelIds)
+  const myKernelSet = new KernelSet(...activeKernelIds)
   const myExpression = new Expression(
     inputs.length + constants.length,
     labels.length,
@@ -55,14 +55,6 @@ export const step = ({ inputs, labels }, expression, algorithm, constants) => {
       labels,
       constants
     )
-
-    result.constants = result.constants.map((val, i) =>
-      isNaN(val) || val === Infinity || val === -Infinity ? constants[i] : val
-    )
-
-    if (isNaN(result.loss)) {
-      result.loss = expression.loss(inputs, labels, result.constants)
-    }
 
     return result
   }

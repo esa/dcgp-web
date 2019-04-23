@@ -111,7 +111,7 @@ export const algorithmsById = {
   },
   gradientDescent: {
     label: 'gradient descent',
-    maxSteps: 1000,
+    maxSteps: 500,
   },
 }
 
