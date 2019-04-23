@@ -32,7 +32,7 @@ const Body = () => {
   const [isOpen, setMenu] = useState(false)
   const handleMenuToggle = useCallback(() => {
     setMenu(prev => !prev)
-  })
+  }, [setMenu])
 
   return (
     <>

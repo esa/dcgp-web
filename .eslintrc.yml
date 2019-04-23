@@ -12,7 +12,6 @@ plugins:
   - jest
   - jsx-a11y
   - react
-  - react-hooks
   - import
 env:
   jest/globals: false
@@ -22,7 +21,6 @@ parserOptions:
   ecmaFeatures:
     jsx: true
 rules:
-  react-hooks/rules-of-hooks: error
   quote-props:
     - error
     - as-needed
