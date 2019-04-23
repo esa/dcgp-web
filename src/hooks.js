@@ -94,7 +94,7 @@ export function useMeasure() {
 
       return ro.disconnect
     }
-  }, [ref.current])
+  })
 
   return [ref, bounds]
 }
@@ -120,7 +120,7 @@ export const useMediaQuery = query => {
     return () => {
       queryList.removeListener(handleMatchesChange)
     }
-  }, [query])
+  }, [queryList])
 
   return matches
 }

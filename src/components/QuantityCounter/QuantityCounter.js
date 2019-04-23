@@ -26,7 +26,7 @@ const QuantityCounter = ({
         onChange(val)
       }
     },
-    [onChange]
+    [onChange, min, max]
   )
 
   const handleDecrement = () => onChange(value - 1)
