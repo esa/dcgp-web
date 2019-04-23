@@ -10,14 +10,19 @@ export const algorithmSelector = state => state.settings.algorithm
 
 export const activeKernelsSelector = createSelector(
   kernelsSelector,
-  kernels =>
-    Object.keys(kernels).reduce((pre, cur) => {
-      if (kernels[cur]) {
-        pre.push(cur)
+  kernels => {
+    const kernelIds = Object.keys(kernels)
+
+    const activeKernels = kernelIds.reduce((previous, current) => {
+      if (kernels[current]) {
+        previous.push(current)
       }
 
-      return pre
+      return previous
     }, [])
+
+    return activeKernels
+  }
 )
 
 export const constantsSelector = state => state.settings.constants
