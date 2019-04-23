@@ -1,17 +1,19 @@
 {
-  "main.js": "/dcgp-web/static/js/main.b6de6c33.chunk.js",
-  "main.js.map": "/dcgp-web/static/js/main.b6de6c33.chunk.js.map",
-  "runtime~main.js": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js",
-  "runtime~main.js.map": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js.map",
-  "static/css/2.4e4721d5.chunk.css": "/dcgp-web/static/css/2.4e4721d5.chunk.css",
-  "static/js/2.76ab2a16.chunk.js": "/dcgp-web/static/js/2.76ab2a16.chunk.js",
-  "static/js/2.76ab2a16.chunk.js.map": "/dcgp-web/static/js/2.76ab2a16.chunk.js.map",
-  "fe303fed004af784bff0.worker.js": "/dcgp-web/fe303fed004af784bff0.worker.js",
-  "fe303fed004af784bff0.worker.js.map": "/dcgp-web/fe303fed004af784bff0.worker.js.map",
-  "index.html": "/dcgp-web/index.html",
-  "precache-manifest.505e80d1b323743684dbe9642d8e97b3.js": "/dcgp-web/precache-manifest.505e80d1b323743684dbe9642d8e97b3.js",
-  "service-worker.js": "/dcgp-web/service-worker.js",
-  "static/css/2.4e4721d5.chunk.css.map": "/dcgp-web/static/css/2.4e4721d5.chunk.css.map",
-  "static/media/katex.min.css": "/dcgp-web/static/media/KaTeX_Typewriter-Regular.e52da442.woff",
-  "static/media/dcgp.wasm": "/dcgp-web/static/media/dcgp.4688751b.wasm"
+  "files": {
+    "main.js": "/dcgp-web/static/js/main.a773181e.chunk.js",
+    "main.js.map": "/dcgp-web/static/js/main.a773181e.chunk.js.map",
+    "runtime~main.js": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js",
+    "runtime~main.js.map": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js.map",
+    "static/css/2.39000ce3.chunk.css": "/dcgp-web/static/css/2.39000ce3.chunk.css",
+    "static/js/2.76ab2a16.chunk.js": "/dcgp-web/static/js/2.76ab2a16.chunk.js",
+    "static/js/2.76ab2a16.chunk.js.map": "/dcgp-web/static/js/2.76ab2a16.chunk.js.map",
+    "40cf0ce3c9831cc1630c.worker.js": "/dcgp-web/40cf0ce3c9831cc1630c.worker.js",
+    "40cf0ce3c9831cc1630c.worker.js.map": "/dcgp-web/40cf0ce3c9831cc1630c.worker.js.map",
+    "index.html": "/dcgp-web/index.html",
+    "precache-manifest.35f5f828170173c566623f53f667e4a9.js": "/dcgp-web/precache-manifest.35f5f828170173c566623f53f667e4a9.js",
+    "service-worker.js": "/dcgp-web/service-worker.js",
+    "static/css/2.39000ce3.chunk.css.map": "/dcgp-web/static/css/2.39000ce3.chunk.css.map",
+    "static/media/katex.min.css": "/dcgp-web/static/media/KaTeX_Typewriter-Regular.e52da442.woff",
+    "static/media/dcgp.wasm": "/dcgp-web/static/media/dcgp.4688751b.wasm"
+  }
 }
