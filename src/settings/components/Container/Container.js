@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import GridContainer from '../../../components/GridContainer'
-import Divider from '../../../components/Divider'
-import SubHeader from '../../../components/SubHeader'
+import GridContainer from '../../../ui/components/GridContainer'
+import Divider from '../../../ui/components/Divider'
+import SubHeader from '../../../ui/components/SubHeader'
 
 const SettingsContainer = ({ children, title }) => (
   <GridContainer>

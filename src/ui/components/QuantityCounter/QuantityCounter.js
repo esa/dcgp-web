@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import AddCircle from '../../icons/AddCircle'
-import SubtractCircle from '../../icons/SubtractCircle'
+import AddCircle from '../../../icons/AddCircle'
+import SubtractCircle from '../../../icons/SubtractCircle'
 import { Wrapper, Input, Button } from './style'
 
 const QuantityCounter = ({

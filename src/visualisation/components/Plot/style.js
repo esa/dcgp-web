@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { up } from 'styled-breakpoints'
 import { LineChart } from 'recharts'
-import unStyledGridContainer from '../../../components/GridContainer'
+import unStyledGridContainer from '../../../ui/components/GridContainer'
 import { transparentize as fade } from 'polished'
 
 export const StyledLineChart = styled(LineChart)`

@@ -10,8 +10,8 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import Controls from '../Controls'
-import GridContainer from '../../../components/GridContainer'
-import Divider from '../../../components/Divider'
+import GridContainer from '../../../ui/components/GridContainer'
+import Divider from '../../../ui/components/Divider'
 import { useRedux } from '../../../hooks'
 import { stepsSelector, isDoneSelector } from '../../selectors'
 import Information from '../Information'

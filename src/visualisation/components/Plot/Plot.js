@@ -13,7 +13,7 @@ import {
 } from 'recharts'
 import { useRedux } from '../../../hooks'
 import { usePredictions } from '../../../dataset/hooks'
-import Divider from '../../../components/Divider'
+import Divider from '../../../ui/components/Divider'
 import {
   inputKeysSelector,
   outputKeysSelector,
