@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import AppBar from '../AppBar'
 import CircleButton from '../CircleButton'
 // import Toolbar from '../Toolbar'
-import { useMediaQuery } from '../../hooks'
-import GitHub from '../../icons/GitHub'
-import Menu from '../../icons/Menu'
+import { useMediaQuery } from '../../../hooks'
+import GitHub from '../../../icons/GitHub'
+import Menu from '../../../icons/Menu'
 import { up } from 'styled-breakpoints'
 
 const Title = styled.h1`

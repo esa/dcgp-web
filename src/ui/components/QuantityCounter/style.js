@@ -8,6 +8,8 @@ export const Wrapper = styled.div`
 
 export const Input = styled.input.attrs({ type: 'number' })`
   appearance: none;
+  /* https://stackoverflow.com/questions/23372903/hide-spinner-in-input-number-firefox-29 */
+  -moz-appearance: textfield;
   margin: 0 4px;
   color: ${({ theme }) => theme.title};
   border: none;

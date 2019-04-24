@@ -1,9 +1,13 @@
-import { dependencies } from '../../../package.json'
-import React from 'react'
+import { dependencies } from '../../../../package.json'
+import React, { useCallback } from 'react'
 import styled, { css } from 'styled-components'
+import { useRedux } from '../../../hooks'
+import { isAdvancedModeSelector } from '../../selectors'
+import { toggleAdvancedMode } from '../../actions'
 import Divider from '../Divider'
-import Download from '../../icons/Download'
-import NewPage from '../../icons/NewPage'
+import Download from '../../../icons/Download'
+import NewPage from '../../../icons/NewPage'
+import CheckBox from '../../../icons/CheckBox'
 
 export const List = styled.ul`
   padding: 0;
@@ -24,6 +28,7 @@ export const Row = styled.li`
   transition: background-color 100ms ease-out;
   padding-left: 20px;
   padding-right: 15px;
+  user-select: none;
 
   ${({ clickable }) =>
     clickable &&
@@ -44,7 +49,17 @@ const Code = styled.code`
   font-size: 0.93em;
 `
 
+const mapStateToProp = {
+  isInAdvancedMode: isAdvancedModeSelector,
+}
+
 const Menu = ({ isOpen, ...restProps }) => {
+  const { isInAdvancedMode, dispatch } = useRedux(mapStateToProp)
+
+  const handleAdvancedChange = useCallback(() => {
+    dispatch(toggleAdvancedMode())
+  }, [dispatch])
+
   return (
     <div {...restProps}>
       <List css="margin: 0;">
@@ -52,7 +67,10 @@ const Menu = ({ isOpen, ...restProps }) => {
           <Code>dcpg.js {dependencies.dcgp.replace('^', '')}</Code>
         </Row>
         <Divider variant="content" size={1} css="margin: 8px 0px 8px 20px;" />
-        <Row>Advanced mode</Row>
+        <Row clickable onClick={handleAdvancedChange}>
+          <Grow>Advanced mode</Grow>
+          <CheckBox size={20} checked={isInAdvancedMode} />
+        </Row>
         <Row>
           <Grow>Download expression</Grow>
           <Download size={20} />

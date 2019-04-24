@@ -9,7 +9,7 @@ import {
 } from '../../actions'
 import { evolutionStateSelector } from '../../selectors'
 import PlayPauseButton from '../PlayPauseButton'
-import CircleButton from '../../../components/CircleButton'
+import CircleButton from '../../../ui/components/CircleButton'
 import Reset from '../../../icons/Reset'
 import Next from '../../../icons/Next'
 

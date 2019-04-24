@@ -1,5 +1,5 @@
 import React from 'react'
-import CircleButton from '../../../components/CircleButton'
+import CircleButton from '../../../ui/components/CircleButton'
 import Play from '../../../icons/Play'
 import Pause from '../../../icons/Pause'
 

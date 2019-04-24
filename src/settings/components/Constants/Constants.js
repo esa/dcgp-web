@@ -13,7 +13,7 @@ import List, { Row } from '../List'
 import Remove from '../../../icons/Remove'
 import Plus from '../../../icons/Plus'
 import Reset from '../../../icons/Reset'
-import CircleButton from '../../../components/CircleButton'
+import CircleButton from '../../../ui/components/CircleButton'
 import { SubHeader, Input } from './style'
 
 // Allows typing negative numbers
