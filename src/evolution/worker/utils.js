@@ -34,20 +34,22 @@ export const createExpression = ({
 }
 
 export const step = ({ inputs, labels }, expression, algorithm, constants) => {
-  const { maxSteps } = algorithmsById[algorithm]
+  const { maxSteps } = algorithmsById[algorithm.id]
+  const parameters = algorithm.byId[algorithm.id]
 
-  if (algorithm === 'muPlusLambda') {
+  if (algorithm.id === 'muPlusLambda') {
     return algorithms.muPlusLambda(
       expression,
-      1,
-      4,
+      parameters.mu,
+      parameters.lambda,
       maxSteps,
       inputs,
       labels,
       constants
     )
   }
-  if (algorithm === 'gradientDescent') {
+
+  if (algorithm.id === 'gradientDescent') {
     const result = algorithms.gradientDescent(
       expression,
       maxSteps,
@@ -59,7 +61,7 @@ export const step = ({ inputs, labels }, expression, algorithm, constants) => {
     return result
   }
 
-  throw new Error('not supported algorithm selected')
+  throw new Error('Selected an algorithm that is not supported.')
 }
 
 const checkIfEvolving = store => {
@@ -75,7 +77,7 @@ const getCurrentStep = store => {
 export const loop = async (store, action) => {
   while (true) {
     const { expression, algorithm, constants } = store.getState()
-    const { maxSteps } = algorithmsById[algorithm]
+    const { maxSteps } = algorithmsById[algorithm.id]
 
     const result = step(action.payload, expression, algorithm, constants)
     result.step = getCurrentStep(store) + maxSteps

@@ -35,25 +35,21 @@ export const SET_LEVELS_BACK = prefix + 'SET_LEVELS_BACK'
 export const networkSettingsById = {
   rows: {
     label: 'rows',
-    advanced: false,
     min: 1,
     max: 10,
   },
   columns: {
     label: 'columns',
-    advanced: false,
     min: 1,
     max: 100,
   },
   arity: {
     label: 'arity',
-    advanced: false,
     min: 2,
     max: 5,
   },
   levelsBack: {
     label: 'levels back',
-    advanced: false,
     min: 1,
     max: 101,
   },
@@ -88,22 +84,44 @@ export const setNetworkSetting = (settingId, value) => ({
 })
 
 export const SET_ALGORITHM = prefix + 'SET_ALGORITHM'
+export const CHANGE_PARAMETER = prefix + 'CHANGE_PARAMETER'
+
+export const changeParameter = (parameterId, value) => ({
+  type: CHANGE_PARAMETER,
+  payload: {
+    parameterId,
+    value,
+  },
+})
+
+export const SET_MU = prefix + 'SET_MU'
+export const SET_LAMBDA = prefix + 'SET_LAMBDA'
+
+export const setMu = mu => ({
+  type: SET_MU,
+  payload: mu,
+})
+
+export const setLambda = mu => ({
+  type: SET_LAMBDA,
+  payload: mu,
+})
 
 // name of the function exported by dcgp.js
 export const algorithmsById = {
   muPlusLambda: {
     label: 'mu plus lambda',
     maxSteps: 1000,
-    settings: {
+    parameters: {
       mu: {
         label: 'mu',
-        advanced: true,
+        action: setMu,
         min: 1,
         max: 10,
       },
       lambda: {
         label: 'lambda',
-        advanced: true,
+        action: setLambda,
         min: 1,
         max: 10,
       },

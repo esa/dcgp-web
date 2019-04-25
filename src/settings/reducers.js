@@ -65,10 +65,10 @@ function kernels(state = initialKernelState, action) {
 }
 
 const initialNetworkState = {
-  rows: 1, // min 1
-  columns: 10, // min 1
-  arity: 2, // min 2
-  levelsBack: 5, // min 1
+  rows: 1,
+  columns: 10,
+  arity: 2,
+  levelsBack: 5,
 }
 
 function network(state = initialNetworkState, action) {
@@ -105,19 +105,19 @@ const initialMuPlusLambdaState = {
 }
 
 function muPlusLambda(state = initialMuPlusLambdaState, action) {
-  const { type } = action
+  const { type, payload } = action
 
   switch (type) {
+    case actions.SET_MU:
+      return { ...state, mu: payload }
+    case actions.SET_LAMBDA:
+      return { ...state, lambda: payload }
     default:
       return state
   }
 }
 
-const initialGradientDescentState = {
-  learningRate: 0.001,
-}
-
-function gradientDescent(state = initialGradientDescentState, action) {
+function gradientDescent(state = null, action) {
   const { type } = action
 
   switch (type) {

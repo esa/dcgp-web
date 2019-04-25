@@ -11,8 +11,14 @@ import {
   setArity,
   setLevelsBack,
   REMOVE_CONSTANT,
+  CHANGE_PARAMETER,
+  algorithmsById,
 } from './actions'
-import { constantsSelector, networkSelector } from './selectors'
+import {
+  constantsSelector,
+  networkSelector,
+  algorithmSelector,
+} from './selectors'
 import { resetEvolution, sendWorkerMessage } from '../evolution/actions'
 import { isEvolvingSelector } from '../evolution/selectors'
 
@@ -116,9 +122,26 @@ export const handleAlgorithm = store => next => action => {
   }
 }
 
+export const handleParameterChange = store => next => action => {
+  next(action)
+
+  if (action.type === CHANGE_PARAMETER) {
+    const { id: algorithmId } = algorithmSelector(store.getState())
+    const { parameterId, value } = action.payload
+
+    const parameter = algorithmsById[algorithmId].parameters[parameterId]
+
+    const nextAction = parameter.action(value)
+
+    store.dispatch(nextAction)
+    store.dispatch(sendWorkerMessage(nextAction))
+  }
+}
+
 export default [
   handleAlgorithm,
   handleConstants,
   handleKernelChange,
   handleNetworkChange,
+  handleParameterChange,
 ]

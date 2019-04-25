@@ -10,14 +10,26 @@
   hasReset: Bool,
   expression: Expression,
   steps: Number,
-  algorithm: String,
+  algorithm: {
+    id: String,
+    byId: {
+      [String]: {
+        [String]: Number,
+      },
+    },
+  },
   constants: [Number],
 }
 */
 
 import { combineReducers } from 'redux'
 import * as actions from '../actions'
-import { SET_ALGORITHM, SET_CONSTANT } from '../../settings/actions'
+import {
+  SET_ALGORITHM,
+  SET_CONSTANT,
+  SET_MU,
+  SET_LAMBDA,
+} from '../../settings/actions'
 
 function isEvolving(state = false, action) {
   const { type } = action
@@ -75,7 +87,7 @@ function step(state = 0, action) {
   }
 }
 
-function algorithm(state = null, action) {
+function algorithmId(state = null, action) {
   const { type, payload } = action
 
   switch (type) {
@@ -85,6 +97,43 @@ function algorithm(state = null, action) {
       return state
   }
 }
+
+const initialMuPlusLambdaState = {
+  mu: 1,
+  lambda: 4,
+}
+
+function muPlusLambda(state = initialMuPlusLambdaState, action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case SET_MU:
+      return { ...state, mu: payload }
+    case SET_LAMBDA:
+      return { ...state, lambda: payload }
+    default:
+      return state
+  }
+}
+
+function gradientDescent(state = null, action) {
+  const { type } = action
+
+  switch (type) {
+    default:
+      return state
+  }
+}
+
+const algorithmById = combineReducers({
+  muPlusLambda,
+  gradientDescent,
+})
+
+const algorithm = combineReducers({
+  id: algorithmId,
+  byId: algorithmById,
+})
 
 function constants(state = [], action) {
   const { type, payload } = action
