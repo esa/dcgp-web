@@ -6,6 +6,7 @@ import {
   addConstant,
   removeConstant,
   changeConstant,
+  setConstants,
   resetConstants,
   MAX_CONSTANTS,
 } from '../../actions'
@@ -14,7 +15,8 @@ import Remove from '../../../icons/Remove'
 import Plus from '../../../icons/Plus'
 import Reset from '../../../icons/Reset'
 import CircleButton from '../../../ui/components/CircleButton'
-import { SubHeader, Input } from './style'
+import { Input } from './style'
+import SubHeader from '../SubHeader'
 
 // Allows typing negative numbers
 const makeHandleChangeConstant = dispatch => i => e => {
@@ -69,6 +71,17 @@ const makeHandleKeyDownConstant = (dispatch, constants) => i => e => {
   }
 }
 
+const makeHandleBlurConstant = (dispatch, constants) => i => e => {
+  dispatch(
+    setConstants(
+      constants.map(c => {
+        const value = parseFloat(c)
+        return isNaN(value) ? 0 : value
+      })
+    )
+  )
+}
+
 const mapStateToProps = {
   constants: constantsSelector,
   isEvolving: isEvolvingSelector,
@@ -83,6 +96,7 @@ const Constants = () => {
 
   const handleChangeConstant = makeHandleChangeConstant(dispatch)
   const handleKeyDownConstant = makeHandleKeyDownConstant(dispatch, constants)
+  const handleBlurConstant = makeHandleBlurConstant(dispatch, constants)
 
   return (
     <>
@@ -118,6 +132,7 @@ const Constants = () => {
               disabled={isEvolving}
               value={constant}
               onChange={handleChangeConstant(i)}
+              onBlur={handleBlurConstant(i)}
               onKeyDown={handleKeyDownConstant(i)}
               tabIndex={i + 1}
             />

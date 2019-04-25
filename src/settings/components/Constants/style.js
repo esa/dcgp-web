@@ -1,16 +1,6 @@
 import styled from 'styled-components'
 import { transparentize as fade } from 'polished'
 
-export const SubHeader = styled.h3`
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`
-
 export const Input = styled.input.attrs({ type: 'text' })`
   flex-grow: 1;
   appearance: none;
