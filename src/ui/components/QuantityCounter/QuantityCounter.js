@@ -67,6 +67,10 @@ QuantityCounter.defaultProps = {
 
 QuantityCounter.propTypes = {
   tabIndex: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  value: PropTypes.number.isRequired,
 }
 
 export default QuantityCounter
