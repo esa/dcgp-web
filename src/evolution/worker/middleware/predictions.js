@@ -55,25 +55,28 @@ const handlePredictions = store => next => action => {
     const constantKeys = constants.map((val, i) => `VAR${i + 1}ENDBRACE`)
 
     const naiveEquations = expression.equations(...inputKeys, ...constantKeys)
-    const simplifiedEquations = naiveEquations.map(eq =>
-      math
-        .simplify(eq, [
-          { l: 'n+0', r: 'n' },
-          { l: 'n^0', r: '1' },
-          { l: '0*n', r: '0' },
-          { l: 'n/n', r: '1' },
-          { l: 'n^1', r: 'n' },
-          { l: '+n1', r: 'n1' },
-          { l: 'n--n1', r: 'n+n1' },
-          ...math.simplify.rules,
-        ])
-        .toTex()
-        .replace(/Infinity/g, ' \\infty')
-        // replace the 'unique' constant key values to be the
-        // correct LaTeX representation.
-        .replace(/ENDBRACE/g, '}')
-        .replace(/VAR/g, 'C_{')
-    )
+    const simplifiedEquations = naiveEquations
+      // makes exponentials work
+      .map(eq => eq.replace(/\*\*/g, '^'))
+      .map(eq =>
+        math
+          .simplify(eq, [
+            { l: 'n+0', r: 'n' },
+            { l: 'n^0', r: '1' },
+            { l: '0*n', r: '0' },
+            { l: 'n/n', r: '1' },
+            { l: 'n^1', r: 'n' },
+            { l: '+n1', r: 'n1' },
+            { l: 'n--n1', r: 'n+n1' },
+            ...math.simplify.rules,
+          ])
+          .toTex()
+          .replace(/Infinity/g, ' \\infty')
+          // replace the 'unique' constant key values to be the
+          // correct LaTeX representation.
+          .replace(/ENDBRACE/g, '}')
+          .replace(/VAR/g, 'C_{')
+      )
 
     if (chromosome) {
       expression.chromosome = currentChromosome
