@@ -49,8 +49,10 @@ const initialKernelState = {
   div: true,
   sin: false,
   cos: false,
+  sqrt: false,
   log: false,
   exp: false,
+  gaussian: false,
 }
 
 function kernels(state = initialKernelState, action) {

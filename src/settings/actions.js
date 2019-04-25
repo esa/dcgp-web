@@ -12,8 +12,10 @@ export const kernelNamesById = {
   div: 'division',
   sin: 'sine',
   cos: 'cosine',
+  sqrt: 'square root',
   log: 'logarithm',
   exp: 'exponential',
+  gaussian: 'gaussian',
 }
 
 export const setSeed = seed => ({
