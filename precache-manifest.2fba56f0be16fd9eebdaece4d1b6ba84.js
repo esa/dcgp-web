@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d6dabea020b050070f56bf2b5c26bdfc",
-    "url": "/dcgp-web/6a2ca58d582419e08a1f.worker.js"
+    "revision": "43036e4d4472f1dce7823267d44e1e70",
+    "url": "/dcgp-web/ef8f76f4b65ee487cd2b.worker.js"
   },
   {
-    "revision": "65970ad71d754731cb8b5097a724f742",
+    "revision": "c3ae84546dfa4cb42e64703227b4a8ba",
     "url": "/dcgp-web/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dcgp-web/static/js/2.f47b4307.chunk.js"
   },
   {
-    "revision": "1913133f467cac088f98",
-    "url": "/dcgp-web/static/js/main.73821e05.chunk.js"
+    "revision": "529449143c7f22e9ec37",
+    "url": "/dcgp-web/static/js/main.5fa3386e.chunk.js"
   },
   {
     "revision": "5ccf561595570306d6cd",
@@ -264,7 +264,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dcgp-web/static/media/KaTeX_Typewriter-Regular.e52da442.woff"
   },
   {
-    "revision": "81848321f282f52e01efb80ac9d114ef",
-    "url": "/dcgp-web/static/media/dcgp.81848321.wasm"
+    "revision": "04cb775c2b7c3ee3ca2c2d5da68647ad",
+    "url": "/dcgp-web/static/media/dcgp.04cb775c.wasm"
   }
 ]);
