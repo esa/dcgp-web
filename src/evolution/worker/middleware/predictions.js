@@ -9,16 +9,10 @@ const handlePredictions = store => next => action => {
   if (action.type === CALC_PREDICTIONS) {
     next(action)
 
-    const {
-      inputs,
-      inputKeys,
-      predictionKeys,
-      chromosome,
-      constants,
-    } = action.payload
+    const { inputs, inputLabels, chromosome, constants } = action.payload
     const { expression } = store.getState()
 
-    if (!expression || !inputs || !predictionKeys || !inputKeys) {
+    if (!expression || !inputs || !inputLabels) {
       return
     }
 
@@ -32,29 +26,18 @@ const handlePredictions = store => next => action => {
       Array(inputs[0].length).fill(val)
     )
 
-    const predictionsMatrix = expression.evaluate(...inputs, ...constantsArray)
-
-    const predictions = []
-
-    for (let j = 0; j < predictionsMatrix[0].length; j++) {
-      const predictionObj = {}
-
-      for (let i = 0; i < predictionsMatrix.length; i++) {
-        Object.assign(predictionObj, {
-          [predictionKeys[i]]: predictionsMatrix[i][j],
-        })
-      }
-
-      predictions.push(predictionObj)
-    }
+    const predictions = expression.evaluate(...inputs, ...constantsArray)
 
     // Set the constants keys to be some recognisable string
     // that is not likely to be in the equation.
     // This is because the simplifier doesn't allow some characters
     // or interprets the equation differently.
-    const constantKeys = constants.map((val, i) => `VAR${i + 1}ENDBRACE`)
+    const constantLabels = constants.map((val, i) => `VAR${i + 1}ENDBRACE`)
 
-    const naiveEquations = expression.equations(...inputKeys, ...constantKeys)
+    const naiveEquations = expression.equations(
+      ...inputLabels,
+      ...constantLabels
+    )
     const simplifiedEquations = naiveEquations
       // makes exponentials work
       .map(eq => eq.replace(/\*\*/g, '^'))

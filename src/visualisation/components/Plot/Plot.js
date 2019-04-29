@@ -1,8 +1,5 @@
-import React, { useContext, useMemo, useRef } from 'react'
-import copy from 'copy-to-clipboard'
+import React, { useContext, useMemo, useState, useCallback } from 'react'
 import { ThemeContext } from 'styled-components'
-import 'katex/dist/katex.min.css'
-import { BlockMath } from 'react-katex'
 import {
   Line,
   XAxis,
@@ -12,52 +9,107 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { useRedux } from '../../../hooks'
-import { usePredictions } from '../../../dataset/hooks'
+// import { usePredictions } from '../../../dataset/hooks'
 import Divider from '../../../ui/components/Divider'
 import {
-  inputKeysSelector,
-  outputKeysSelector,
+  inputLabelsSelector,
+  outputLabelsSelector,
+  inputIndicesSelector,
+  outputIndicesSelector,
+  labelsSelector,
   pointsSelector,
-  equationSelector,
-  predictionEquationsSelector,
 } from '../../../dataset/selectors'
-import { StyledLineChart, GridContainer, CopyButton } from './style'
+import { StyledLineChart, GridContainer, Select } from './style'
+
+const MAX_PLOTTED_POINTS = 70
+
+const structurePoints = (points, labels) => {
+  const result = []
+
+  for (let j = 0; j < points[0].length; j++) {
+    const rowObject = {}
+
+    for (let i = 0; i < points.length; i++) {
+      rowObject[labels[i]] = points[i][j]
+    }
+
+    result.push(rowObject)
+  }
+
+  return result
+}
+
+const mergeObjectArrays = (array1, array2) => {
+  if (array1.length === 0) return array2
+
+  if (array2.length === 0) return array1
+
+  const result = []
+
+  for (let i = 0; i < array1.length; i++) {
+    result.push({ ...array1[i], ...array2[i] })
+  }
+
+  return result
+}
+
+const subSampleData = array => {
+  if (array.length < MAX_PLOTTED_POINTS) return array
+
+  const stepSize = Math.round(array.length / MAX_PLOTTED_POINTS)
+
+  return array.filter((_, i) => i % stepSize === 0)
+}
 
 const mapStateToProps = {
-  inputs: inputKeysSelector,
-  outputs: outputKeysSelector,
+  inputLabels: inputLabelsSelector,
+  outputLabels: outputLabelsSelector,
+  inputsIndices: inputIndicesSelector,
+  outputsIndices: outputIndicesSelector,
   points: pointsSelector,
-  equation: equationSelector,
-  predictionEquations: predictionEquationsSelector,
+  labels: labelsSelector,
 }
 
 const Plot = () => {
-  const copyButton = useRef(null)
+  const {
+    inputLabels,
+    outputLabels,
+    // inputsIndices,
+    // outputsIndices,
+    points,
+    labels,
+  } = useRedux(mapStateToProps)
+  const theme = useContext(ThemeContext)
+  const [selectedInput, setSelectedInput] = useState(inputLabels[0])
+  const [selectedOutput, setSelectedOutput] = useState(outputLabels[0])
 
-  const { inputs, outputs, points, equation, predictionEquations } = useRedux(
-    mapStateToProps
-  )
+  const handleInputChange = useCallback(e => setSelectedInput(e.value), [])
+  const handleOutputChange = useCallback(e => setSelectedOutput(e.value), [])
 
-  const handleCopy = () => {
-    if (predictionEquations.length) {
-      copy(predictionEquations[0])
-    }
-  }
+  // const { predictions, keys: predictionKeys } = usePredictions()
 
-  const { predictions, keys: predictionKeys } = usePredictions()
+  const structuredPoints = useMemo(() => structurePoints(points, labels), [
+    points,
+    labels,
+  ])
 
   const data = useMemo(() => {
-    if (predictions.length) {
-      return points.map((point, i) => ({
-        ...point,
-        ...predictions[i],
-      }))
-    } else {
-      return points
-    }
-  }, [predictions, points])
+    const mergedData = mergeObjectArrays(structuredPoints, [])
 
-  const theme = useContext(ThemeContext)
+    const sortedData = selectedInput
+      ? mergedData.sort((a, b) => a[selectedInput] - b[selectedInput])
+      : mergedData
+
+    return subSampleData(sortedData)
+  }, [structuredPoints, selectedInput])
+
+  if (inputLabels.length !== 0 && !inputLabels.includes(selectedInput)) {
+    setSelectedInput(inputLabels[0])
+  }
+
+  if (outputLabels.length !== 0 && !outputLabels.includes(selectedOutput)) {
+    setSelectedOutput(outputLabels[0])
+  }
 
   return (
     <GridContainer>
@@ -70,7 +122,7 @@ const Plot = () => {
             >
               <CartesianGrid />
               <XAxis
-                dataKey={inputs[0]}
+                dataKey={selectedInput}
                 domain={['auto', 'auto']}
                 type="number"
               />
@@ -79,47 +131,45 @@ const Plot = () => {
               <Line
                 name="labels"
                 type="monotone"
-                dataKey={outputs[0]}
+                dataKey={selectedOutput}
                 dot={{ fill: theme.primary, r: 4 }}
                 stroke="transparent"
                 animationDuration={0}
               />
-              <Line
+              {/* <Line
                 name="predictions"
                 dataKey={predictionKeys[0]}
                 type="monotone"
                 dot={{ r: 0 }}
                 stroke={theme.secundary}
                 animationDuration={500}
-              />
+              /> */}
             </StyledLineChart>
           </ResponsiveContainer>
         </div>
       </div>
       <Divider css="margin: 15px 0;" />
-      {equation && (
-        <>
-          <div css="display: flex; margin-bottom: 15px;">
-            <span css="flex-grow: 1;">Label equation:</span>
-          </div>
-          <div css="overflow-x: auto; overflow-y: hidden;">
-            <BlockMath>{equation}</BlockMath>
-          </div>
-        </>
-      )}
-      {predictionEquations.length > 0 && (
-        <>
-          <div css="display: flex; margin: 30px 0 15px;">
-            <span css="flex-grow: 1;">Prediction equation:</span>
-            <CopyButton ref={copyButton} onClick={handleCopy}>
-              Copy LaTeX
-            </CopyButton>
-          </div>
-          <div css="overflow-x: auto; overflow-y: hidden;">
-            <BlockMath>{predictionEquations[0]}</BlockMath>
-          </div>
-        </>
-      )}
+      <div css="display: flex; align-items: center; margin-bottom: 8px;">
+        Select input:
+        <div css="flex-grow: 1;" />
+        <Select
+          value={selectedInput}
+          // inputValue={selectedInput}
+          onChange={handleInputChange}
+          options={inputLabels.map(label => ({ value: label, label }))}
+        />
+      </div>
+      <div css="display: flex; align-items: center;">
+        Select output:
+        <div css="flex-grow: 1;" />
+        <Select
+          value={selectedOutput}
+          // inputValue={selectedOutput}
+          onChange={handleOutputChange}
+          options={outputLabels.map(label => ({ value: label, label }))}
+        />
+      </div>
+      {/* PLOT STUFF */}
     </GridContainer>
   )
 }

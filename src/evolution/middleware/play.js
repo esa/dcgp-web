@@ -12,7 +12,7 @@ import {
   settingsSelector,
   constantsSelector,
 } from '../../settings/selectors'
-import { inputsSelector, labelsSelector } from '../../dataset/selectors'
+import { inputsSelector, outputsSelector } from '../../dataset/selectors'
 
 export const handlePlay = store => next => action => {
   if (action.type === STEP_EVOLUTION) {
@@ -33,7 +33,7 @@ export const handlePlay = store => next => action => {
     const parameters = settingsSelector(state)
     const currentStep = currentStepSelector(state)
     const inputs = inputsSelector(state)
-    const labels = labelsSelector(state)
+    const outputs = outputsSelector(state)
     const constants = constantsSelector(state)
 
     store.dispatch(
@@ -43,7 +43,7 @@ export const handlePlay = store => next => action => {
           parameters,
           step: currentStep,
           inputs,
-          labels,
+          outputs,
           constants,
         })
       )

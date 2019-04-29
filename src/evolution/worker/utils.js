@@ -8,7 +8,7 @@ export const createExpression = ({
   parameters,
   activeKernelIds,
   inputs,
-  labels,
+  outputs,
   constants,
 }) => {
   const {
@@ -19,7 +19,7 @@ export const createExpression = ({
   const myKernelSet = new KernelSet(...activeKernelIds)
   const myExpression = new Expression(
     inputs.length + constants.length,
-    labels.length,
+    outputs.length,
     rows,
     columns,
     levelsBack,
@@ -33,7 +33,7 @@ export const createExpression = ({
   return myExpression
 }
 
-export const step = ({ inputs, labels }, expression, algorithm, constants) => {
+export const step = ({ inputs, outputs }, expression, algorithm, constants) => {
   const { maxSteps } = algorithmsById[algorithm.id]
   const parameters = algorithm.byId[algorithm.id]
 
@@ -44,7 +44,7 @@ export const step = ({ inputs, labels }, expression, algorithm, constants) => {
       parameters.lambda,
       maxSteps,
       inputs,
-      labels,
+      outputs,
       constants
     )
   }
@@ -54,7 +54,7 @@ export const step = ({ inputs, labels }, expression, algorithm, constants) => {
       expression,
       maxSteps,
       inputs,
-      labels,
+      outputs,
       constants
     )
 

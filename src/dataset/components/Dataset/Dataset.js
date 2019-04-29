@@ -1,63 +1,103 @@
-import React, { useCallback } from 'react'
-import styled from 'styled-components'
+import React, { useCallback, useRef } from 'react'
+import { css } from 'styled-components'
 import Radio from '../../../icons/Radio'
+import Upload from '../../../icons/Upload'
 import { capitalize } from '../../../utils/string'
-import { pointsPresetsById, changeDataset } from '../../actions'
-import { datasetIdSelector } from '../../selectors'
+import {
+  selectDataset,
+  setRawData,
+  requestCustomDataset,
+  changeName,
+} from '../../actions'
+import {
+  selectedDatasetIdSelector,
+  datasetsSelector,
+  datasetIdsSelector,
+} from '../../selectors'
 import { useRedux } from '../../../hooks'
+import Properties from '../Properties'
+import Heading from '../Heading'
+import TextInput from '../../../ui/components/TextInput'
+import { List, Item } from './styles'
 
-const presetIds = Object.keys(pointsPresetsById)
-
-const Heading = styled.h2`
-  margin: 0;
-  margin-bottom: 20px;
-  font-weight: 600;
-`
-
-const List = styled.ul`
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 0;
-`
-
-const Item = styled.li`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-right: 15px;
-  cursor: pointer;
-  line-height: 2.4;
-`
-
-const Label = styled.span`
+const labelStyle = css`
   margin-left: 8px;
 `
 
 const mapStateToProps = {
-  datasetId: datasetIdSelector,
+  selectedDatasetId: selectedDatasetIdSelector,
+  datasets: datasetsSelector,
+  datasetIds: datasetIdsSelector,
 }
 
 const Dataset = () => {
-  const { dispatch, datasetId } = useRedux(mapStateToProps)
-  const handleClick = useCallback(id => () => dispatch(changeDataset(id)), [
+  const uploadRef = useRef()
+  const { dispatch, selectedDatasetId, datasets, datasetIds } = useRedux(
+    mapStateToProps
+  )
+
+  const handleClick = useCallback(id => () => dispatch(selectDataset(id)), [
     dispatch,
   ])
 
+  const handleCustomData = useCallback(() => {
+    dispatch(requestCustomDataset(uploadRef.current))
+  }, [dispatch])
+
+  const handleFiles = useCallback(
+    e => {
+      if (e.target.files.length > 0) {
+        const reader = new FileReader()
+
+        reader.onload = e => {
+          dispatch(setRawData(e.target.result))
+        }
+
+        reader.readAsText(e.target.files[0])
+      }
+    },
+    [dispatch]
+  )
+
+  const handleNameChange = useCallback(
+    datasetId => e => dispatch(changeName(datasetId, e.target.value)),
+    [dispatch]
+  )
+
   return (
-    <div css="grid-column: full;">
-      <Heading>Select data</Heading>
-      <List>
-        {presetIds.map(id => (
-          <Item key={id} onClick={handleClick(id)}>
-            <Radio checked={datasetId === id} />
-            <Label>{capitalize(pointsPresetsById[id].label)}</Label>
+    <>
+      <div css="grid-column: full;">
+        <Heading>Select data</Heading>
+        <List>
+          {datasetIds.map(id => (
+            <Item key={id} onClick={handleClick(id)}>
+              <Radio size={22} checked={selectedDatasetId === id} />
+              {datasets[id].mutable ? (
+                <TextInput
+                  css={labelStyle}
+                  value={datasets[id].name}
+                  onChange={handleNameChange(id)}
+                />
+              ) : (
+                <span css={labelStyle}>{capitalize(datasets[id].name)}</span>
+              )}
+            </Item>
+          ))}
+          <Item as="button" onClick={handleCustomData}>
+            <Upload />
+            <input
+              ref={uploadRef}
+              type="file"
+              accept="text/csv"
+              css="display: none;"
+              onChange={handleFiles}
+            />
+            <span css={labelStyle}>Upload custom data</span>
           </Item>
-        ))}
-      </List>
-    </div>
+        </List>
+      </div>
+      <Properties />
+    </>
   )
 }
 

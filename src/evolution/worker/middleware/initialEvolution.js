@@ -13,8 +13,8 @@ const handleInitialEvolution = store => next => action => {
     const expression = createExpression(action.payload)
     store.dispatch(setExpression(expression))
 
-    const { inputs, labels, constants } = action.payload
-    const loss = expression.loss(inputs, labels, constants)
+    const { inputs, outputs, constants } = action.payload
+    const loss = expression.loss(inputs, outputs, constants)
     const { chromosome } = expression
 
     store.dispatch(setInitialEvolution({ loss, chromosome }))

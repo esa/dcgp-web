@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import { up } from 'styled-breakpoints'
 import { LineChart } from 'recharts'
-import unStyledGridContainer from '../../../ui/components/GridContainer'
+import unstyledGridContainer from '../../../ui/components/GridContainer'
+import unstyledSelect from 'react-select'
 import { transparentize as fade } from 'polished'
 
 export const StyledLineChart = styled(LineChart)`
@@ -39,7 +40,7 @@ export const StyledLineChart = styled(LineChart)`
   }
 `
 
-export const GridContainer = styled(unStyledGridContainer)`
+export const GridContainer = styled(unstyledGridContainer)`
   grid-column-end: span 1;
 
   ${up('sm')} {
@@ -47,24 +48,46 @@ export const GridContainer = styled(unStyledGridContainer)`
   }
 `
 
-export const CopyButton = styled.button`
-  color: ${({ theme }) => theme.primary};
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  transition: color 150ms ease-out;
-  box-sizing: border-box;
-  -webkit-appearance: none;
+export const Select = styled(unstyledSelect).attrs({
+  classNamePrefix: 'select',
+})`
+  & .select__control {
+    border-radius: 1000px;
+    border-color: rgba(0, 0, 0, 0);
+    background-color: ${({ theme }) => fade(0.3, theme.background)};
+    min-height: 24px;
+    overflow: hidden;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
 
-  &:hover {
-    text-decoration: underline;
+    &:hover {
+      border-color: rgba(0, 0, 0, 0);
+    }
   }
 
-  &:active {
-    transition: color 80ms ease-out;
-    color: ${({ theme }) => fade(0.3, theme.primary)};
+  & .select__value-container {
+    border-top-left-radius: 1000px;
+    border-bottom-left-radius: 1000px;
+  }
+
+  & .select__indicator-separator {
+    display: none;
+  }
+
+  & .select__input {
+    color: ${({ theme }) => theme.title};
+  }
+
+  & .select__indicator.select__dropdown-indicator {
+    background-color: rgba(0, 0, 0, 0);
+    color: ${({ theme }) => theme.primary};
+    padding: 6px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
   }
 `
