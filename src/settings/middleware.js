@@ -1,25 +1,21 @@
+import { sendUpdate } from '../dcgpProxy'
 import {
   TOGGLE_KERNEL,
   NETWORK_CHANGE,
-  ADD_CONSTANT,
-  MAX_CONSTANTS,
-  RESET_CONSTANTS,
-  setConstants,
   SET_ALGORITHM,
   setRows,
   setColumns,
   setArity,
   setLevelsBack,
-  REMOVE_CONSTANT,
   CHANGE_PARAMETER,
   algorithmsById,
 } from './actions'
 import {
-  constantsSelector,
   networkSelector,
   algorithmSelector,
+  currrentAlgorithmSelector,
 } from './selectors'
-import { resetEvolution, sendWorkerMessage } from '../evolution/actions'
+import { resetEvolutionRequest } from '../evolution/actions'
 import { isEvolvingSelector } from '../evolution/selectors'
 
 export const handleKernelChange = store => next => action => {
@@ -33,7 +29,7 @@ export const handleKernelChange = store => next => action => {
 
     next(action)
 
-    store.dispatch(resetEvolution())
+    store.dispatch(resetEvolutionRequest())
     return
   }
 
@@ -71,53 +67,20 @@ export const handleNetworkChange = store => next => action => {
         throw new Error(`settingId ${settingId} is not allowed`)
     }
 
-    dispatch(resetEvolution())
+    dispatch(resetEvolutionRequest())
   }
-}
-
-export const handleConstants = store => next => action => {
-  if (action.type === ADD_CONSTANT) {
-    const constants = constantsSelector(store.getState())
-
-    if (constants.length >= MAX_CONSTANTS) return
-
-    const initialConstant = constants.length + 1
-
-    next({ ...action, payload: initialConstant })
-
-    store.dispatch(resetEvolution())
-    return
-  }
-
-  if (action.type === RESET_CONSTANTS) {
-    const constants = constantsSelector(store.getState())
-    next(action)
-
-    const newConstants = Array(constants.length)
-      .fill(0)
-      .map((val, i) => i + 1)
-
-    next(setConstants(newConstants))
-    return
-  }
-
-  if (action.type === REMOVE_CONSTANT) {
-    next(action)
-    store.dispatch(resetEvolution())
-    return
-  }
-
-  next(action)
 }
 
 export const handleAlgorithm = store => next => action => {
   next(action)
 
   if (action.type === SET_ALGORITHM) {
-    const isEvolving = isEvolvingSelector(store.getState())
+    const state = store.getState()
+    const isEvolving = isEvolvingSelector(state)
 
     if (isEvolving) {
-      store.dispatch(sendWorkerMessage(action))
+      const algorithm = currrentAlgorithmSelector(state)
+      sendUpdate({ algorithm })
     }
   }
 }
@@ -134,13 +97,19 @@ export const handleParameterChange = store => next => action => {
     const nextAction = parameter.action(value)
 
     store.dispatch(nextAction)
-    store.dispatch(sendWorkerMessage(nextAction))
+
+    const state = store.getState()
+    const isEvolving = isEvolvingSelector(state)
+
+    if (isEvolving) {
+      const algorithm = currrentAlgorithmSelector(state)
+      sendUpdate({ algorithm })
+    }
   }
 }
 
 export default [
   handleAlgorithm,
-  handleConstants,
   handleKernelChange,
   handleNetworkChange,
   handleParameterChange,

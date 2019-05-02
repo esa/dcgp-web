@@ -1,13 +1,18 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import reducers from './reducers'
+import { createEpicMiddleware } from 'redux-observable'
+import { rootReducer, rootEpic } from './root'
 import middlewares from './middleware'
+
+const epicMiddleware = createEpicMiddleware()
 
 export default function configureStore(preloadedState) {
   const store = createStore(
-    reducers,
+    rootReducer,
     preloadedState,
-    compose(applyMiddleware(...middlewares))
+    compose(applyMiddleware(epicMiddleware, ...middlewares))
   )
+
+  epicMiddleware.run(rootEpic)
 
   return store
 }

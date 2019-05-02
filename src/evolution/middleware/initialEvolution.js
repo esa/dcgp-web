@@ -1,41 +1,42 @@
-import { GET_INITIAL_EVOLUTION, sendWorkerMessage } from '../actions'
-import { addPayload } from '../../utils/actions'
-import { predictionRequest } from './predictions'
+import { INITIAL_REQUEST, initialEvolution } from '../actions'
 import {
   activeKernelsSelector,
-  settingsSelector,
+  networkSelector,
   constantsSelector,
+  seedSelector,
 } from '../../settings/selectors'
-import { inputsSelector, labelsSelector } from '../../dataset/selectors'
+import { inputsSelector, outputsSelector } from '../../dataset/selectors'
 
-export const handleInitialEvolution = store => next => action => {
-  if (action.type === GET_INITIAL_EVOLUTION) {
-    next(action)
+import { getLoss } from '../../dcgpProxy'
+
+export const handleInitialEvolution = store => next => async action => {
+  next(action)
+
+  if (action.type === INITIAL_REQUEST) {
     const state = store.getState()
 
-    const activeKernelIds = activeKernelsSelector(state)
-    const parameters = settingsSelector(state)
+    const kernelIds = activeKernelsSelector(state)
+    const network = networkSelector(state)
     const inputs = inputsSelector(state)
-    const labels = labelsSelector(state)
+    const outputs = outputsSelector(state)
+    const seed = seedSelector(state)
     const constants = constantsSelector(state)
 
-    store.dispatch(
-      sendWorkerMessage(
-        addPayload(action, {
-          activeKernelIds,
-          parameters,
-          inputs,
-          labels,
-          constants,
-        })
-      )
-    )
+    const loss = await getLoss({
+      expression: {
+        ...network,
+        kernelIds,
+        inputs: inputs.length + constants.length,
+        outputs: outputs.length,
+        seed,
+      },
+      inputs,
+      outputs,
+      constants,
+    })
 
-    predictionRequest(store)
-    return
+    store.dispatch(initialEvolution({ loss }))
   }
-
-  next(action)
 }
 
 export default handleInitialEvolution

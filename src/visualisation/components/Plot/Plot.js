@@ -1,125 +1,99 @@
-import React, { useContext, useMemo, useRef } from 'react'
-import copy from 'copy-to-clipboard'
-import { ThemeContext } from 'styled-components'
-import 'katex/dist/katex.min.css'
-import { BlockMath } from 'react-katex'
-import {
-  Line,
-  XAxis,
-  YAxis,
-  Legend,
-  CartesianGrid,
-  ResponsiveContainer,
-} from 'recharts'
+import React, { useState, useCallback } from 'react'
 import { useRedux } from '../../../hooks'
-import { usePredictions } from '../../../dataset/hooks'
+import { usePredictions } from '../../../dcgpProxy/hooks'
 import Divider from '../../../ui/components/Divider'
 import {
-  inputKeysSelector,
-  outputKeysSelector,
+  inputLabelsSelector,
+  outputLabelsSelector,
+  inputIndicesSelector,
+  outputIndicesSelector,
+  labelsSelector,
   pointsSelector,
-  equationSelector,
-  predictionEquationsSelector,
+  inputsSelector,
 } from '../../../dataset/selectors'
-import { StyledLineChart, GridContainer, CopyButton } from './style'
+import { GridContainer } from './style'
+import Chart from './Chart'
+import AxisSelection from './AxisSelection'
+import {
+  useStucturedPoints,
+  useSubSampledPoints,
+  useMergedPoints,
+} from './hooks'
 
 const mapStateToProps = {
-  inputs: inputKeysSelector,
-  outputs: outputKeysSelector,
+  inputLabels: inputLabelsSelector,
+  outputLabels: outputLabelsSelector,
+  inputsIndices: inputIndicesSelector,
+  outputsIndices: outputIndicesSelector,
   points: pointsSelector,
-  equation: equationSelector,
-  predictionEquations: predictionEquationsSelector,
+  inputs: inputsSelector,
+  labels: labelsSelector,
 }
 
 const Plot = () => {
-  const copyButton = useRef(null)
-
-  const { inputs, outputs, points, equation, predictionEquations } = useRedux(
+  const { inputLabels, outputLabels, points, labels, inputs } = useRedux(
     mapStateToProps
   )
+  const [selectedInput, setSelectedInput] = useState(inputLabels[0])
+  const [selectedOutput, setSelectedOutput] = useState(outputLabels[0])
 
-  const handleCopy = () => {
-    if (predictionEquations.length) {
-      copy(predictionEquations[0])
-    }
+  const handleInputChange = useCallback(e => setSelectedInput(e.value), [])
+  const handleOutputChange = useCallback(e => setSelectedOutput(e.value), [])
+
+  const structuredInputPoints = useStucturedPoints(inputs, inputLabels)
+
+  const structuredOutputPoints = useStucturedPoints(points, labels)
+  const sampledOutputPoints = useSubSampledPoints(
+    structuredOutputPoints,
+    selectedInput,
+    selectedOutput
+  )
+
+  const predictions = usePredictions()
+  const structuredPredictionPoints = useStucturedPoints(
+    predictions,
+    outputLabels
+  )
+  const mergedPredictionPoints = useMergedPoints(
+    structuredInputPoints,
+    structuredPredictionPoints
+  )
+  const sampledPredictionPoints = useSubSampledPoints(
+    mergedPredictionPoints,
+    selectedInput,
+    selectedOutput
+  )
+
+  if (inputLabels.length !== 0 && !inputLabels.includes(selectedInput)) {
+    setSelectedInput(inputLabels[0])
   }
 
-  const { predictions, keys: predictionKeys } = usePredictions()
-
-  const data = useMemo(() => {
-    if (predictions.length) {
-      return points.map((point, i) => ({
-        ...point,
-        ...predictions[i],
-      }))
-    } else {
-      return points
-    }
-  }, [predictions, points])
-
-  const theme = useContext(ThemeContext)
+  if (outputLabels.length !== 0 && !outputLabels.includes(selectedOutput)) {
+    setSelectedOutput(outputLabels[0])
+  }
 
   return (
     <GridContainer>
-      <div css="margin: 0 5px; position: relative; padding-bottom: 65%;">
-        <div css="width: 100%; height: 100%; position: absolute;">
-          <ResponsiveContainer>
-            <StyledLineChart
-              data={data}
-              margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-            >
-              <CartesianGrid />
-              <XAxis
-                dataKey={inputs[0]}
-                domain={['auto', 'auto']}
-                type="number"
-              />
-              <YAxis width={45} />
-              <Legend verticalAlign="top" height={36} />
-              <Line
-                name="labels"
-                type="monotone"
-                dataKey={outputs[0]}
-                dot={{ fill: theme.primary, r: 4 }}
-                stroke="transparent"
-                animationDuration={0}
-              />
-              <Line
-                name="predictions"
-                dataKey={predictionKeys[0]}
-                type="monotone"
-                dot={{ r: 0 }}
-                stroke={theme.secundary}
-                animationDuration={500}
-              />
-            </StyledLineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+      <Chart
+        outputPoints={sampledOutputPoints}
+        predictionPoints={sampledPredictionPoints}
+        selectedInput={selectedInput}
+        selectedOutput={selectedOutput}
+      />
       <Divider css="margin: 15px 0;" />
-      {equation && (
-        <>
-          <div css="display: flex; margin-bottom: 15px;">
-            <span css="flex-grow: 1;">Label equation:</span>
-          </div>
-          <div css="overflow-x: auto; overflow-y: hidden;">
-            <BlockMath>{equation}</BlockMath>
-          </div>
-        </>
-      )}
-      {predictionEquations.length > 0 && (
-        <>
-          <div css="display: flex; margin: 30px 0 15px;">
-            <span css="flex-grow: 1;">Prediction equation:</span>
-            <CopyButton ref={copyButton} onClick={handleCopy}>
-              Copy LaTeX
-            </CopyButton>
-          </div>
-          <div css="overflow-x: auto; overflow-y: hidden;">
-            <BlockMath>{predictionEquations[0]}</BlockMath>
-          </div>
-        </>
-      )}
+      <AxisSelection
+        name="inputs"
+        value={selectedInput}
+        options={inputLabels}
+        onChange={handleInputChange}
+      />
+      <AxisSelection
+        name="outputs"
+        value={selectedOutput}
+        options={outputLabels}
+        onChange={handleOutputChange}
+      />
+      {/* PLOT STUFF */}
     </GridContainer>
   )
 }

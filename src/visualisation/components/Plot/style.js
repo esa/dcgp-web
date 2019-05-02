@@ -1,22 +1,23 @@
+import React from 'react'
 import styled from 'styled-components'
 import { up } from 'styled-breakpoints'
-import { LineChart } from 'recharts'
-import unStyledGridContainer from '../../../ui/components/GridContainer'
-import { transparentize as fade } from 'polished'
+import { ScatterChart as unstyledScatterChart } from 'recharts'
+import unstyledGridContainer from '../../../ui/components/GridContainer'
+import unstyledSelect from 'react-select'
+import { transparentize as fade, mix } from 'polished'
 
-export const StyledLineChart = styled(LineChart)`
+export const ScatterChart = styled(unstyledScatterChart)`
   .recharts-curve {
     stroke-width: 1px;
   }
 
-  .legend-item-0 path {
-    stroke: ${({ theme }) => theme.primary};
+  .recharts-default-legend path.recharts-symbols {
+    transform: translate(16px, 16px) scale(0.8);
   }
 
-  .recharts-line-dots circle {
-    stroke: ${({ theme }) => theme.surface.regular};
-    stroke-width: 2px;
-  }
+  /* .recharts-scatter-symbol circle {
+    mix-blend-mode: exclusion;
+  } */
 
   .recharts-cartesian-axis-line,
   .recharts-cartesian-axis-tick-line {
@@ -39,7 +40,7 @@ export const StyledLineChart = styled(LineChart)`
   }
 `
 
-export const GridContainer = styled(unStyledGridContainer)`
+export const GridContainer = styled(unstyledGridContainer)`
   grid-column-end: span 1;
 
   ${up('sm')} {
@@ -47,24 +48,85 @@ export const GridContainer = styled(unStyledGridContainer)`
   }
 `
 
-export const CopyButton = styled.button`
-  color: ${({ theme }) => theme.primary};
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  transition: color 150ms ease-out;
-  box-sizing: border-box;
-  -webkit-appearance: none;
+export const Select = styled(unstyledSelect).attrs({
+  classNamePrefix: 'select',
+})`
+  min-width: 40%;
 
-  &:hover {
-    text-decoration: underline;
+  & .select__control {
+    border-radius: 1000px;
+    border-color: rgba(0, 0, 0, 0);
+    background-color: ${({ theme }) => fade(0.3, theme.background)};
+    min-height: 24px;
+    overflow: hidden;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none;
+
+    &:hover {
+      border-color: rgba(0, 0, 0, 0);
+    }
   }
 
-  &:active {
-    transition: color 80ms ease-out;
-    color: ${({ theme }) => fade(0.3, theme.primary)};
+  & .select__value-container {
+    border-top-left-radius: 1000px;
+    border-bottom-left-radius: 1000px;
+  }
+
+  & .select__indicator-separator {
+    display: none;
+  }
+
+  & .select__input,
+  & .select__single-value {
+    color: ${({ theme }) => theme.title};
+  }
+
+  & .select__menu {
+    background-color: ${({ theme }) =>
+      mix(0.5, theme.surface.regular, theme.surface.selected)};
+  }
+
+  & .select__option {
+    color: ${({ theme }) => theme.title};
+    border-bottom: 1px dashed ${({ theme }) => theme.border.content};
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 100ms ease-out;
+    cursor: pointer;
+
+    &:first-of-type {
+      border-top: 1px dashed ${({ theme }) => theme.border.content};
+    }
+
+    &:hover {
+      background-color: ${({ theme }) => fade(0.7, theme.surface.regular)};
+    }
+  }
+
+  & .select__indicator.select__dropdown-indicator {
+    background-color: rgba(0, 0, 0, 0);
+    color: ${({ theme }) => theme.primary};
+    padding: 6px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
   }
 `
+
+export const Grow = styled.div`
+  flex-grow: 1;
+`
+
+export const Bold = styled.b`
+  font-size: 17px;
+  font-weight: 600;
+  margin-right: 0.25em;
+  flex-grow: 1;
+`
+
+export const Circle = ({ cx, x, y, cy, fill }) => (
+  <circle r={3} cx={cx || x} cy={cy || y} fill={fill} />
+)

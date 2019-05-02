@@ -3,52 +3,106 @@
 const prefix = '[dataset] '
 
 export const SET_POINTS = prefix + 'SET_POINTS'
-export const CHANGE_DATASET = prefix + 'CHANGE_DATASET'
+export const SET_RAW_DATA = prefix + 'SET_RAW_DATA'
+export const SELECT_DATASET = prefix + 'SELECT_DATASET'
+export const ADD_DATASET = prefix + 'ADD_DATASET'
 export const SET_POINTS_PRESET = prefix + 'SET_POINTS_PRESET'
-
-export const pointsPresetsById = {
-  // linear: {
-  //   label: 'Linear',
-  // },
-  sinc: {
-    label: 'cardinal sine',
-  },
-  sinExp: {
-    label: 'sine of exponent',
-  },
-  noisyParabola: {
-    label: 'noisy parabola',
-  },
-  eckerle4: {
-    label: 'circular interference transmittance',
-  },
-  chwirut2: {
-    label: 'ultrasonic reference block',
-  },
-  hahn1: {
-    label: 'copper thermal expansion',
-  },
-  gauss2: {
-    label: 'blended gaussians',
-  },
-}
+export const REQUEST_CUSTOM_DATASET = prefix + 'REQUEST_CUSTOM_DATASET'
 
 export const setPoints = points => ({
   type: SET_POINTS,
   payload: points,
 })
 
-export const changeDataset = datasetId => ({
-  type: CHANGE_DATASET,
+export const setRawData = rawData => ({
+  type: SET_RAW_DATA,
+  payload: rawData,
+})
+
+export const selectDataset = datasetId => ({
+  type: SELECT_DATASET,
   payload: datasetId,
+})
+
+export const addDataset = dataset => ({
+  type: ADD_DATASET,
+  payload: dataset,
+})
+
+export const requestCustomDataset = inputElement => ({
+  type: REQUEST_CUSTOM_DATASET,
+  meta: {
+    inputElement,
+  },
 })
 
 export const ADD_INPUT = prefix + 'ADD_INPUT'
 export const ADD_OUTPUT = prefix + 'ADD_OUTPUT'
 export const REMOVE_INPUT = prefix + 'REMOVE_INPUT'
 export const REMOVE_OUTPUT = prefix + 'REMOVE_OUTPUT'
-export const SET_INPUTS = prefix + 'SET_INPUTS'
-export const SET_OUTPUTS = prefix + 'SET_OUTPUTS'
+export const CHANGE_COLUMN_TYPE = prefix + 'CHANGE_COLUMN_TYPE'
+export const CHANGE_NAME = prefix + 'CHANGE_NAME'
+export const CHANGE_LABEL = prefix + 'CHANGE_LABEL'
+
+export const columnTypes = ['INPUT', 'OUTPUT', 'NONE']
+
+export const changeColumnType = (datasetId, columnIndex, type) => ({
+  type: CHANGE_COLUMN_TYPE,
+  payload: {
+    datasetId,
+    columnIndex,
+    type,
+  },
+})
+
+export const addInput = (datasetId, columnIndex) => ({
+  type: ADD_INPUT,
+  payload: {
+    datasetId,
+    columnIndex,
+  },
+})
+
+export const addOutput = (datasetId, columnIndex) => ({
+  type: ADD_OUTPUT,
+  payload: {
+    datasetId,
+    columnIndex,
+  },
+})
+
+export const removeInput = (datasetId, columnIndex) => ({
+  type: REMOVE_INPUT,
+  payload: {
+    datasetId,
+    columnIndex,
+  },
+})
+
+export const removeOutput = (datasetId, columnIndex) => ({
+  type: REMOVE_OUTPUT,
+  payload: {
+    datasetId,
+    columnIndex,
+  },
+})
+
+export const changeName = (datasetId, name) => ({
+  type: CHANGE_NAME,
+  payload: {
+    datasetId,
+    name,
+  },
+})
+
+export const changeLabel = (datasetId, columnIndex, label) => ({
+  type: CHANGE_LABEL,
+  payload: {
+    datasetId,
+    columnIndex,
+    label,
+  },
+})
 
 export const SET_PREDICTION_KEYS = prefix + 'SET_PREDICTION_KEYS'
 export const REMOVE_PREDICTION_KEYS = prefix + 'REMOVE_PREDICTION_KEYS'

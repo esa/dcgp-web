@@ -11,7 +11,7 @@ import { useRedux } from '../../../hooks'
 import { menuVisibilitySelector } from '../../selectors'
 import { toggleMenuVisibility } from '../../actions'
 import { Evolution } from '../../../evolution'
-import { Plot } from '../../../visualisation'
+import { Plot, Equations } from '../../../visualisation'
 import { up } from 'styled-breakpoints'
 
 import styled from 'styled-components'
@@ -59,6 +59,7 @@ const Body = () => {
             <Network />
             <Algorithm />
             <Plot />
+            <Equations />
           </Page>
         </PageBody>
       </PageLayout>

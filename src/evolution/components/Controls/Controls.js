@@ -1,11 +1,12 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 import { useRedux } from '../../../hooks'
 import {
-  startEvolution,
-  pauseEvolution,
-  resetEvolution,
-  stepEvolution,
+  startEvolutionRequest,
+  pauseEvolutionRequest,
+  resetEvolutionRequest,
+  stepEvolutionRequest,
+  initialEvolutionRequest,
 } from '../../actions'
 import { evolutionStateSelector } from '../../selectors'
 import PlayPauseButton from '../PlayPauseButton'
@@ -32,10 +33,22 @@ const mapStateToProps = {
 const Controls = () => {
   const { dispatch, evolutionState } = useRedux(mapStateToProps)
 
-  const handleReset = useCallback(() => dispatch(resetEvolution()), [dispatch])
-  const handlePlay = useCallback(() => dispatch(startEvolution()), [dispatch])
-  const handlePause = useCallback(() => dispatch(pauseEvolution()), [dispatch])
-  const handleStep = useCallback(() => dispatch(stepEvolution()), [dispatch])
+  useEffect(() => {
+    dispatch(initialEvolutionRequest())
+  }, [dispatch])
+
+  const handleReset = useCallback(() => dispatch(resetEvolutionRequest()), [
+    dispatch,
+  ])
+  const handlePlay = useCallback(() => dispatch(startEvolutionRequest()), [
+    dispatch,
+  ])
+  const handlePause = useCallback(() => dispatch(pauseEvolutionRequest()), [
+    dispatch,
+  ])
+  const handleStep = useCallback(() => dispatch(stepEvolutionRequest()), [
+    dispatch,
+  ])
 
   return (
     <ControlWrapper>

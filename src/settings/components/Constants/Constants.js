@@ -3,11 +3,11 @@ import { useRedux } from '../../../hooks'
 import { constantsSelector } from '../../selectors'
 import { isEvolvingSelector } from '../../../evolution/selectors'
 import {
-  addConstant,
+  requestAddConstant,
   removeConstant,
   changeConstant,
   setConstants,
-  resetConstants,
+  requestResetConstants,
   MAX_CONSTANTS,
 } from '../../actions'
 import List, { Row } from '../List'
@@ -15,7 +15,7 @@ import Remove from '../../../icons/Remove'
 import Plus from '../../../icons/Plus'
 import Reset from '../../../icons/Reset'
 import CircleButton from '../../../ui/components/CircleButton'
-import { Input } from './style'
+import TextInput from '../../../ui/components/TextInput'
 import SubHeader from '../SubHeader'
 
 // Allows typing negative numbers
@@ -90,9 +90,9 @@ const mapStateToProps = {
 const Constants = () => {
   const { constants, isEvolving, dispatch } = useRedux(mapStateToProps)
 
-  const handleAddConstant = () => dispatch(addConstant())
+  const handleAddConstant = () => dispatch(requestAddConstant())
   const handleRemoveConstant = i => () => dispatch(removeConstant(i))
-  const handleResetConstants = () => dispatch(resetConstants())
+  const handleResetConstants = () => dispatch(requestResetConstants())
 
   const handleChangeConstant = makeHandleChangeConstant(dispatch)
   const handleKeyDownConstant = makeHandleKeyDownConstant(dispatch, constants)
@@ -128,7 +128,8 @@ const Constants = () => {
         {constants.map((constant, i) => (
           <Row key={i}>
             C{i + 1}
-            <Input
+            <TextInput
+              css="margin: 0 15px;"
               disabled={isEvolving}
               value={constant}
               onChange={handleChangeConstant(i)}

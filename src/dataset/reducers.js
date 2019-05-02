@@ -1,180 +1,146 @@
 /*
 {
-  id: String,
+  selectedId: String,
+  allIds: [String],
   byId: {
     [String]: {
-      inputs: [String],
-      outputs: [String],
-      equation: ?String,
-      points: [{
-        [String]: Number,
-      }],
+      id: String,
+      name: String,
+      mutable: Boolean,
+      points: [[Number]],
+      inputs: [Number],
+      outputs: [Number],
+      labels: [String],
+      equations?: [String],
     },
   },
-  prediction: {
-    keys: [String],
-    points: [{
-      [String]: Number,
-    }],
-    equation: String,
-    subscribers: Number,
-  },
+  errors: [Error],
 }
 */
 
 import { combineReducers } from 'redux'
 import * as actions from './actions'
-import { RESET_EVOLUTION } from '../evolution/actions'
-import linearPreset from './pointsPresets/linear'
-import sincPreset from './pointsPresets/sinc'
-import sinExpPreset from './pointsPresets/sinExp'
-import noisyParabolaPreset from './pointsPresets/noisyParabola'
-import eckerle4Preset from './pointsPresets/eckerle4'
-import chwirut2Preset from './pointsPresets/chwirut2'
-import hahn1Preset from './pointsPresets/hahn1'
-import gauss2Preset from './pointsPresets/gauss2'
 
-function id(state = 'sinc', action) {
+let presetsById
+
+if (process.env.NODE_ENV !== 'test') {
+  const presetsRequire = require.context('./presets/', false, /\.js$/)
+  presetsById = presetsRequire.keys().reduce((presets, key) => {
+    const preset = presetsRequire(key).default
+    return { ...presets, [preset.id]: preset }
+  }, {})
+}
+
+if (process.env.NODE_ENV === 'test') {
+  const linear = require('./presets/linear.js').default
+  const sinc = require('./presets/sinc.js').default
+  presetsById = { [linear.id]: linear, [sinc.id]: sinc }
+}
+
+const presetIds = Object.keys(presetsById)
+
+function selectedId(state = 'sinc', action) {
   const { type, payload } = action
 
   switch (type) {
-    case actions.CHANGE_DATASET:
+    case actions.SELECT_DATASET:
       return payload
     default:
       return state
   }
 }
 
-const linear = (state = linearPreset) => state
-const sinc = (state = sincPreset) => state
-const sinExp = (state = sinExpPreset) => state
-const noisyParabola = (state = noisyParabolaPreset) => state
-const eckerle4 = (state = eckerle4Preset) => state
-const chwirut2 = (state = chwirut2Preset) => state
-const hahn1 = (state = hahn1Preset) => state
-const gauss2 = (state = gauss2Preset) => state
-
-function inputs(state = [], action) {
+function allIds(state = presetIds, action) {
   const { type, payload } = action
 
   switch (type) {
+    case actions.ADD_DATASET:
+      return [...state, payload.id]
+    default:
+      return state
+  }
+}
+
+const addToState = (state = [], action) => {
+  const {
+    payload: { columnIndex },
+  } = action
+
+  return [...state, columnIndex]
+}
+
+const removeFromState = (state = [], action) => {
+  const {
+    payload: { columnIndex },
+  } = action
+
+  return state.filter(index => index !== columnIndex)
+}
+
+const changeLabel = (labels = [], action) => {
+  const {
+    payload: { columnIndex, label },
+  } = action
+
+  labels[columnIndex] = label
+
+  return [...labels]
+}
+
+const modifyDataset = (property, state, action, modificationFunction) => {
+  const { payload } = action
+  const { datasetId } = payload
+  const dataset = state[datasetId]
+
+  return {
+    ...state,
+    [datasetId]: {
+      ...dataset,
+      [property]: modificationFunction(dataset[property], action),
+    },
+  }
+}
+
+const modifyInputs = modifyDataset.bind(null, 'inputs')
+const modifyOutputs = modifyDataset.bind(null, 'outputs')
+const modifyName = modifyDataset.bind(null, 'name')
+const modifyLabels = modifyDataset.bind(null, 'labels')
+
+function byId(state = presetsById, action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case actions.ADD_DATASET:
+      return { ...state, [payload.id]: payload }
     case actions.ADD_INPUT:
-      return [...state, payload]
-    case actions.SET_INPUTS:
-      return payload
+      return modifyInputs(state, action, addToState)
     case actions.REMOVE_INPUT:
-      return state.filter(item => item !== payload)
-    default:
-      return state
-  }
-}
-
-function outputs(state = [], action) {
-  const { type, payload } = action
-
-  switch (type) {
+      return modifyInputs(state, action, removeFromState)
     case actions.ADD_OUTPUT:
-      return [...state, payload]
-    case actions.SET_OUTPUTS:
-      return payload
+      return modifyOutputs(state, action, addToState)
     case actions.REMOVE_OUTPUT:
-      return state.filter(item => item !== payload)
+      return modifyOutputs(state, action, removeFromState)
+    case actions.CHANGE_NAME:
+      return modifyName(state, action, (_, action) => action.payload.name)
+    case actions.CHANGE_LABEL:
+      return modifyLabels(state, action, changeLabel)
     default:
       return state
   }
 }
 
-function points(state = [], action) {
-  const { type, payload } = action
-
-  switch (type) {
-    case actions.SET_POINTS:
-      return payload
-    default:
-      return state
-  }
-}
-
-const client = combineReducers({
-  outputs,
-  inputs,
-  points,
-})
-
-const byId = combineReducers({
-  linear,
-  sinc,
-  sinExp,
-  noisyParabola,
-  eckerle4,
-  chwirut2,
-  hahn1,
-  gauss2,
-  client,
-})
-
-function keys(state = [], action) {
-  const { type, payload } = action
-
-  switch (type) {
-    case actions.SET_PREDICTION_KEYS:
-      return payload
-    case actions.REMOVE_PREDICTION_KEYS:
-      return []
-    default:
-      return state
-  }
-}
-
-function predictionPoints(state = [], action) {
-  const { type, payload } = action
-
-  switch (type) {
-    case actions.SET_PREDICTION_POINTS:
-      return payload
-    case actions.REMOVE_PREDICTION_POINTS:
-    case RESET_EVOLUTION:
-      return []
-    default:
-      return state
-  }
-}
-
-function equations(state = [], action) {
+function errors(state = [], action) {
   const { type } = action
 
   switch (type) {
-    case actions.SET_PREDICTION_EQUATIONS:
-      return action.payload
-    case RESET_EVOLUTION:
-      return []
     default:
       return state
   }
 }
-
-function subscribers(state = 0, action) {
-  const { type } = action
-
-  switch (type) {
-    case actions.ADD_PREDICTION_SUBSCRIBER:
-      return state + 1
-    case actions.REMOVE_PREDICTION_SUBSCRIBER:
-      return state - 1
-    default:
-      return state
-  }
-}
-
-const prediction = combineReducers({
-  keys,
-  points: predictionPoints,
-  equations,
-  subscribers,
-})
 
 export default combineReducers({
-  id,
+  selectedId,
+  allIds,
   byId,
-  prediction,
+  errors,
 })

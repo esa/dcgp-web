@@ -2,62 +2,79 @@
 // prevents actions from being declared multiple times
 const prefix = '[evolution] '
 
-export const SET_DCGP_INSTANCE = prefix + 'SET_DCGP_INSTANCE'
+export const START = prefix + 'START'
+export const START_REQUEST = prefix + 'START_REQUEST'
 
-export const setDcgpInstance = instance => ({
-  type: SET_DCGP_INSTANCE,
-  payload: instance,
+export const startEvolution = payload => ({
+  type: START,
+  payload,
 })
 
-export const WORKER_MESSAGE_IN = prefix + 'WORKER_MESSAGE_IN'
-export const WORKER_MESSAGE_OUT = prefix + 'WORKER_MESSAGE_OUT'
-
-export const sendWorkerMessage = action => ({
-  type: WORKER_MESSAGE_OUT,
-  payload: action,
+export const startEvolutionRequest = () => ({
+  type: START_REQUEST,
 })
 
-export const START_EVOLUTION = prefix + 'START_EVOLUTION'
-export const PAUSE_EVOLUTION = prefix + 'PAUSE_EVOLUTION'
-export const RESET_EVOLUTION = prefix + 'RESET_EVOLUTION'
-export const STEP_EVOLUTION = prefix + 'STEP_EVOLUTION'
-export const DONE_EVOLUTION = prefix + 'DONE_EVOLUTION'
-export const GET_INITIAL_EVOLUTION = prefix + 'GET_INITIAL_EVOLUTION'
-export const SET_INITIAL_EVOLUTION = prefix + 'SET_INITIAL_EVOLUTION'
-export const LOSS_THRESHOLD = 1e-14
-export const EVOLUTION_PROGRESS = prefix + 'EVOLUTION_PROGRESS'
-
-export const getInitialEvolution = () => ({
-  type: GET_INITIAL_EVOLUTION,
-})
-
-export const setInitialEvolution = resultObj => ({
-  type: SET_INITIAL_EVOLUTION,
-  payload: resultObj,
-})
-
-export const startEvolution = () => ({
-  type: START_EVOLUTION,
-})
+export const PAUSE = prefix + 'PAUSE'
+export const PAUSE_REQUEST = prefix + 'PAUSE_REQUEST'
 
 export const pauseEvolution = () => ({
-  type: PAUSE_EVOLUTION,
+  type: PAUSE,
 })
+
+export const pauseEvolutionRequest = () => ({
+  type: PAUSE_REQUEST,
+})
+
+export const RESUME = prefix + 'RESUME'
+export const RESUME_REQUEST = prefix + 'RESUME_REQUEST'
+
+export const RESET = prefix + 'RESET'
+export const RESET_REQUEST = prefix + 'RESET_REQUEST'
 
 export const resetEvolution = () => ({
-  type: RESET_EVOLUTION,
+  type: RESET,
 })
 
-export const stepEvolution = () => ({
-  type: STEP_EVOLUTION,
+export const resetEvolutionRequest = () => ({
+  type: RESET_REQUEST,
 })
+
+export const STEP = prefix + 'STEP'
+export const STEP_REQUEST = prefix + 'STEP_REQUEST'
+
+export const stepEvolution = payload => ({
+  type: STEP,
+  payload,
+})
+
+export const stepEvolutionRequest = () => ({
+  type: STEP_REQUEST,
+})
+
+export const DONE = prefix + 'DONE'
+// export const DONE_REQUEST = prefix + 'DONE_REQUEST'
 
 export const doneEvolution = () => ({
-  type: DONE_EVOLUTION,
+  type: DONE,
 })
 
+export const INITIAL = prefix + 'INITIAL'
+export const INITIAL_REQUEST = prefix + 'INITIAL_REQUEST'
+
+export const initialEvolution = payload => ({
+  type: INITIAL,
+  payload,
+})
+
+export const initialEvolutionRequest = () => ({
+  type: INITIAL_REQUEST,
+})
+
+export const PROGRESS = prefix + 'PROGRESS'
+export const PROGRESS_REQUEST = prefix + 'PROGRESS_REQUEST'
+
 export const evolutionProgress = resultObj => ({
-  type: EVOLUTION_PROGRESS,
+  type: PROGRESS,
   payload: resultObj,
 })
 

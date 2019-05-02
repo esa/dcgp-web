@@ -1,52 +1,78 @@
 import { createSelector } from 'reselect'
+import { transpose2D } from '../utils/array'
 
-export const datasetIdSelector = state => state.datasets.id
+export const selectedDatasetIdSelector = state => state.datasets.selectedId
+export const datasetsSelector = state => state.datasets.byId
+export const datasetIdsSelector = state => state.datasets.allIds
 
 export const selectedDatasetSelector = createSelector(
-  datasetIdSelector,
+  selectedDatasetIdSelector,
   state => state.datasets.byId,
   (id, datasets) => datasets[id]
 )
 
-export const equationSelector = createSelector(
+export const pointsSelector = createSelector(
   selectedDatasetSelector,
-  dataset => dataset.equation
+  // transpose points matix because that is how dcgp methods expect it
+  dataset => transpose2D(dataset.points)
 )
 
-export const inputKeysSelector = createSelector(
+export const inputIndicesSelector = createSelector(
   selectedDatasetSelector,
   dataset => dataset.inputs
 )
 
-export const outputKeysSelector = createSelector(
+export const outputIndicesSelector = createSelector(
   selectedDatasetSelector,
   dataset => dataset.outputs
 )
 
-export const pointsSelector = createSelector(
+export const labelsSelector = createSelector(
   selectedDatasetSelector,
-  dataset => dataset.points
+  dataset => dataset.labels
+)
+
+export const equationsSelector = createSelector(
+  selectedDatasetSelector,
+  dataset => dataset.equations
 )
 
 export const inputsSelector = createSelector(
-  inputKeysSelector,
   pointsSelector,
-  (inputs, points) => inputs.map(input => points.map(point => point[input]))
+  inputIndicesSelector,
+  (points, inputIndices) =>
+    points.filter((column, i) => inputIndices.includes(i))
 )
 
-export const labelsSelector = createSelector(
-  outputKeysSelector,
+export const outputsSelector = createSelector(
   pointsSelector,
-  (outputs, points) => outputs.map(output => points.map(point => point[output]))
+  outputIndicesSelector,
+  (points, outputIndices) =>
+    points.filter((column, i) => outputIndices.includes(i))
 )
 
-export const predictionsSubscribersSelector = state =>
-  state.datasets.prediction.subscribers
+export const inputLabelsSelector = createSelector(
+  labelsSelector,
+  inputIndicesSelector,
+  (labels, inputIndices) =>
+    labels.filter((label, i) => inputIndices.includes(i))
+)
 
-export const predictionPointsSelector = state =>
-  state.datasets.prediction.points
+export const outputLabelsSelector = createSelector(
+  labelsSelector,
+  outputIndicesSelector,
+  (labels, outputIndices) =>
+    labels.filter((label, i) => outputIndices.includes(i))
+)
 
-export const predictionKeysSelector = state => state.datasets.prediction.keys
+// export const predictionsSubscribersSelector = state =>
+//   // state.datasets.prediction.subscribers
+//   false
 
-export const predictionEquationsSelector = state =>
-  state.datasets.prediction.equations
+// export const predictionPointsSelector = state =>
+//   state.datasets.prediction.points
+
+// export const predictionKeysSelector = state => state.datasets.prediction.keys
+
+// export const predictionEquationsSelector = state =>
+//   state.datasets.prediction.equations
