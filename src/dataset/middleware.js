@@ -12,14 +12,18 @@ import {
   removeOutput,
 } from './actions'
 import { resetEvolution } from '../evolution/actions'
-import { datasetsSelector } from './selectors'
+import { datasetsSelector, selectedDatasetSelector } from './selectors'
 const nanoid = require('nanoid/non-secure')
 
 export const handleDatasetChange = store => next => action => {
   next(action)
 
   if (action.type === SELECT_DATASET) {
-    store.dispatch(resetEvolution())
+    const currentDatasetId = selectedDatasetSelector(store.getState()).id
+
+    if (action.payload !== currentDatasetId) {
+      store.dispatch(resetEvolution())
+    }
   }
 }
 

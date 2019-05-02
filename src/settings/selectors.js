@@ -2,6 +2,8 @@ import { createSelector } from 'reselect'
 
 export const settingsSelector = state => state.settings
 
+export const seedSelector = state => state.settings.seed
+
 export const networkSelector = state => state.settings.network
 
 export const kernelsSelector = state => state.settings.kernels

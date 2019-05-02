@@ -15,16 +15,12 @@ const handleWorker = store => {
 
   return next => action => {
     if (action.type === WORKER_MESSAGE_OUT) {
+      // console.log('MESSAGE OUT', action.payload)
       worker.postMessage(action.payload)
     }
 
     if (action.type === SET_DCGP_INSTANCE) {
       next(action)
-      // initializer(action.payload.module).then(dcgp => {
-      //   next(addPayload(action, dcgp))
-
-      //   store.dispatch(getInitialEvolution())
-      // })
       store.dispatch(getInitialEvolution())
       return
     }

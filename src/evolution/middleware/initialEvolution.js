@@ -1,49 +1,42 @@
-import { GET_INITIAL_EVOLUTION, sendWorkerMessage } from '../actions'
-import { addPayload } from '../../utils/actions'
-// import { predictionRequest } from './predictions'
+import { GET_INITIAL_EVOLUTION, setInitialEvolution } from '../actions'
 import {
   activeKernelsSelector,
-  settingsSelector,
+  networkSelector,
   constantsSelector,
+  seedSelector,
 } from '../../settings/selectors'
-import {
-  inputsSelector,
-  outputsSelector,
-  // predictionsSubscribersSelector,
-} from '../../dataset/selectors'
+import { inputsSelector, outputsSelector } from '../../dataset/selectors'
 
-export const handleInitialEvolution = store => next => action => {
+import { getLoss } from '../../dcgpProxy'
+
+export const handleInitialEvolution = store => next => async action => {
+  next(action)
+
   if (action.type === GET_INITIAL_EVOLUTION) {
-    next(action)
     const state = store.getState()
 
-    const activeKernelIds = activeKernelsSelector(state)
-    const parameters = settingsSelector(state)
+    const kernelIds = activeKernelsSelector(state)
+    const network = networkSelector(state)
     const inputs = inputsSelector(state)
     const outputs = outputsSelector(state)
+    const seed = seedSelector(state)
     const constants = constantsSelector(state)
 
-    store.dispatch(
-      sendWorkerMessage(
-        addPayload(action, {
-          activeKernelIds,
-          parameters,
-          inputs,
-          outputs,
-          constants,
-        })
-      )
-    )
+    const loss = await getLoss({
+      expression: {
+        ...network,
+        kernelIds,
+        inputs: inputs.length + constants.length,
+        outputs: outputs.length,
+        seed,
+      },
+      inputs,
+      outputs,
+      constants,
+    })
 
-    // const predicitionSubscribers = predictionsSubscribersSelector(state)
-
-    // if (predicitionSubscribers) {
-    //   predictionRequest(store)
-    // }
-    return
+    store.dispatch(setInitialEvolution({ loss }))
   }
-
-  next(action)
 }
 
 export default handleInitialEvolution

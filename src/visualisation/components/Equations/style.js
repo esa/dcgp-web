@@ -1,6 +1,8 @@
+import React from 'react'
+import 'katex/dist/katex.min.css'
+import { BlockMath } from 'react-katex'
 import styled from 'styled-components'
 import { up } from 'styled-breakpoints'
-import { transparentize as fade } from 'polished'
 import unstyledGridContainer from '../../../ui/components/GridContainer'
 
 export const GridContainer = styled(unstyledGridContainer)`
@@ -11,24 +13,25 @@ export const GridContainer = styled(unstyledGridContainer)`
   }
 `
 
-export const CopyButton = styled.button`
-  color: ${({ theme }) => theme.primary};
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  transition: color 150ms ease-out;
-  box-sizing: border-box;
-  -webkit-appearance: none;
+export const Bold = styled.b`
+  font-size: 17px;
+  font-weight: 600;
+  margin-right: 0.25em;
+  flex-grow: 1;
+`
 
-  &:hover {
-    text-decoration: underline;
-  }
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
 
-  &:active {
-    transition: color 80ms ease-out;
-    color: ${({ theme }) => fade(0.3, theme.primary)};
-  }
+export const EquationBlock = styled(({ className, equation, children }) => (
+  <div className={className}>
+    <BlockMath>{children || equation}</BlockMath>
+  </div>
+))`
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 20px;
 `

@@ -19,6 +19,7 @@ export const sendWorkerMessage = action => ({
 
 export const START_EVOLUTION = prefix + 'START_EVOLUTION'
 export const PAUSE_EVOLUTION = prefix + 'PAUSE_EVOLUTION'
+export const RESUME_EVOLUTION = prefix + 'RESUME_EVOLUTION'
 export const RESET_EVOLUTION = prefix + 'RESET_EVOLUTION'
 export const STEP_EVOLUTION = prefix + 'STEP_EVOLUTION'
 export const DONE_EVOLUTION = prefix + 'DONE_EVOLUTION'

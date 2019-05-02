@@ -1,15 +1,6 @@
-import React, { useContext, useMemo, useState, useCallback } from 'react'
-import { ThemeContext } from 'styled-components'
-import {
-  Line,
-  XAxis,
-  YAxis,
-  Legend,
-  CartesianGrid,
-  ResponsiveContainer,
-} from 'recharts'
+import React, { useState, useCallback } from 'react'
 import { useRedux } from '../../../hooks'
-// import { usePredictions } from '../../../dataset/hooks'
+import { usePredictions } from '../../../dcgpProxy/hooks'
 import Divider from '../../../ui/components/Divider'
 import {
   inputLabelsSelector,
@@ -18,48 +9,16 @@ import {
   outputIndicesSelector,
   labelsSelector,
   pointsSelector,
+  inputsSelector,
 } from '../../../dataset/selectors'
-import { StyledLineChart, GridContainer, Select } from './style'
-
-const MAX_PLOTTED_POINTS = 70
-
-const structurePoints = (points, labels) => {
-  const result = []
-
-  for (let j = 0; j < points[0].length; j++) {
-    const rowObject = {}
-
-    for (let i = 0; i < points.length; i++) {
-      rowObject[labels[i]] = points[i][j]
-    }
-
-    result.push(rowObject)
-  }
-
-  return result
-}
-
-const mergeObjectArrays = (array1, array2) => {
-  if (array1.length === 0) return array2
-
-  if (array2.length === 0) return array1
-
-  const result = []
-
-  for (let i = 0; i < array1.length; i++) {
-    result.push({ ...array1[i], ...array2[i] })
-  }
-
-  return result
-}
-
-const subSampleData = array => {
-  if (array.length < MAX_PLOTTED_POINTS) return array
-
-  const stepSize = Math.round(array.length / MAX_PLOTTED_POINTS)
-
-  return array.filter((_, i) => i % stepSize === 0)
-}
+import { GridContainer } from './style'
+import Chart from './Chart'
+import AxisSelection from './AxisSelection'
+import {
+  useStucturedPoints,
+  useSubSampledPoints,
+  useMergedPoints,
+} from './hooks'
 
 const mapStateToProps = {
   inputLabels: inputLabelsSelector,
@@ -67,41 +26,43 @@ const mapStateToProps = {
   inputsIndices: inputIndicesSelector,
   outputsIndices: outputIndicesSelector,
   points: pointsSelector,
+  inputs: inputsSelector,
   labels: labelsSelector,
 }
 
 const Plot = () => {
-  const {
-    inputLabels,
-    outputLabels,
-    // inputsIndices,
-    // outputsIndices,
-    points,
-    labels,
-  } = useRedux(mapStateToProps)
-  const theme = useContext(ThemeContext)
+  const { inputLabels, outputLabels, points, labels, inputs } = useRedux(
+    mapStateToProps
+  )
   const [selectedInput, setSelectedInput] = useState(inputLabels[0])
   const [selectedOutput, setSelectedOutput] = useState(outputLabels[0])
 
   const handleInputChange = useCallback(e => setSelectedInput(e.value), [])
   const handleOutputChange = useCallback(e => setSelectedOutput(e.value), [])
 
-  // const { predictions, keys: predictionKeys } = usePredictions()
+  const structuredInputPoints = useStucturedPoints(inputs, inputLabels)
 
-  const structuredPoints = useMemo(() => structurePoints(points, labels), [
-    points,
-    labels,
-  ])
+  const structuredOutputPoints = useStucturedPoints(points, labels)
+  const sampledOutputPoints = useSubSampledPoints(
+    structuredOutputPoints,
+    selectedInput,
+    selectedOutput
+  )
 
-  const data = useMemo(() => {
-    const mergedData = mergeObjectArrays(structuredPoints, [])
-
-    const sortedData = selectedInput
-      ? mergedData.sort((a, b) => a[selectedInput] - b[selectedInput])
-      : mergedData
-
-    return subSampleData(sortedData)
-  }, [structuredPoints, selectedInput])
+  const predictions = usePredictions()
+  const structuredPredictionPoints = useStucturedPoints(
+    predictions,
+    outputLabels
+  )
+  const mergedPredictionPoints = useMergedPoints(
+    structuredInputPoints,
+    structuredPredictionPoints
+  )
+  const sampledPredictionPoints = useSubSampledPoints(
+    mergedPredictionPoints,
+    selectedInput,
+    selectedOutput
+  )
 
   if (inputLabels.length !== 0 && !inputLabels.includes(selectedInput)) {
     setSelectedInput(inputLabels[0])
@@ -113,62 +74,25 @@ const Plot = () => {
 
   return (
     <GridContainer>
-      <div css="margin: 0 5px; position: relative; padding-bottom: 65%;">
-        <div css="width: 100%; height: 100%; position: absolute;">
-          <ResponsiveContainer>
-            <StyledLineChart
-              data={data}
-              margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-            >
-              <CartesianGrid />
-              <XAxis
-                dataKey={selectedInput}
-                domain={['auto', 'auto']}
-                type="number"
-              />
-              <YAxis width={45} />
-              <Legend verticalAlign="top" height={36} />
-              <Line
-                name="labels"
-                type="monotone"
-                dataKey={selectedOutput}
-                dot={{ fill: theme.primary, r: 4 }}
-                stroke="transparent"
-                animationDuration={0}
-              />
-              {/* <Line
-                name="predictions"
-                dataKey={predictionKeys[0]}
-                type="monotone"
-                dot={{ r: 0 }}
-                stroke={theme.secundary}
-                animationDuration={500}
-              /> */}
-            </StyledLineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+      <Chart
+        outputPoints={sampledOutputPoints}
+        predictionPoints={sampledPredictionPoints}
+        selectedInput={selectedInput}
+        selectedOutput={selectedOutput}
+      />
       <Divider css="margin: 15px 0;" />
-      <div css="display: flex; align-items: center; margin-bottom: 8px;">
-        Select input:
-        <div css="flex-grow: 1;" />
-        <Select
-          value={selectedInput}
-          // inputValue={selectedInput}
-          onChange={handleInputChange}
-          options={inputLabels.map(label => ({ value: label, label }))}
-        />
-      </div>
-      <div css="display: flex; align-items: center;">
-        Select output:
-        <div css="flex-grow: 1;" />
-        <Select
-          value={selectedOutput}
-          // inputValue={selectedOutput}
-          onChange={handleOutputChange}
-          options={outputLabels.map(label => ({ value: label, label }))}
-        />
-      </div>
+      <AxisSelection
+        name="inputs"
+        value={selectedInput}
+        options={inputLabels}
+        onChange={handleInputChange}
+      />
+      <AxisSelection
+        name="outputs"
+        value={selectedOutput}
+        options={outputLabels}
+        onChange={handleOutputChange}
+      />
       {/* PLOT STUFF */}
     </GridContainer>
   )

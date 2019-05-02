@@ -4,11 +4,9 @@
   isDone: Bool,
   initial: {
     loss: Number,
-    chromosome: [Number],
   },
   steps: [{
     loss: Number,
-    chromosome: [Number],
     step: Number,
   }],
   predictions?: {
@@ -74,52 +72,6 @@ function steps(state = [], action) {
       return state
   }
 }
-
-// function predictionPoints(state = [], action) {
-//   const { type, payload } = action
-
-//   switch (type) {
-//     case actions.SET_PREDICTION_POINTS:
-//       return payload
-//     case actions.REMOVE_PREDICTION_POINTS:
-//     case RESET_EVOLUTION:
-//       return []
-//     default:
-//       return state
-//   }
-// }
-
-// function equations(state = [], action) {
-//   const { type } = action
-
-//   switch (type) {
-//     case actions.SET_PREDICTION_EQUATIONS:
-//       return action.payload
-//     case RESET_EVOLUTION:
-//       return []
-//     default:
-//       return state
-//   }
-// }
-
-// function subscribers(state = 0, action) {
-//   const { type } = action
-
-//   switch (type) {
-//     case actions.ADD_PREDICTION_SUBSCRIBER:
-//       return state + 1
-//     case actions.REMOVE_PREDICTION_SUBSCRIBER:
-//       return state - 1
-//     default:
-//       return state
-//   }
-// }
-
-// const prediction = combineReducers({
-//   points: predictionPoints,
-//   equations,
-//   subscribers,
-// })
 
 export default combineReducers({
   isEvolving,

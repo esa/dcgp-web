@@ -71,7 +71,7 @@ export const NIGHT = {
   secundary: bright.yellow,
   surface: {
     regular: grays['700'],
-    selected: grays['500'],
+    selected: grays['600'],
   },
   text: {
     regular: grays['200'],
