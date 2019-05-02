@@ -1,7 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
 import {
-  LineChart,
   Line,
   XAxis,
   YAxis,
@@ -9,46 +7,13 @@ import {
   ReferenceLine,
   ResponsiveContainer,
 } from 'recharts'
+import { LineChart } from './style'
 import Controls from '../Controls'
 import GridContainer from '../../../ui/components/GridContainer'
 import Divider from '../../../ui/components/Divider'
 import { useRedux } from '../../../hooks'
 import { stepsSelector, isDoneSelector } from '../../selectors'
 import Information from '../Information'
-
-const StyledLineChart = styled(LineChart)`
-  .recharts-curve {
-    stroke: ${({ theme }) => theme.title};
-    stroke-width: 2px;
-  }
-
-  .recharts-line-dots circle {
-    stroke: none;
-    fill: ${({ theme }) => theme.title};
-  }
-
-  .recharts-reference-line line {
-    stroke-width: 2px;
-    stroke: ${({ theme }) => theme.text.subtle};
-    stroke-dasharray: none;
-  }
-
-  .recharts-cartesian-grid-horizontal line {
-    stroke: ${({ theme }) => theme.border.divider};
-    stroke-dasharray: 3, 3;
-
-    &:nth-last-child(2) {
-      stroke-width: 2px;
-      stroke: rgba(0, 0, 0, 0);
-    }
-
-    &:nth-last-child(1) {
-      stroke-width: 2px;
-      stroke: ${({ theme }) => theme.text.subtle};
-      stroke-dasharray: none;
-    }
-  }
-`
 
 const getData = (data, isDone) => {
   if (isDone) {
@@ -78,14 +43,14 @@ const Evolve = () => {
       <div css="margin: 0 5px; position: relative; padding-bottom: 65%;">
         <div css="width: 100%; height: 100%; position: absolute;">
           <ResponsiveContainer style={{ position: 'absolute' }}>
-            <StyledLineChart
+            <LineChart
               data={data}
               margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
             >
               <XAxis
                 dataKey="step"
                 type="number"
-                domain={[0, dataMax => Math.max(dataMax, 1000)]}
+                domain={[0, dataMax => (isFinite(dataMax) ? dataMax : 1000)]}
                 hide
               />
               <YAxis
@@ -101,7 +66,7 @@ const Evolve = () => {
                 dot={false}
                 animationDuration={1000}
               />
-            </StyledLineChart>
+            </LineChart>
           </ResponsiveContainer>
         </div>
       </div>

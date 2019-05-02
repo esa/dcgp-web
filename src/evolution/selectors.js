@@ -20,7 +20,7 @@ export const lossSelector = createSelector(
   state => state.evolution.initial,
   (steps, initial) => {
     if (!steps.length) {
-      if (initial) {
+      if (initial && typeof initial.loss === 'number') {
         return initial.loss
       }
 
@@ -47,7 +47,7 @@ export const chromosomeSelector = createSelector(
   state => state.evolution.initial,
   (steps, initial) => {
     if (!steps.length) {
-      if (initial) {
+      if (initial && initial.chromosome) {
         return initial.chromosome
       }
 

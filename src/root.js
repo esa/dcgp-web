@@ -6,7 +6,7 @@ import settings from './settings/reducers'
 import datasets from './dataset/reducers'
 import ui from './ui/reducers'
 
-// import evolution from './evolution/reducers'
+import evolutionEpic from './evolution/epics'
 import settingsEpic from './settings/epics'
 // import datasets from './dataset/reducers'
 // import ui from './ui/reducers'
@@ -18,4 +18,4 @@ export const rootReducer = combineReducers({
   ui,
 })
 
-export const rootEpic = combineEpics(settingsEpic)
+export const rootEpic = combineEpics(settingsEpic, evolutionEpic)

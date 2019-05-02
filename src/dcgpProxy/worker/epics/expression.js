@@ -1,3 +1,4 @@
+import { ReplaySubject } from 'rxjs'
 import { map, filter, scan, startWith } from 'rxjs/operators'
 import { KernelSet, Expression } from 'dcgp'
 
@@ -19,18 +20,25 @@ import { KernelSet, Expression } from 'dcgp'
 }
 */
 
-const makeExpression = event$ =>
-  event$.pipe(
-    filter(event => event.payload && event.payload.expression),
-    map(event => event.payload.expression),
-    map(createExpression),
-    filter(expression => expression),
-    scan((previous, current) => {
-      if (previous) previous.destroy()
-      return current
-    }),
-    startWith(null)
-  )
+const makeExpression = event$ => {
+  const expression$ = new ReplaySubject(1)
+
+  event$
+    .pipe(
+      filter(event => event.payload && event.payload.expression),
+      map(event => event.payload.expression),
+      map(createExpression),
+      filter(expression => expression),
+      scan((previous, current) => {
+        if (previous) previous.destroy()
+        return current
+      }),
+      startWith(null)
+    )
+    .subscribe(expression$)
+
+  return expression$
+}
 
 export const createExpression = settings => {
   try {
@@ -51,7 +59,6 @@ export const createExpression = settings => {
 
     return expression
   } catch (error) {
-    console.warn(error, settings)
     return null
   }
 }

@@ -10,6 +10,16 @@ export const kernelsSelector = state => state.settings.kernels
 
 export const algorithmSelector = state => state.settings.algorithm
 
+export const currrentAlgorithmSelector = createSelector(
+  algorithmSelector,
+  algorithm => {
+    return {
+      id: algorithm.id,
+      ...algorithm.byId[algorithm.id],
+    }
+  }
+)
+
 export const activeKernelsSelector = createSelector(
   kernelsSelector,
   kernels => {

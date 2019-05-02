@@ -1,25 +1,22 @@
 import {
-  STEP_EVOLUTION,
-  START_EVOLUTION,
-  LOSS_THRESHOLD,
-  pauseEvolution,
-  sendWorkerMessage,
+  STEP_REQUEST,
+  START_REQUEST,
+  startEvolution,
+  stepEvolution,
 } from '../actions'
-import { addPayload } from '../../utils/actions'
-import { currentStepSelector, lossSelector } from '../selectors'
+import { LOSS_THRESHOLD } from '../../dcgpProxy/constants'
+import { lossSelector } from '../selectors'
 import {
   activeKernelsSelector,
-  settingsSelector,
+  currrentAlgorithmSelector,
   constantsSelector,
 } from '../../settings/selectors'
 import { inputsSelector, outputsSelector } from '../../dataset/selectors'
 
 export const handlePlay = store => next => action => {
-  if (action.type === STEP_EVOLUTION) {
-    store.dispatch(pauseEvolution())
-  }
+  next(action)
 
-  if (action.type === START_EVOLUTION || action.type === STEP_EVOLUTION) {
+  if (action.type === START_REQUEST || action.type === STEP_REQUEST) {
     const state = store.getState()
     const loss = lossSelector(state)
 
@@ -27,32 +24,25 @@ export const handlePlay = store => next => action => {
       return
     }
 
-    next(action)
-
-    const activeKernelIds = activeKernelsSelector(state)
-    const parameters = settingsSelector(state)
-    const currentStep = currentStepSelector(state)
+    const kernelIds = activeKernelsSelector(state)
+    const algorithm = currrentAlgorithmSelector(state)
     const inputs = inputsSelector(state)
     const outputs = outputsSelector(state)
     const constants = constantsSelector(state)
 
+    const newAction =
+      action.type === START_REQUEST ? startEvolution : stepEvolution
+
     store.dispatch(
-      sendWorkerMessage(
-        addPayload(action, {
-          activeKernelIds,
-          parameters,
-          step: currentStep,
-          inputs,
-          outputs,
-          constants,
-        })
-      )
+      newAction({
+        kernelIds,
+        algorithm,
+        inputs,
+        outputs,
+        constants,
+      })
     )
-
-    return
   }
-
-  next(action)
 }
 
 export default handlePlay

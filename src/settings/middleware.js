@@ -1,3 +1,4 @@
+import { sendUpdate } from '../dcgpProxy'
 import {
   TOGGLE_KERNEL,
   NETWORK_CHANGE,
@@ -9,8 +10,12 @@ import {
   CHANGE_PARAMETER,
   algorithmsById,
 } from './actions'
-import { networkSelector, algorithmSelector } from './selectors'
-import { resetEvolution, sendWorkerMessage } from '../evolution/actions'
+import {
+  networkSelector,
+  algorithmSelector,
+  currrentAlgorithmSelector,
+} from './selectors'
+import { resetEvolutionRequest } from '../evolution/actions'
 import { isEvolvingSelector } from '../evolution/selectors'
 
 export const handleKernelChange = store => next => action => {
@@ -24,7 +29,7 @@ export const handleKernelChange = store => next => action => {
 
     next(action)
 
-    store.dispatch(resetEvolution())
+    store.dispatch(resetEvolutionRequest())
     return
   }
 
@@ -62,7 +67,7 @@ export const handleNetworkChange = store => next => action => {
         throw new Error(`settingId ${settingId} is not allowed`)
     }
 
-    dispatch(resetEvolution())
+    dispatch(resetEvolutionRequest())
   }
 }
 
@@ -70,10 +75,12 @@ export const handleAlgorithm = store => next => action => {
   next(action)
 
   if (action.type === SET_ALGORITHM) {
-    const isEvolving = isEvolvingSelector(store.getState())
+    const state = store.getState()
+    const isEvolving = isEvolvingSelector(state)
 
     if (isEvolving) {
-      store.dispatch(sendWorkerMessage(action))
+      const algorithm = currrentAlgorithmSelector(state)
+      sendUpdate({ algorithm })
     }
   }
 }
@@ -90,7 +97,14 @@ export const handleParameterChange = store => next => action => {
     const nextAction = parameter.action(value)
 
     store.dispatch(nextAction)
-    store.dispatch(sendWorkerMessage(nextAction))
+
+    const state = store.getState()
+    const isEvolving = isEvolvingSelector(state)
+
+    if (isEvolving) {
+      const algorithm = currrentAlgorithmSelector(state)
+      sendUpdate({ algorithm })
+    }
   }
 }
 

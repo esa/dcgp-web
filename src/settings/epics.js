@@ -10,7 +10,7 @@ import {
   addConstant,
   REMOVE_CONSTANT,
 } from './actions'
-import { resetEvolution } from '../evolution/actions'
+import { resetEvolutionRequest } from '../evolution/actions'
 import { constantsSelector } from './selectors'
 
 const isNumber = value => typeof value === 'number'
@@ -49,7 +49,7 @@ const handleResetConstants = (action$, state$) =>
 const handleEvolutionReset = action$ =>
   action$.pipe(
     ofType(ADD_CONSTANT, REMOVE_CONSTANT),
-    mapTo(resetEvolution())
+    mapTo(resetEvolutionRequest())
   )
 
 export default combineEpics(

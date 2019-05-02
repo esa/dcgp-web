@@ -1,40 +1,77 @@
-import { of, merge } from 'rxjs'
+import { of, merge, from } from 'rxjs'
 import { tap, filter, mergeMap, switchMap, takeUntil } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
+import { setConstants, setSeed } from '../settings/actions'
 import {
   doneEvolution,
+  pauseEvolutionRequest,
   evolutionProgress,
-  RESET_EVOLUTION,
-  RESUME_EVOLUTION,
-  PAUSE_EVOLUTION,
-  START_EVOLUTION,
+  initialEvolutionRequest,
+  RESET,
+  RESUME,
+  PAUSE,
+  START,
+  STEP,
 } from './actions'
-import { evolution } from '../dcgpProxy'
+import { evolution, doStep } from '../dcgpProxy'
 
 const handleEvolution = action$ => {
-  const stop$ = action$.pipe(ofType(RESET_EVOLUTION))
+  const reset$ = action$.pipe(ofType(RESET))
+
+  const resetAction$ = reset$.pipe(
+    mergeMap(() => {
+      const seed = Math.round(Math.random() * 1000)
+
+      return of(setSeed(seed), initialEvolutionRequest())
+    })
+  )
 
   const pause$ = action$.pipe(
-    ofType(PAUSE_EVOLUTION),
+    ofType(PAUSE),
     tap(() => evolution.pause()),
     filter(() => false)
   )
 
   const resume$ = action$.pipe(
-    ofType(RESUME_EVOLUTION),
+    ofType(RESUME),
     tap(() => evolution.resume()),
     filter(() => false)
   )
 
   const progress$ = action$.pipe(
-    ofType(START_EVOLUTION),
-    switchMap(({ payload }) => evolution.start(payload).pipe(takeUntil(stop$))),
-    mergeMap(progress => {
-      if (progress.done) return of(evolutionProgress(progress), doneEvolution())
-      return of(evolutionProgress(progress))
-    })
+    ofType(START),
+    switchMap(({ payload }) =>
+      evolution.start(payload).pipe(takeUntil(reset$))
+    ),
+    mergeMap(handleProgress)
   )
-  return merge(pause$, resume$, progress$)
+
+  return merge(pause$, resume$, progress$, resetAction$)
 }
 
-export default combineEpics(handleEvolution)
+const handleStep = action$ =>
+  action$.pipe(
+    ofType(STEP),
+    mergeMap(({ payload }) => from(doStep(payload))),
+    mergeMap(handleProgress)
+  )
+
+const handleProgress = progress => {
+  const actions = [evolutionProgress(progress)]
+
+  if (progress.isPausing) {
+    actions.push(pauseEvolutionRequest(progress.constants))
+  }
+
+  if (progress.constants) {
+    actions.push(setConstants(progress.constants))
+  }
+
+  if (progress.done) {
+    actions.push(doneEvolution())
+  }
+
+  return of(...actions)
+}
+
+export default combineEpics(handleEvolution, handleStep)

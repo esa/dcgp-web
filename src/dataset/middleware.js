@@ -11,20 +11,23 @@ import {
   removeInput,
   removeOutput,
 } from './actions'
-import { resetEvolution } from '../evolution/actions'
+import { resetEvolutionRequest } from '../evolution/actions'
 import { datasetsSelector, selectedDatasetSelector } from './selectors'
 const nanoid = require('nanoid/non-secure')
 
 export const handleDatasetChange = store => next => action => {
-  next(action)
-
   if (action.type === SELECT_DATASET) {
     const currentDatasetId = selectedDatasetSelector(store.getState()).id
 
+    next(action)
+
     if (action.payload !== currentDatasetId) {
-      store.dispatch(resetEvolution())
+      store.dispatch(resetEvolutionRequest())
     }
+    return
   }
+
+  next(action)
 }
 
 const handleRawUserData = store => next => action => {
@@ -113,7 +116,7 @@ const handleColumnType = store => next => action => {
       store.dispatch(removeInput(datasetId, columnIndex))
     }
 
-    store.dispatch(resetEvolution())
+    store.dispatch(resetEvolutionRequest())
   }
 }
 

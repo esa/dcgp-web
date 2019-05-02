@@ -27,7 +27,9 @@ const getPredictionEvent = ([event, expression]) => {
 
   const { inputs, constants = [] } = payload
 
-  const constantsArray = constants.map(c => Array(inputs[0].length).fill(c))
+  const constantsArray = Array.isArray(inputs[0])
+    ? constants.map(c => Array(inputs[0].length).fill(c))
+    : []
 
   try {
     const predictions = expression.evaluate(...inputs, ...constantsArray)

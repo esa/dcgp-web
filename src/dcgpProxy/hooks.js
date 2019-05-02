@@ -25,7 +25,6 @@ export const usePredictions = chromosome => {
     })
       .then(setPredictions)
       .catch(err => {
-        console.warn(err)
         setPredictions([])
       })
   }, [chromosome, constants, inputs, loss])
@@ -56,7 +55,6 @@ export const usePredictionEquations = (simplified = false, enabled) => {
     })
       .then(setEquations)
       .catch(err => {
-        console.warn(err)
         setEquations([])
       })
   }, [constants, enabled, inputLabels, loss, simplified])

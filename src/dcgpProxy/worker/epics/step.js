@@ -74,15 +74,13 @@ export const step = (
   }
 
   if (algorithm.id === 'gradientDescent') {
-    const result = algorithms.gradientDescent(
+    return algorithms.gradientDescent(
       expression,
       steps,
       inputs,
       outputs,
       constants
     )
-
-    return result
   }
 
   throw new Error('Selected an algorithm that is not supported.')

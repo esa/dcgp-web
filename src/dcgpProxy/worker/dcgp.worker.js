@@ -1,7 +1,7 @@
 /* eslint-env worker */
 import { initialise } from 'dcgp'
 import { fromEvent, merge, from, Subject, ReplaySubject, concat } from 'rxjs'
-import { tap, pluck, filter } from 'rxjs/operators'
+import { pluck, filter } from 'rxjs/operators'
 import dcgpUrl from 'dcgp/dcgp.wasm'
 
 import makeExpression from './epics/expression'
@@ -25,7 +25,6 @@ concat(initialise$, rawEvent$)
   .pipe(
     filter(event => event.data),
     pluck('data')
-    // tap(console.log)
   )
   .subscribe(event$)
 
@@ -43,6 +42,4 @@ merge(
   handleLoss(event$, state),
   handlePrediction(event$, state),
   handleEquation(event$, state)
-)
-  // .pipe(tap(console.log))
-  .subscribe({ next: event => postMessage(event) })
+).subscribe({ next: event => postMessage(event) })

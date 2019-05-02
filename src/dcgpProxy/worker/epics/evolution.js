@@ -1,4 +1,4 @@
-import { interval, merge, empty } from 'rxjs'
+import { interval, merge, empty, of } from 'rxjs'
 import {
   map,
   mapTo,
@@ -8,6 +8,7 @@ import {
   takeWhile,
   takeUntil,
   startWith,
+  catchError,
 } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
 import { algorithmsById } from '../../../settings/actions'
@@ -67,7 +68,15 @@ const handleStep = (event$, { expression$, algorithm$ }) => {
           },
         ]),
         map(([action]) => action),
-        takeWhile(({ payload }) => !payload.done)
+        takeWhile(({ payload }) => !payload.done),
+        catchError(err =>
+          of(
+            progressEvent(`dcgp backend: ${err}`, {
+              ...event.meta,
+              isError: true,
+            })
+          )
+        )
       )
     )
   )
@@ -90,7 +99,7 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
 
   // scalar makes sure there is a consistent progress framerate
   const { maxSteps } = algorithmsById[algorithm.id]
-  const numSteps = maxSteps * data.scalar
+  const numSteps = Math.round(maxSteps * data.scalar)
 
   let result
   let returnEvent
@@ -123,6 +132,25 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
   const scalar = timeScalar * data.scalar
 
   const constants = result.constants || data.constants
+
+  //
+  // explicit send message to frontend when termination event happens
+  //
+
+  if (returnEvent.meta && !returnEvent.meta.isError) {
+    if (returnEvent.payload.done) {
+      postMessage(returnEvent)
+    }
+
+    if (deltaTime < 20) {
+      // metric te determine whether gradient descent has converged
+      postMessage({
+        ...returnEvent,
+        payload: { ...returnEvent.payload, isPausing: true },
+      })
+      returnEvent.payload.done = true
+    }
+  }
 
   return [returnEvent, { time, scalar, constants }]
 }

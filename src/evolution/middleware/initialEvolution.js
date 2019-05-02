@@ -1,4 +1,4 @@
-import { GET_INITIAL_EVOLUTION, setInitialEvolution } from '../actions'
+import { INITIAL_REQUEST, initialEvolution } from '../actions'
 import {
   activeKernelsSelector,
   networkSelector,
@@ -12,7 +12,7 @@ import { getLoss } from '../../dcgpProxy'
 export const handleInitialEvolution = store => next => async action => {
   next(action)
 
-  if (action.type === GET_INITIAL_EVOLUTION) {
+  if (action.type === INITIAL_REQUEST) {
     const state = store.getState()
 
     const kernelIds = activeKernelsSelector(state)
@@ -35,7 +35,7 @@ export const handleInitialEvolution = store => next => async action => {
       constants,
     })
 
-    store.dispatch(setInitialEvolution({ loss }))
+    store.dispatch(initialEvolution({ loss }))
   }
 }
 

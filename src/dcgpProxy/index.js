@@ -4,9 +4,13 @@ import { Observable } from 'rxjs'
 import * as constants from './constants'
 const nanoid = require('nanoid/non-secure')
 
-const _15FPS = Math.round(1000 / 15)
+const FPS = Math.round(1000 / 10)
 
 const backend = new DcgpWorker()
+
+export const sendUpdate = payload => {
+  backend.postMessage({ payload })
+}
 
 const singleRequestAnswer = event => {
   const promiseId = nanoid()
@@ -106,7 +110,7 @@ export const evolution = {
    * @param {any} payload data used in the backend
    * @returns {Observable} progress stream
    */
-  start(payload, progressInterval = _15FPS) {
+  start(payload, progressInterval = FPS) {
     return new Observable(function subscribe(observer) {
       const handleBackendMessages = message => {
         const { data } = message
