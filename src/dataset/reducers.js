@@ -20,13 +20,23 @@
 
 import { combineReducers } from 'redux'
 import * as actions from './actions'
-// import { RESET_EVOLUTION } from '../evolution/actions'
 
-const presetsRequire = require.context('./presets/', false, /\.js$/)
-const presetsById = presetsRequire.keys().reduce((presets, key) => {
-  const preset = presetsRequire(key).default
-  return { ...presets, [preset.id]: preset }
-}, {})
+let presetsById
+
+if (process.env.NODE_ENV !== 'test') {
+  const presetsRequire = require.context('./presets/', false, /\.js$/)
+  presetsById = presetsRequire.keys().reduce((presets, key) => {
+    const preset = presetsRequire(key).default
+    return { ...presets, [preset.id]: preset }
+  }, {})
+}
+
+if (process.env.NODE_ENV === 'test') {
+  const linear = require('./presets/linear.js').default
+  const sinc = require('./presets/sinc.js').default
+  presetsById = { [linear.id]: linear, [sinc.id]: sinc }
+}
+
 const presetIds = Object.keys(presetsById)
 
 function selectedId(state = 'sinc', action) {
