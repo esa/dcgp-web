@@ -99,7 +99,7 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
 
   // scalar makes sure there is a consistent progress framerate
   const { maxSteps } = algorithmsById[algorithm.id]
-  const numSteps = Math.min(Math.round(maxSteps * data.scalar), 10 * maxSteps)
+  const numSteps = Math.min(Math.round(maxSteps * data.scalar), 10000)
 
   let result
   let returnEvent
@@ -132,6 +132,7 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
   const scalar = timeScalar * data.scalar
 
   const constants = result.constants || data.constants
+  const loss = result.loss
 
   //
   // explicit send message to frontend when termination event happens
@@ -142,7 +143,11 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
       postMessage(returnEvent)
     }
 
-    if (deltaTime < 20) {
+    if (
+      data.loss &&
+      algorithm.id === 'gradientDescent' &&
+      data.loss - loss < Number.EPSILON * 4
+    ) {
       // metric te determine whether gradient descent has converged
       postMessage({
         ...returnEvent,
@@ -152,7 +157,7 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
     }
   }
 
-  return [returnEvent, { time, scalar, constants }]
+  return [returnEvent, { time, scalar, constants, loss }]
 }
 
 export default handleStep

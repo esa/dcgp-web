@@ -26,12 +26,12 @@ const Body = () => {
           <div css="grid-column: full;">
             <Divider />
           </div>
-          <Evolution />
-          <Kernels />
           <Network />
+          <Kernels />
           <Algorithm />
-          <Plot />
+          <Evolution />
           <Equations />
+          <Plot />
         </Page>
       </PageLayout>
       <Footer />
