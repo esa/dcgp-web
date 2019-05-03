@@ -5,7 +5,11 @@ import {
   constantsSelector,
   seedSelector,
 } from '../../settings/selectors'
-import { inputsSelector, outputsSelector } from '../../dataset/selectors'
+import {
+  inputsSelector,
+  outputsSelector,
+  errorSelector,
+} from '../../dataset/selectors'
 
 import { getLoss } from '../../dcgpProxy'
 
@@ -14,6 +18,9 @@ export const handleInitialEvolution = store => next => async action => {
 
   if (action.type === INITIAL_REQUEST) {
     const state = store.getState()
+
+    const errors = errorSelector(state)
+    if (errors.length > 0) return
 
     const kernelIds = activeKernelsSelector(state)
     const network = networkSelector(state)

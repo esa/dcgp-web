@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react'
 import { useRedux } from '../../../hooks'
 import { setAlgorithm, algorithmsById, changeParameter } from '../../actions'
-import { algorithmSelector } from '../../selectors'
-import { isAdvancedModeSelector } from '../../../ui/selectors'
+import { algorithmSelector, constantsSelector } from '../../selectors'
 import QuantityCounter from '../../../ui/components/QuantityCounter'
 import Container from '../Container'
 import SubHeader from '../SubHeader'
@@ -14,11 +13,11 @@ const algorithmIds = Object.keys(algorithmsById)
 
 const mapStateToProps = {
   algorithm: algorithmSelector,
-  isAdvancedMode: isAdvancedModeSelector,
+  constants: constantsSelector,
 }
 
 const Algorithm = () => {
-  const { dispatch, algorithm, isAdvancedMode } = useRedux(mapStateToProps)
+  const { dispatch, algorithm, constants } = useRedux(mapStateToProps)
 
   const handleChange = useCallback(id => () => dispatch(setAlgorithm(id)), [
     dispatch,
@@ -34,21 +33,26 @@ const Algorithm = () => {
   return (
     <Container title="Algorithm">
       <List>
-        {algorithmIds.map(algorithmId => (
-          <Row
-            css="cursor: pointer;"
-            key={algorithmId}
-            onClick={handleChange(algorithmId)}
-          >
-            <Radio
-              css="margin-right: 8px;"
-              checked={algorithm.id === algorithmId}
-            />
-            {capitalize(algorithmsById[algorithmId].label)}
-          </Row>
-        ))}
+        {algorithmIds.map(algorithmId => {
+          const isDisabled =
+            algorithmId === 'gradientDescent' && constants.length === 0
+          return (
+            <Row
+              css="cursor: pointer;"
+              key={algorithmId}
+              disabled={isDisabled}
+              onClick={handleChange(algorithmId)}
+            >
+              <Radio
+                css="margin-right: 8px;"
+                checked={algorithm.id === algorithmId}
+              />
+              {capitalize(algorithmsById[algorithmId].label)}
+            </Row>
+          )
+        })}
       </List>
-      {isAdvancedMode && parameters && (
+      {parameters && (
         <>
           <SubHeader>Parameters</SubHeader>
           <List>

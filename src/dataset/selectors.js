@@ -11,10 +11,15 @@ export const selectedDatasetSelector = createSelector(
   (id, datasets) => datasets[id]
 )
 
-export const pointsSelector = createSelector(
+export const untransposedPointsSelector = createSelector(
   selectedDatasetSelector,
+  dataset => dataset.points
+)
+
+export const pointsSelector = createSelector(
+  untransposedPointsSelector,
   // transpose points matix because that is how dcgp methods expect it
-  dataset => transpose2D(dataset.points)
+  points => transpose2D(points)
 )
 
 export const inputIndicesSelector = createSelector(
@@ -65,14 +70,33 @@ export const outputLabelsSelector = createSelector(
     labels.filter((label, i) => outputIndices.includes(i))
 )
 
-// export const predictionsSubscribersSelector = state =>
-//   // state.datasets.prediction.subscribers
-//   false
+export const warningSelector = createSelector(
+  untransposedPointsSelector,
+  points => {
+    const warnings = []
 
-// export const predictionPointsSelector = state =>
-//   state.datasets.prediction.points
+    if (points.length > 500) {
+      warnings.push('Using a large dataset.')
+    }
 
-// export const predictionKeysSelector = state => state.datasets.prediction.keys
+    return warnings
+  }
+)
 
-// export const predictionEquationsSelector = state =>
-//   state.datasets.prediction.equations
+export const errorSelector = createSelector(
+  inputLabelsSelector,
+  outputLabelsSelector,
+  (inputLabels, outputLabels) => {
+    const errors = []
+
+    if (inputLabels.length === 0) {
+      errors.push('Must select an input.')
+    }
+
+    if (outputLabels.length === 0) {
+      errors.push('Must select an output.')
+    }
+
+    return errors
+  }
+)

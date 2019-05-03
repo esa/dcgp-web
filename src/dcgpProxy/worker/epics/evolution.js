@@ -99,7 +99,7 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
 
   // scalar makes sure there is a consistent progress framerate
   const { maxSteps } = algorithmsById[algorithm.id]
-  const numSteps = Math.round(maxSteps * data.scalar)
+  const numSteps = Math.min(Math.round(maxSteps * data.scalar), 10 * maxSteps)
 
   let result
   let returnEvent
