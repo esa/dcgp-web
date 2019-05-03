@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b33b473e318c1d7c357a787870563f0b",
-    "url": "/dcgp-web/60c689bdefaa21e5262f.worker.js"
+    "revision": "f43401e9e2038959842afa2b0c11499f",
+    "url": "/dcgp-web/b236217c9d425238ddd4.worker.js"
   },
   {
-    "revision": "787cbf9db45c6161fb44f68fb960e17a",
+    "revision": "ee79f4f40a539c58ccbe9943c75a1c4d",
     "url": "/dcgp-web/index.html"
   },
   {
-    "revision": "7088f8bb2f53c8e7cb6a",
+    "revision": "cd74c0fab203ff0dbd85",
     "url": "/dcgp-web/static/css/2.39000ce3.chunk.css"
   },
   {
-    "revision": "7088f8bb2f53c8e7cb6a",
-    "url": "/dcgp-web/static/js/2.ea632c5e.chunk.js"
+    "revision": "cd74c0fab203ff0dbd85",
+    "url": "/dcgp-web/static/js/2.a44d6ba5.chunk.js"
   },
   {
-    "revision": "ab770d711a34c6afd442",
-    "url": "/dcgp-web/static/js/main.29be369c.chunk.js"
+    "revision": "f33a6562f02145049b94",
+    "url": "/dcgp-web/static/js/main.e28ba966.chunk.js"
   },
   {
     "revision": "5ccf561595570306d6cd",
