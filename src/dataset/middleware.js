@@ -40,13 +40,13 @@ const handleRawUserData = store => next => action => {
   }
 
   if (action.type === SET_RAW_DATA) {
-    const parsedValues = action.payload
+    const parsedValues = action.payload.data
       .trim()
       .split('\n')
       .map(item => item.split(',').map(val => val.trim()))
 
     const containsHeaders = parsedValues[0].every(
-      val => typeof val === 'string'
+      val => isNaN(parseFloat(val)) && typeof val === 'string'
     )
 
     const labels = containsHeaders
@@ -67,7 +67,7 @@ const handleRawUserData = store => next => action => {
     store.dispatch(
       addDataset({
         id: datasetId,
-        name: 'Custom dataset',
+        name: action.payload.name || 'Custom dataset',
         mutable: true,
         points,
         inputs: [],

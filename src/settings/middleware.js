@@ -9,11 +9,14 @@ import {
   setLevelsBack,
   CHANGE_PARAMETER,
   algorithmsById,
+  REMOVE_CONSTANT,
+  setAlgorithm,
 } from './actions'
 import {
   networkSelector,
   algorithmSelector,
   currrentAlgorithmSelector,
+  constantsSelector,
 } from './selectors'
 import { resetEvolutionRequest } from '../evolution/actions'
 import { isEvolvingSelector } from '../evolution/selectors'
@@ -108,9 +111,26 @@ export const handleParameterChange = store => next => action => {
   }
 }
 
+export const handleRemoveConstant = store => next => action => {
+  next(action)
+
+  if (action.type === REMOVE_CONSTANT) {
+    const updatedConstants = constantsSelector(store.getState())
+    const currentAlgorithm = currrentAlgorithmSelector(store.getState())
+
+    if (
+      updatedConstants.length === 0 &&
+      currentAlgorithm.id === 'gradientDescent'
+    ) {
+      store.dispatch(setAlgorithm('muPlusLambda'))
+    }
+  }
+}
+
 export default [
   handleAlgorithm,
   handleKernelChange,
   handleNetworkChange,
   handleParameterChange,
+  handleRemoveConstant,
 ]

@@ -48,12 +48,13 @@ const Dataset = () => {
     e => {
       if (e.target.files.length > 0) {
         const reader = new FileReader()
+        const file = e.target.files[0]
 
         reader.onload = e => {
-          dispatch(setRawData(e.target.result))
+          dispatch(setRawData({ name: file.name, data: e.target.result }))
         }
 
-        reader.readAsText(e.target.files[0])
+        reader.readAsText(file)
       }
     },
     [dispatch]

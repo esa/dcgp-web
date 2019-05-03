@@ -9,17 +9,27 @@ export const List = styled.ul`
 export const Row = styled.li`
   display: flex;
   flex-direction: row;
+  align-items: center;
   font-size: 16px;
-  line-height: 1.7;
+  margin-bottom: 8px;
+  line-height: 1.3;
 `
 
 export const Bold = styled.b`
   font-size: 18px;
-  margin-right: 0.25em;
+  margin-right: 4px;
   flex-grow: 1;
 `
 
+export const Label = styled.span`
+  flex-grow: 1;
+  margin-right: 4px;
+`
+
 export const Icon = styled.span`
-  color: ${({ theme }) => theme.orange};
-  margin: 0 8px;
+  color: ${({ theme, color }) => {
+    if (color === 'warning') return theme.orange
+    if (color === 'error') return theme.red
+  }};
+  display: flex;
 `

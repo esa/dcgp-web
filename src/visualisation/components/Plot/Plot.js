@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { useRedux } from '../../../hooks'
 import { usePredictions } from '../../../dcgpProxy/hooks'
 import Divider from '../../../ui/components/Divider'
@@ -8,24 +8,26 @@ import {
   inputIndicesSelector,
   outputIndicesSelector,
   labelsSelector,
-  pointsSelector,
+  untransposedPointsSelector,
   inputsSelector,
 } from '../../../dataset/selectors'
 import { GridContainer } from './style'
 import Chart from './Chart'
 import AxisSelection from './AxisSelection'
 import {
-  useStucturedPoints,
-  useSubSampledPoints,
-  useMergedPoints,
-} from './hooks'
+  subSampleData,
+  structurePoints,
+  structurePointsUntransposed,
+  mergeObjectArrays,
+  filterPoints,
+} from './utils'
 
 const mapStateToProps = {
   inputLabels: inputLabelsSelector,
   outputLabels: outputLabelsSelector,
   inputsIndices: inputIndicesSelector,
   outputsIndices: outputIndicesSelector,
-  points: pointsSelector,
+  points: untransposedPointsSelector,
   inputs: inputsSelector,
   labels: labelsSelector,
 }
@@ -40,28 +42,33 @@ const Plot = () => {
   const handleInputChange = useCallback(e => setSelectedInput(e.value), [])
   const handleOutputChange = useCallback(e => setSelectedOutput(e.value), [])
 
-  const structuredInputPoints = useStucturedPoints(inputs, inputLabels)
+  const structuredInputPoints = useMemo(
+    () => structurePoints(inputs, inputLabels),
+    [inputLabels, inputs]
+  )
 
-  const structuredOutputPoints = useStucturedPoints(points, labels)
-  const sampledOutputPoints = useSubSampledPoints(
-    structuredOutputPoints,
-    selectedInput,
-    selectedOutput
+  const sampledOutputPoints = useMemo(() => subSampleData(points), [points])
+  const structuredOutputPoints = useMemo(
+    () => structurePointsUntransposed(sampledOutputPoints, labels),
+    [sampledOutputPoints, labels]
   )
 
   const predictions = usePredictions()
-  const structuredPredictionPoints = useStucturedPoints(
-    predictions,
-    outputLabels
+  const structuredPredictionPoints = useMemo(
+    () => structurePoints(predictions, outputLabels),
+    [predictions, outputLabels]
   )
-  const mergedPredictionPoints = useMergedPoints(
-    structuredInputPoints,
-    structuredPredictionPoints
+  const sampledPredictionPoints = useMemo(
+    () =>
+      subSampleData(
+        mergeObjectArrays(structuredInputPoints, structuredPredictionPoints)
+      ),
+    [structuredInputPoints, structuredPredictionPoints]
   )
-  const sampledPredictionPoints = useSubSampledPoints(
-    mergedPredictionPoints,
-    selectedInput,
-    selectedOutput
+
+  const filteredPredictionPoints = useMemo(
+    () => filterPoints(sampledPredictionPoints, selectedOutput),
+    [sampledPredictionPoints, selectedOutput]
   )
 
   if (inputLabels.length !== 0 && !inputLabels.includes(selectedInput)) {
@@ -75,8 +82,8 @@ const Plot = () => {
   return (
     <GridContainer>
       <Chart
-        outputPoints={sampledOutputPoints}
-        predictionPoints={sampledPredictionPoints}
+        outputPoints={structuredOutputPoints}
+        predictionPoints={filteredPredictionPoints}
         selectedInput={selectedInput}
         selectedOutput={selectedOutput}
       />
@@ -93,7 +100,6 @@ const Plot = () => {
         options={outputLabels}
         onChange={handleOutputChange}
       />
-      {/* PLOT STUFF */}
     </GridContainer>
   )
 }

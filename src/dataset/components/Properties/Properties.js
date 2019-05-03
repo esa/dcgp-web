@@ -81,7 +81,7 @@ const renderCellLabel = (
     return `Row ${rowIndex}`
   }
 
-  return points[columnIndex][rowIndex]
+  return points[columnIndex][rowIndex].toExponential(3)
 }
 
 const mapStateToProps = {

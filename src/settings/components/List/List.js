@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const List = styled.ul`
   padding: 0;
@@ -13,6 +13,14 @@ export const Row = styled.li`
   align-items: center;
   margin-bottom: 8px;
   color: ${({ theme }) => theme.text.regular};
+  transition: opacity 80ms ease-out;
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.5;
+      pointer-events: none;
+    `}
 
   &:last-child {
     margin-bottom: 0;

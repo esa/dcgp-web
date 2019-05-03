@@ -26,13 +26,11 @@ const Page = styled.main`
 
   ${up('lg')} {
     grid-template-columns: [full-start] repeat(4, 1fr) [full-end];
-    ${({ isOpen }) => isOpen && 'padding-left: 30px'};
-    ${({ isOpen }) => isOpen && 'padding-right: 30px'};
   }
 `
 
 Page.propType = {
-  childern: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 export default Page

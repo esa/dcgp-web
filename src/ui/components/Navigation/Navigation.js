@@ -1,32 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import AppBar from '../AppBar'
 import CircleButton from '../CircleButton'
-// import Toolbar from '../Toolbar'
 import { useMediaQuery } from '../../../hooks'
 import GitHub from '../../../icons/GitHub'
-import Menu from '../../../icons/Menu'
 import { up } from 'styled-breakpoints'
 
 const Title = styled.h1`
   font-size: 20px;
   font-weight: 600;
   margin: 0;
-  margin-left: 8px;
   flex-grow: 1;
-
-  ${up('sm')} {
-    margin-left: 15px;
-  }
-
-  ${up('md')} {
-    margin-left: 20px;
-  }
-
-  ${up('lg')} {
-    margin-left: 30px;
-  }
 `
 
 const Padding = styled.div`
@@ -56,23 +40,13 @@ const Width = styled.div`
   margin-right: auto;
 `
 
-const Navigation = ({ handleMenuToggle }) => {
+const Navigation = () => {
   const isWideEnough = useMediaQuery('(min-width: 960px)')
 
   return (
     <AppBar>
       <Padding>
         <Width>
-          <CircleButton
-            onClick={handleMenuToggle}
-            title="Menu"
-            size={48}
-            padding={12}
-            variant="ghost"
-            css="margin-left: -12px;"
-          >
-            <Menu size={null} />
-          </CircleButton>
           <Title>
             {isWideEnough
               ? 'differentiable cartesian genetic programming'
@@ -92,10 +66,6 @@ const Navigation = ({ handleMenuToggle }) => {
       </Padding>
     </AppBar>
   )
-}
-
-Navigation.propTypes = {
-  handleMenuToggle: PropTypes.func.isRequired,
 }
 
 export default Navigation

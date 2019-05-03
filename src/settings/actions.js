@@ -113,7 +113,7 @@ export const setLambda = mu => ({
 export const algorithmsById = {
   muPlusLambda: {
     label: 'mu plus lambda',
-    maxSteps: 1000,
+    maxSteps: 10,
     parameters: {
       mu: {
         label: 'mu',
@@ -131,7 +131,7 @@ export const algorithmsById = {
   },
   gradientDescent: {
     label: 'gradient descent',
-    maxSteps: 500,
+    maxSteps: 10,
   },
 }
 
