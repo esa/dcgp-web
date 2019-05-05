@@ -58,6 +58,18 @@ export const doneEvolution = () => ({
   type: DONE,
 })
 
+export const CONVERGED = prefix + 'CONVERGED'
+
+export const evolutionConverged = () => ({
+  type: CONVERGED,
+})
+
+export const CONVERGED_RESET = prefix + 'CONVERGED_RESET'
+
+export const evolutionConvergedReset = () => ({
+  type: CONVERGED_RESET,
+})
+
 export const INITIAL = prefix + 'INITIAL'
 export const INITIAL_REQUEST = prefix + 'INITIAL_REQUEST'
 

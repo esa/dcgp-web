@@ -72,3 +72,16 @@ export const evolutionStateSelector = createSelector(
     return 'EMPTY'
   }
 )
+
+export const warningSelector = createSelector(
+  state => state.evolution.isConverged,
+  isConverged => {
+    const warnings = []
+
+    if (isConverged) {
+      warnings.push('Evolution has converged.')
+    }
+
+    return warnings
+  }
+)
