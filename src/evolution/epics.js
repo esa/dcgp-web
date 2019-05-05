@@ -4,7 +4,7 @@ import { combineEpics, ofType } from 'redux-observable'
 import { setConstants, setSeed } from '../settings/actions'
 import {
   doneEvolution,
-  pauseEvolutionRequest,
+  evolutionConverged,
   evolutionProgress,
   initialEvolutionRequest,
   RESET,
@@ -59,8 +59,8 @@ const handleStep = action$ =>
 const handleProgress = progress => {
   const actions = [evolutionProgress(progress)]
 
-  if (progress.isPausing) {
-    actions.push(pauseEvolutionRequest(progress.constants))
+  if (progress.isConverged) {
+    actions.push(evolutionConverged(progress.constants))
   }
 
   if (progress.constants) {

@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useRedux } from '../../../hooks'
-import { currentStepSelector, lossSelector } from '../../selectors'
-import { errorSelector, warningSelector } from '../../../dataset/selectors'
+import {
+  currentStepSelector,
+  lossSelector,
+  warningSelector as evolutionWaringSelector,
+} from '../../selectors'
+import {
+  errorSelector,
+  warningSelector as datasetWaringSelector,
+} from '../../../dataset/selectors'
 import Warning from '../../../icons/Warning'
 import Error from '../../../icons/Error'
 import { List, Row, Bold, Icon, Label } from './style'
@@ -12,11 +19,23 @@ const mapStateToProps = {
   currentStep: currentStepSelector,
   loss: lossSelector,
   errors: errorSelector,
-  warnings: warningSelector,
+  evolutionWarnings: evolutionWaringSelector,
+  datasetWarnings: datasetWaringSelector,
 }
 
 const Information = () => {
-  const { currentStep, loss, errors, warnings } = useRedux(mapStateToProps)
+  const {
+    currentStep,
+    loss,
+    errors,
+    evolutionWarnings,
+    datasetWarnings,
+  } = useRedux(mapStateToProps)
+
+  const warnings = useMemo(() => [...evolutionWarnings, ...datasetWarnings], [
+    evolutionWarnings,
+    datasetWarnings,
+  ])
 
   const showWarning = (isNaN(loss) || loss === Infinity) && loss !== undefined
 

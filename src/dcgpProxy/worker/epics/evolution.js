@@ -151,8 +151,9 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
       // metric te determine whether gradient descent has converged
       postMessage({
         ...returnEvent,
-        payload: { ...returnEvent.payload, isPausing: true },
+        payload: { ...returnEvent.payload, isConverged: true },
       })
+
       returnEvent.payload.done = true
     }
   }

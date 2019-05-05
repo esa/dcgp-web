@@ -1,15 +1,30 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "dcgp",
+  "name": "differentiable cartesian genetic programming",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "sizes": "80x80",
+      "src": "/touch-icon-80.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "152x152",
+      "src": "/touch-icon-152.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "167x167",
+      "src": "/touch-icon-167.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "180x180",
+      "src": "/touch-icon-180.png",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#D0103A",
+  "background_color": "#171717"
 }

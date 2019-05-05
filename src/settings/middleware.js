@@ -18,7 +18,10 @@ import {
   currrentAlgorithmSelector,
   constantsSelector,
 } from './selectors'
-import { resetEvolutionRequest } from '../evolution/actions'
+import {
+  resetEvolutionRequest,
+  evolutionConvergedReset,
+} from '../evolution/actions'
 import { isEvolvingSelector } from '../evolution/selectors'
 
 export const handleKernelChange = store => next => action => {
@@ -85,6 +88,8 @@ export const handleAlgorithm = store => next => action => {
       const algorithm = currrentAlgorithmSelector(state)
       sendUpdate({ algorithm })
     }
+
+    store.dispatch(evolutionConvergedReset())
   }
 }
 

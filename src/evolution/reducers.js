@@ -2,6 +2,7 @@
 {
   isEvolving: Bool,
   isDone: Bool,
+  isConverged: Bool,
   initial: {
     loss: Number,
   },
@@ -42,6 +43,19 @@ function isDone(state = false, action) {
     case actions.DONE:
       return true
     case actions.RESET:
+      return false
+    default:
+      return state
+  }
+}
+
+function isConverged(state = false, action) {
+  const { type } = action
+
+  switch (type) {
+    case actions.CONVERGED:
+      return true
+    case actions.CONVERGED_RESET:
       return false
     default:
       return state
@@ -93,4 +107,5 @@ export default combineReducers({
   isDone,
   initial,
   steps,
+  isConverged,
 })

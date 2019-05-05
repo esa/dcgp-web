@@ -14,6 +14,7 @@ const TextInput = styled.input.attrs({ type: 'text' })`
   transition: color 150ms ease;
   padding: 2px;
   border-bottom: 1px dotted ${({ theme }) => theme.border.dividerOpacity};
+  border-radius: 0;
   transition: border 100ms ease-out;
   min-width: 100px;
   width: 100%;

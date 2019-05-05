@@ -1,4 +1,5 @@
-import { applyMiddleware, compose, createStore } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { createEpicMiddleware } from 'redux-observable'
 import { rootReducer, rootEpic } from './root'
 import middlewares from './middleware'
@@ -9,7 +10,7 @@ export default function configureStore(preloadedState) {
   const store = createStore(
     rootReducer,
     preloadedState,
-    compose(applyMiddleware(epicMiddleware, ...middlewares))
+    composeWithDevTools(applyMiddleware(epicMiddleware, ...middlewares))
   )
 
   epicMiddleware.run(rootEpic)
