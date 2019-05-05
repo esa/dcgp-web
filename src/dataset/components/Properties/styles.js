@@ -10,8 +10,10 @@ export const Table = styled.div`
   display: flex;
   font-size: 18px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   padding-bottom: 8px;
   color: ${({ theme }) => theme.text.regular};
+  box-sizing: border-box;
 `
 
 export const Column = styled.div`
