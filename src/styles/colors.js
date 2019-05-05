@@ -55,6 +55,7 @@ export const DAY = {
     subtle: grays['400'],
   },
   title: grays['900'],
+  id: 'DAY',
 }
 
 export const NIGHT = {
@@ -79,4 +80,5 @@ export const NIGHT = {
     subtle: grays['300'],
   },
   title: grays['000'],
+  id: 'NIGHT',
 }

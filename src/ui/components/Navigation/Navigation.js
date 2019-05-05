@@ -1,10 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components'
 import AppBar from '../AppBar'
 import CircleButton from '../CircleButton'
 import { useMediaQuery } from '../../../hooks'
 import GitHub from '../../../icons/GitHub'
 import { up } from 'styled-breakpoints'
+import logoWhite from '../../../images/logo-white.png'
+import logoBlack from '../../../images/logo-black.png'
 
 const Title = styled.h1`
   font-size: 20px;
@@ -40,13 +42,28 @@ const Width = styled.div`
   margin-right: auto;
 `
 
+const Image = styled.img`
+  height: 48px;
+  margin-bottom: -2px;
+  margin-left: -10px;
+  margin-right: 8px;
+
+  ${up('md')} {
+    margin-right: 15px;
+  }
+`
+
 const Navigation = () => {
   const isWideEnough = useMediaQuery('(min-width: 960px)')
+  const theme = useContext(ThemeContext)
+
+  const isDarkTheme = theme.id === 'NIGHT'
 
   return (
     <AppBar>
       <Padding>
         <Width>
+          <Image src={isDarkTheme ? logoWhite : logoBlack} alt="logo" />
           <Title>
             {isWideEnough
               ? 'differentiable cartesian genetic programming'
