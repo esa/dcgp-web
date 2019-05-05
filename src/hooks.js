@@ -92,11 +92,14 @@ export function useMeasure() {
 
       ro.observe(ref.current)
 
-      return ro.disconnect
+      return () => {
+        ro.disconnect()
+      }
     }
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref.current])
 
-  return [ref, bounds]
+  return [{ ref }, bounds]
 }
 
 /**
