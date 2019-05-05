@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ad3d472b14f03404f08b545df033279d",
-    "url": "/dcgp-web/f2f27b07c2041e5a11e3.worker.js"
+    "revision": "26614bbf21dbd33794249ac1135168db",
+    "url": "/dcgp-web/1fffa62aba20447a8e57.worker.js"
   },
   {
-    "revision": "9071d30b865d72e95660eb7ed3200706",
+    "revision": "5b3ea61d8be96605903663680e346197",
     "url": "/dcgp-web/index.html"
   },
   {
-    "revision": "cd74c0fab203ff0dbd85",
+    "revision": "2dc228508deb0a2a7481",
     "url": "/dcgp-web/static/css/2.39000ce3.chunk.css"
   },
   {
-    "revision": "cd74c0fab203ff0dbd85",
-    "url": "/dcgp-web/static/js/2.a44d6ba5.chunk.js"
+    "revision": "2dc228508deb0a2a7481",
+    "url": "/dcgp-web/static/js/2.1307904b.chunk.js"
   },
   {
-    "revision": "e7c98f2f0060518e0153",
-    "url": "/dcgp-web/static/js/main.7a53d817.chunk.js"
+    "revision": "a63da8dc5a1ddc2622e3",
+    "url": "/dcgp-web/static/js/main.eb987aba.chunk.js"
   },
   {
     "revision": "5ccf561595570306d6cd",
@@ -266,5 +266,13 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "04cb775c2b7c3ee3ca2c2d5da68647ad",
     "url": "/dcgp-web/static/media/dcgp.04cb775c.wasm"
+  },
+  {
+    "revision": "3d479b010e7604852c624db8b120b378",
+    "url": "/dcgp-web/static/media/logo-black.3d479b01.png"
+  },
+  {
+    "revision": "af28210e76e8beba99499dd7f9096225",
+    "url": "/dcgp-web/static/media/logo-white.af28210e.png"
   }
 ]);
