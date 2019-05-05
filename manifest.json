@@ -1,30 +1,15 @@
 {
-  "short_name": "dcgp",
-  "name": "differentiable cartesian genetic programming",
+  "short_name": "differentiable cartesian genetic programming",
+  "name": "dcgp",
   "icons": [
     {
-      "sizes": "80x80",
-      "src": "touch-icon-80.png",
-      "type": "image/png"
-    },
-    {
-      "sizes": "152x152",
-      "src": "touch-icon-152.png",
-      "type": "image/png"
-    },
-    {
-      "sizes": "167x167",
-      "src": "touch-icon-167.png",
-      "type": "image/png"
-    },
-    {
-      "sizes": "180x180",
-      "src": "touch-icon-180.png",
+      "sizes": "192x192",
+      "src": "desktop-icon-192.png",
       "type": "image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#D0103A",
+  "theme_color": "#822433",
   "background_color": "#171717"
 }
