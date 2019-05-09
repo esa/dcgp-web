@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dcgp-web/1fffa62aba20447a8e57.worker.js"
   },
   {
-    "revision": "dcac37842fd6fcc091a96541bfa63e26",
+    "revision": "060430ee461324df228e32b277ed9dcb",
     "url": "/dcgp-web/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dcgp-web/static/js/2.f84cea8f.chunk.js"
   },
   {
-    "revision": "c729b6578813b6f15c78",
-    "url": "/dcgp-web/static/js/main.04ce7505.chunk.js"
+    "revision": "14114dbde6f6295a7249",
+    "url": "/dcgp-web/static/js/main.ef28eb09.chunk.js"
   },
   {
     "revision": "5ccf561595570306d6cd",
