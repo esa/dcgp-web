@@ -2,7 +2,10 @@ import React, { useContext } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import AppBar from '../AppBar'
 import CircleButton from '../CircleButton'
-import { useMediaQuery } from '../../../hooks'
+import { useMediaQuery, useRedux } from '../../../hooks'
+import { isAboutOpenSelector } from '../../selectors'
+import { toggleAbout } from '../../actions'
+import Help from '../../../icons/Help'
 import GitHub from '../../../icons/GitHub'
 import { up } from 'styled-breakpoints'
 import logoWhite from '../../../images/logo-white.png'
@@ -53,9 +56,14 @@ const Image = styled.img`
   }
 `
 
+const mapStateToProps = {
+  isAboutOpen: isAboutOpenSelector,
+}
+
 const Navigation = () => {
   const isWideEnough = useMediaQuery('(min-width: 960px)')
   const theme = useContext(ThemeContext)
+  const { isAboutOpen, dispatch } = useRedux(mapStateToProps)
 
   const isDarkTheme = theme.id === 'NIGHT'
 
@@ -69,6 +77,16 @@ const Navigation = () => {
               ? 'differentiable cartesian genetic programming'
               : 'dcgp'}
           </Title>
+          <CircleButton
+            css="margin-right: 15px;"
+            title="About dcgp"
+            size={48}
+            padding={12}
+            variant="ghost"
+            onClick={() => dispatch(toggleAbout())}
+          >
+            <Help variant={isAboutOpen ? 'default' : 'outline'} size={null} />
+          </CircleButton>
           <CircleButton
             as="a"
             title="GitHub"

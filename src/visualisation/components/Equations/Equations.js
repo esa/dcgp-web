@@ -10,7 +10,8 @@ import {
 import { EquationBlock, GridContainer, Bold, Row } from './style'
 import SubHeader from '../../../ui/components/SubHeader'
 import CircleButton from '../../../ui/components/CircleButton'
-import CheckBox from '../../../icons/CheckBox'
+import Eye from '../../../icons/Eye'
+import Fold from '../../../icons/Fold'
 import Clipboard from '../../../icons/Clipboard'
 
 const mapStateToProps = {
@@ -52,17 +53,7 @@ const Equations = () => {
   }, [equations, predictionEquations])
 
   const handleCopy = useCallback(() => {
-    if (!isShowingPrediction) {
-      try {
-        copy('')
-        setCopyVariant('check')
-      } catch (error) {
-        setCopyVariant('error')
-      }
-      return
-    }
-
-    if (completePredictionEquations.length) {
+    if (isShowingPrediction && completePredictionEquations.length > 0) {
       try {
         copy(completePredictionEquations.join('\n'))
         setCopyVariant('check')
@@ -86,28 +77,33 @@ const Equations = () => {
           ))}
         </div>
       )}
-      <Row
-        css="margin-bottom: 8px; cursor: pointer;"
-        onClick={handleChangeShowingPrediction}
-      >
-        <span css="flex-grow: 1;">Show prediction equation:</span>
-        <CheckBox checked={isShowingPrediction} />
-      </Row>
-      <Row
-        css="margin-bottom: 8px; cursor: pointer;"
-        onClick={handleChangeSimplification}
-      >
-        <span css="flex-grow: 1;">Simplify prediction equation:</span>
-        <CheckBox checked={isSimplified} />
-      </Row>
-      <Row css="margin-bottom: 15px; margin-top: 15px;">
+      <Row css="margin: 15px 0;">
         <Bold css="flex-grow: 1;">Prediction equation:</Bold>
         <CircleButton
+          onClick={handleChangeShowingPrediction}
+          title={`${isShowingPrediction ? 'Hide' : 'Show'} prediction equation`}
+          size={38}
+          padding={8}
+          variant="ghost"
+        >
+          <Eye isVisible={isShowingPrediction} size={null} />
+        </CircleButton>
+        <CircleButton
+          onClick={handleChangeSimplification}
+          title={isSimplified ? 'Expand equation' : 'Simplify equation'}
+          css="margin: 0 8px;"
+          size={38}
+          padding={8}
+          variant="ghost"
+        >
+          <Fold open={!isSimplified} size={null} />
+        </CircleButton>
+        <CircleButton
           onClick={handleCopy}
-          css="margin-right: -4px;"
+          css="margin-right: -8px;"
           title="Copy as LaTeX"
-          size={32}
-          padding={4}
+          size={38}
+          padding={8}
           variant="ghost"
         >
           <Clipboard variant={copyVariant} size={null} />
