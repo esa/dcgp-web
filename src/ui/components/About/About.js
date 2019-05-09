@@ -169,7 +169,7 @@ const About = () => {
           <p>
             This web application was developed and designed by Mike Heddes under
             the supervision of Marcus Märtens, working at the Advanced Concepts
-            Team of the <a href="https://esa.int">European Space Agency</a>{' '}
+            Team of the <a href="https://www.esa.int">European Space Agency</a>{' '}
             (ESA).
           </p>
           <p>
