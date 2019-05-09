@@ -4,20 +4,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dcgp-web/1fffa62aba20447a8e57.worker.js"
   },
   {
-    "revision": "5b3ea61d8be96605903663680e346197",
+    "revision": "dcac37842fd6fcc091a96541bfa63e26",
     "url": "/dcgp-web/index.html"
   },
   {
-    "revision": "2dc228508deb0a2a7481",
+    "revision": "3640e180ae5cca3ef539",
     "url": "/dcgp-web/static/css/2.39000ce3.chunk.css"
   },
   {
-    "revision": "2dc228508deb0a2a7481",
-    "url": "/dcgp-web/static/js/2.1307904b.chunk.js"
+    "revision": "3640e180ae5cca3ef539",
+    "url": "/dcgp-web/static/js/2.f84cea8f.chunk.js"
   },
   {
-    "revision": "a63da8dc5a1ddc2622e3",
-    "url": "/dcgp-web/static/js/main.eb987aba.chunk.js"
+    "revision": "c729b6578813b6f15c78",
+    "url": "/dcgp-web/static/js/main.04ce7505.chunk.js"
   },
   {
     "revision": "5ccf561595570306d6cd",
