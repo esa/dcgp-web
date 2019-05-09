@@ -3,8 +3,23 @@
   "name": "dcgp",
   "icons": [
     {
-      "sizes": "192x192",
-      "src": "desktop-icon-192.png",
+      "sizes": "128x128",
+      "src": "desktop-icon@0,125x.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "256x256",
+      "src": "desktop-icon@0,25x.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "512x512",
+      "src": "desktop-icon@0,5x.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "1024x1024",
+      "src": "desktop-icon@1x.png",
       "type": "image/png"
     }
   ],
