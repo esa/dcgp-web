@@ -79,7 +79,7 @@ export const warningSelector = createSelector(
     const warnings = []
 
     if (isConverged) {
-      warnings.push('Evolution has converged.')
+      warnings.push('Algorithm has converged.')
     }
 
     return warnings
