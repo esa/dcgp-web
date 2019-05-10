@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/dcgp-web/static/js/main.ef28eb09.chunk.js",
-    "main.js.map": "/dcgp-web/static/js/main.ef28eb09.chunk.js.map",
+    "main.js": "/dcgp-web/static/js/main.0b4934cf.chunk.js",
+    "main.js.map": "/dcgp-web/static/js/main.0b4934cf.chunk.js.map",
     "runtime~main.js": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js",
     "runtime~main.js.map": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js.map",
     "static/css/2.39000ce3.chunk.css": "/dcgp-web/static/css/2.39000ce3.chunk.css",
@@ -10,7 +10,7 @@
     "1fffa62aba20447a8e57.worker.js": "/dcgp-web/1fffa62aba20447a8e57.worker.js",
     "1fffa62aba20447a8e57.worker.js.map": "/dcgp-web/1fffa62aba20447a8e57.worker.js.map",
     "index.html": "/dcgp-web/index.html",
-    "precache-manifest.e67cb6c8f7c1e5bee4942a2b78b03fa8.js": "/dcgp-web/precache-manifest.e67cb6c8f7c1e5bee4942a2b78b03fa8.js",
+    "precache-manifest.c9c782a1bacad7daa6d9043f37de7911.js": "/dcgp-web/precache-manifest.c9c782a1bacad7daa6d9043f37de7911.js",
     "service-worker.js": "/dcgp-web/service-worker.js",
     "static/css/2.39000ce3.chunk.css.map": "/dcgp-web/static/css/2.39000ce3.chunk.css.map",
     "static/media/katex.min.css": "/dcgp-web/static/media/KaTeX_Typewriter-Regular.e52da442.woff",
