@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useRedux } from '../hooks'
+import { useSelector } from 'react-redux'
 import { inputsSelector, inputLabelsSelector } from '../dataset/selectors'
 import { lossSelector } from '../evolution/selectors'
 import { constantsSelector } from '../settings/selectors'
 import { getPredictions, getEquations } from './index'
 
-const mapStateToPredictions = {
-  inputs: inputsSelector,
-  constants: constantsSelector,
-  loss: lossSelector,
-}
-
 export const usePredictions = chromosome => {
-  const { inputs, constants, loss } = useRedux(mapStateToPredictions)
+  const inputs = useSelector(inputsSelector)
+  const constants = useSelector(constantsSelector)
+  const loss = useSelector(lossSelector)
+
   const [predictions, setPredictions] = useState([])
 
   useEffect(() => {
@@ -32,14 +29,11 @@ export const usePredictions = chromosome => {
   return predictions
 }
 
-const mapStateToEquations = {
-  inputLabels: inputLabelsSelector,
-  constants: constantsSelector,
-  loss: lossSelector,
-}
-
 export const usePredictionEquations = (simplified = false, enabled) => {
-  const { inputLabels, constants, loss } = useRedux(mapStateToEquations)
+  const inputLabels = useSelector(inputLabelsSelector)
+  const constants = useSelector(constantsSelector)
+  const loss = useSelector(lossSelector)
+
   const [equations, setEquations] = useState([])
 
   useEffect(() => {

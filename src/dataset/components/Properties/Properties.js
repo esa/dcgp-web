@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react'
-import { useRedux } from '../../../hooks'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   pointsSelector,
   selectedDatasetSelector,
@@ -12,26 +12,17 @@ import renderCellLabel from './renderCellLabel'
 
 const arrayOfLength = length => Array(length).fill(0)
 
-const mapStateToProps = {
-  labels: labelsSelector,
-  dataset: selectedDatasetSelector,
-  points: pointsSelector,
-}
-
 const Properties = () => {
-  const { dataset, labels, points, dispatch } = useRedux(mapStateToProps)
+  const labels = useSelector(labelsSelector)
+  const dataset = useSelector(selectedDatasetSelector)
+  const points = useSelector(pointsSelector)
+  const dispatch = useDispatch()
 
-  const handleLabelChange = useCallback(
-    columnIndex => e =>
-      dispatch(changeLabel(dataset.id, columnIndex, e.target.value)),
-    [dataset.id, dispatch]
-  )
+  const handleLabelChange = columnIndex => e =>
+    dispatch(changeLabel(dataset.id, columnIndex, e.target.value))
 
-  const handleTypeChange = useCallback(
-    (columnIndex, type) => () =>
-      dispatch(changeColumnType(dataset.id, columnIndex, type)),
-    [dataset.id, dispatch]
-  )
+  const handleTypeChange = (columnIndex, type) => () =>
+    dispatch(changeColumnType(dataset.id, columnIndex, type))
 
   if (!dataset.mutable) {
     return null

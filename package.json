@@ -1,6 +1,7 @@
 {
   "name": "dcgp-web",
-  "version": "0.1.0",
+  "author": "Mike Heddes",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "predeploy": "npm run build",
@@ -16,23 +17,22 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "https://mikeheddes.github.io/dcgp-web",
+  "homepage": "https://esa.github.io/dcgp-web",
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
-    "dcgp": "^1.0.0",
+    "dcgp": "^1.1.1",
     "history": "^4.7.2",
     "katex": "^0.10.1",
     "mathjs": "^5.8.0",
     "nanoid": "^2.0.1",
     "polished": "^3.0.3",
     "prop-types": "^15.7.2",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-katex": "^2.0.2",
-    "react-router-dom": "^4.3.1",
+    "react-redux": "^7.1.0",
     "react-scripts": "^3.0.0",
     "react-select": "^2.4.3",
-    "react-transition-group": "^2.6.0",
     "recharts": "^1.5.0",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
@@ -41,7 +41,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "^6.5.1",
     "styled-breakpoints": "^6.5.5",
-    "styled-components": "^4.2.0",
+    "styled-components": "^4.3.1",
     "styled-normalize": "^8.0.6"
   },
   "devDependencies": {

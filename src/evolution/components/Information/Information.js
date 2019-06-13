@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { useRedux } from '../../../hooks'
+import { useSelector } from 'react-redux'
 import {
   currentStepSelector,
   lossSelector,
@@ -15,22 +15,12 @@ import { List, Row, Bold, Icon, Label } from './style'
 
 const significant4 = number => number.toPrecision(4)
 
-const mapStateToProps = {
-  currentStep: currentStepSelector,
-  loss: lossSelector,
-  errors: errorSelector,
-  evolutionWarnings: evolutionWaringSelector,
-  datasetWarnings: datasetWaringSelector,
-}
-
 const Information = () => {
-  const {
-    currentStep,
-    loss,
-    errors,
-    evolutionWarnings,
-    datasetWarnings,
-  } = useRedux(mapStateToProps)
+  const currentStep = useSelector(currentStepSelector)
+  const loss = useSelector(lossSelector)
+  const errors = useSelector(errorSelector)
+  const evolutionWarnings = useSelector(evolutionWaringSelector)
+  const datasetWarnings = useSelector(datasetWaringSelector)
 
   const warnings = useMemo(() => [...evolutionWarnings, ...datasetWarnings], [
     evolutionWarnings,

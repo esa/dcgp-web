@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRedux } from '../../../hooks'
+import { useSelector, useDispatch } from 'react-redux'
 import { constantsSelector } from '../../selectors'
 import { isEvolvingSelector } from '../../../evolution/selectors'
 import {
@@ -82,13 +82,10 @@ const makeHandleBlurConstant = (dispatch, constants) => i => e => {
   )
 }
 
-const mapStateToProps = {
-  constants: constantsSelector,
-  isEvolving: isEvolvingSelector,
-}
-
 const Constants = () => {
-  const { constants, isEvolving, dispatch } = useRedux(mapStateToProps)
+  const constants = useSelector(constantsSelector)
+  const isEvolving = useSelector(isEvolvingSelector)
+  const dispatch = useDispatch()
 
   const handleAddConstant = () => dispatch(requestAddConstant())
   const handleRemoveConstant = i => () => dispatch(removeConstant(i))

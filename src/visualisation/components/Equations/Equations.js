@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useState, useMemo } from 'react'
 import copy from 'copy-to-clipboard'
-import { useRedux } from '../../../hooks'
+import { useSelector } from 'react-redux'
 import { usePredictionEquations } from '../../../dcgpProxy/hooks'
 import Divider from '../../../ui/components/Divider'
 import {
@@ -14,30 +14,21 @@ import Eye from '../../../icons/Eye'
 import Fold from '../../../icons/Fold'
 import Clipboard from '../../../icons/Clipboard'
 
-const mapStateToProps = {
-  equations: equationsSelector,
-  outputLabels: outputLabelsSelector,
-}
-
 const Equations = () => {
   const [isSimplified, setSimplified] = useState(false)
   const [isShowingPrediction, setShowingPrediction] = useState(true)
   const [copyVariant, setCopyVariant] = useState('default')
-  const { equations, outputLabels } = useRedux(mapStateToProps)
+  const equations = useSelector(equationsSelector)
+  const outputLabels = useSelector(outputLabelsSelector)
+
   const predictionEquations = usePredictionEquations(
     isSimplified,
     isShowingPrediction
   )
 
-  const handleChangeSimplification = useCallback(
-    () => setSimplified(state => !state),
-    []
-  )
-
-  const handleChangeShowingPrediction = useCallback(
-    () => setShowingPrediction(state => !state),
-    []
-  )
+  const handleChangeSimplification = () => setSimplified(state => !state)
+  const handleChangeShowingPrediction = () =>
+    setShowingPrediction(state => !state)
 
   const completePredictionEquations = useMemo(
     () =>
@@ -52,7 +43,7 @@ const Equations = () => {
     return [predictionEquations, equations]
   }, [equations, predictionEquations])
 
-  const handleCopy = useCallback(() => {
+  const handleCopy = () => {
     if (isShowingPrediction && completePredictionEquations.length > 0) {
       try {
         copy(completePredictionEquations.join('\n'))
@@ -61,7 +52,7 @@ const Equations = () => {
         setCopyVariant('error')
       }
     }
-  }, [completePredictionEquations, isShowingPrediction])
+  }
 
   return (
     <GridContainer>

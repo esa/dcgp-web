@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import styled, { ThemeContext } from 'styled-components'
 import AppBar from '../AppBar'
 import CircleButton from '../CircleButton'
-import { useMediaQuery, useRedux } from '../../../hooks'
+import { useMediaQuery } from '../../../hooks'
 import { isAboutOpenSelector } from '../../selectors'
 import { toggleAbout } from '../../actions'
 import Help from '../../../icons/Help'
@@ -56,14 +57,11 @@ const Image = styled.img`
   }
 `
 
-const mapStateToProps = {
-  isAboutOpen: isAboutOpenSelector,
-}
-
 const Navigation = () => {
   const isWideEnough = useMediaQuery('(min-width: 960px)')
   const theme = useContext(ThemeContext)
-  const { isAboutOpen, dispatch } = useRedux(mapStateToProps)
+  const isAboutOpen = useSelector(isAboutOpenSelector)
+  const dispatch = useDispatch()
 
   const isDarkTheme = theme.id === 'NIGHT'
 

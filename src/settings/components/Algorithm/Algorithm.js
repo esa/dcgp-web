@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react'
-import { useRedux } from '../../../hooks'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { setAlgorithm, algorithmsById, changeParameter } from '../../actions'
 import { algorithmSelector, constantsSelector } from '../../selectors'
 import QuantityCounter from '../../../ui/components/QuantityCounter'
@@ -11,24 +11,17 @@ import { capitalize } from '../../../utils/string'
 
 const algorithmIds = Object.keys(algorithmsById)
 
-const mapStateToProps = {
-  algorithm: algorithmSelector,
-  constants: constantsSelector,
-}
-
 const Algorithm = () => {
-  const { dispatch, algorithm, constants } = useRedux(mapStateToProps)
+  const algorithm = useSelector(algorithmSelector)
+  const constants = useSelector(constantsSelector)
+  const dispatch = useDispatch()
 
-  const handleChange = useCallback(id => () => dispatch(setAlgorithm(id)), [
-    dispatch,
-  ])
+  const handleChange = id => () => dispatch(setAlgorithm(id))
 
   const parameters = algorithmsById[algorithm.id].parameters
 
-  const handleSettingChange = useCallback(
-    id => newValue => dispatch(changeParameter(id, newValue)),
-    [dispatch]
-  )
+  const handleSettingChange = id => newValue =>
+    dispatch(changeParameter(id, newValue))
 
   return (
     <Container title="Algorithm">

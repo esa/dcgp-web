@@ -1,5 +1,6 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useRef } from 'react'
 import { css } from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
 import Radio from '../../../icons/Radio'
 import Upload from '../../../icons/Upload'
 import { capitalize } from '../../../utils/string'
@@ -14,7 +15,6 @@ import {
   datasetsSelector,
   datasetIdsSelector,
 } from '../../selectors'
-import { useRedux } from '../../../hooks'
 import Properties from '../Properties'
 import Heading from '../Heading'
 import TextInput from '../../../ui/components/TextInput'
@@ -24,46 +24,32 @@ const labelStyle = css`
   margin-left: 8px;
 `
 
-const mapStateToProps = {
-  selectedDatasetId: selectedDatasetIdSelector,
-  datasets: datasetsSelector,
-  datasetIds: datasetIdsSelector,
-}
-
 const Dataset = () => {
   const uploadRef = useRef()
-  const { dispatch, selectedDatasetId, datasets, datasetIds } = useRedux(
-    mapStateToProps
-  )
+  const selectedDatasetId = useSelector(selectedDatasetIdSelector)
+  const datasets = useSelector(datasetsSelector)
+  const datasetIds = useSelector(datasetIdsSelector)
+  const dispatch = useDispatch()
 
-  const handleClick = useCallback(id => () => dispatch(selectDataset(id)), [
-    dispatch,
-  ])
-
-  const handleCustomData = useCallback(() => {
+  const handleClick = id => () => dispatch(selectDataset(id))
+  const handleCustomData = () =>
     dispatch(requestCustomDataset(uploadRef.current))
-  }, [dispatch])
 
-  const handleFiles = useCallback(
-    e => {
-      if (e.target.files.length > 0) {
-        const reader = new FileReader()
-        const file = e.target.files[0]
+  const handleFiles = e => {
+    if (e.target.files.length > 0) {
+      const reader = new FileReader()
+      const file = e.target.files[0]
 
-        reader.onload = e => {
-          dispatch(setRawData({ name: file.name, data: e.target.result }))
-        }
-
-        reader.readAsText(file)
+      reader.onload = e => {
+        dispatch(setRawData({ name: file.name, data: e.target.result }))
       }
-    },
-    [dispatch]
-  )
 
-  const handleNameChange = useCallback(
-    datasetId => e => dispatch(changeName(datasetId, e.target.value)),
-    [dispatch]
-  )
+      reader.readAsText(file)
+    }
+  }
+
+  const handleNameChange = datasetId => e =>
+    dispatch(changeName(datasetId, e.target.value))
 
   return (
     <>
