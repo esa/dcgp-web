@@ -22,8 +22,8 @@ const getPropsSelector = mapStateToProps => {
  * Hook to use values gathered from the Redux store.
  *
  * @function useRedux
- * @param {object} mapStateToProps Object whos values are functions that can calculate a value based on the Redux store.
- * @return {object} Object whos keys are the same as those of `mapStateToProps` with the addition of `dispatch` and whos values are the computed values from the Redux store.
+ * @param {object} mapStateToProps Object whose values are functions that can calculate a value based on the Redux store.
+ * @return {object} Object whose keys are the same as those of `mapStateToProps` with the addition of `dispatch` and whose values are the computed values from the Redux store.
  * @example
  * const { foo, bar, dispatch } = useRedux({
  *  foo: store => store.foo,
@@ -55,7 +55,7 @@ export const useRedux = mapStateToProps => {
  * Hook to remember and provide the previous value.
  *
  * @param {any} value Value to remember.
- * @returns {any} The previous value of `value` starting with `undifined`.
+ * @returns {any} The previous value of `value` starting with `undefined`.
  */
 export function usePrevious(value) {
   const ref = useRef()
@@ -107,7 +107,7 @@ export function useMeasure() {
  *
  * @function useMediaQuery
  * @param {string} query The CSS media query to evaluate.
- * @returns {boolean} Wheater the media query matches the current environment.
+ * @returns {boolean} Whether the media query matches the current environment.
  */
 export const useMediaQuery = query => {
   const queryList = useMemo(() => window.matchMedia(query), [query])
