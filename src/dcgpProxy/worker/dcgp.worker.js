@@ -19,11 +19,11 @@ const event$ = new Subject()
 // eslint-disable-next-line no-restricted-globals
 fromEvent(self, 'message').subscribe(rawEvent$)
 
-const initialise$ = from(initialise(fetch(dcgpUrl)))
+const initialise$ = from(initialise(dcgpUrl))
 
 concat(initialise$, rawEvent$)
   .pipe(
-    filter(event => event.data),
+    filter(event => event && event.data),
     pluck('data')
   )
   .subscribe(event$)

@@ -1,55 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { createSelector } from 'reselect'
-import configureStore from './store'
 import ResizeObserver from 'resize-observer-polyfill'
-
-export const store = configureStore(/* provide initial state if any */)
-
-const getPropsSelector = mapStateToProps => {
-  const selectors = Object.values(mapStateToProps)
-  const keys = Object.keys(mapStateToProps)
-
-  const propsSelector = createSelector(
-    ...selectors,
-    (...args) =>
-      args.reduce((prev, cur, i) => ({ ...prev, [keys[i]]: cur }), {})
-  )
-
-  return propsSelector
-}
-
-/**
- * Hook to use values gathered from the Redux store.
- *
- * @function useRedux
- * @param {object} mapStateToProps Object whose values are functions that can calculate a value based on the Redux store.
- * @return {object} Object whose keys are the same as those of `mapStateToProps` with the addition of `dispatch` and whose values are the computed values from the Redux store.
- * @example
- * const { foo, bar, dispatch } = useRedux({
- *  foo: store => store.foo,
- *  bar: store => store.foo.bar,
- * })
- */
-export const useRedux = mapStateToProps => {
-  const propsSelector = useMemo(() => getPropsSelector(mapStateToProps), [
-    mapStateToProps,
-  ])
-  const [props, setProps] = useState(() => propsSelector(store.getState()))
-
-  useEffect(() => {
-    const handleChange = () => {
-      const state = store.getState()
-      const newProps = propsSelector(state)
-
-      setProps(newProps)
-    }
-
-    const unsubsribe = store.subscribe(handleChange)
-    return unsubsribe
-  }, [propsSelector])
-
-  return Object.assign(props, { dispatch: store.dispatch })
-}
 
 /**
  * Hook to remember and provide the previous value.

@@ -1,12 +1,10 @@
-import React, { useState, useCallback, useMemo } from 'react'
-import { useRedux } from '../../../hooks'
+import React, { useState, useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import { usePredictions } from '../../../dcgpProxy/hooks'
 import Divider from '../../../ui/components/Divider'
 import {
   inputLabelsSelector,
   outputLabelsSelector,
-  inputIndicesSelector,
-  outputIndicesSelector,
   labelsSelector,
   untransposedPointsSelector,
   inputsSelector,
@@ -22,25 +20,18 @@ import {
   filterPoints,
 } from './utils'
 
-const mapStateToProps = {
-  inputLabels: inputLabelsSelector,
-  outputLabels: outputLabelsSelector,
-  inputsIndices: inputIndicesSelector,
-  outputsIndices: outputIndicesSelector,
-  points: untransposedPointsSelector,
-  inputs: inputsSelector,
-  labels: labelsSelector,
-}
-
 const Plot = () => {
-  const { inputLabels, outputLabels, points, labels, inputs } = useRedux(
-    mapStateToProps
-  )
+  const inputLabels = useSelector(inputLabelsSelector)
+  const outputLabels = useSelector(outputLabelsSelector)
+  const points = useSelector(untransposedPointsSelector)
+  const inputs = useSelector(inputsSelector)
+  const labels = useSelector(labelsSelector)
+
   const [selectedInput, setSelectedInput] = useState(inputLabels[0])
   const [selectedOutput, setSelectedOutput] = useState(outputLabels[0])
 
-  const handleInputChange = useCallback(e => setSelectedInput(e.value), [])
-  const handleOutputChange = useCallback(e => setSelectedOutput(e.value), [])
+  const handleInputChange = e => setSelectedInput(e.value)
+  const handleOutputChange = e => setSelectedOutput(e.value)
 
   const structuredInputPoints = useMemo(
     () => structurePoints(inputs, inputLabels),

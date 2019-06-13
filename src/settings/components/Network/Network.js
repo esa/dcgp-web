@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react'
-import { useRedux } from '../../../hooks'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { setNetworkSetting, networkSettingsById } from '../../actions'
 import { networkSelector } from '../../selectors'
 import QuantityCounter from '../../../ui/components/QuantityCounter'
@@ -19,17 +19,12 @@ const calcMaxValue = (settingId, values) => {
   return networkSettingsById[settingId].max
 }
 
-const mapStateToProps = {
-  network: networkSelector,
-}
-
 const Network = () => {
-  const { dispatch, network } = useRedux(mapStateToProps)
+  const network = useSelector(networkSelector)
+  const dispatch = useDispatch()
 
-  const handleChange = useCallback(
-    settingId => newValue => dispatch(setNetworkSetting(settingId, newValue)),
-    [dispatch]
-  )
+  const handleChange = settingId => newValue =>
+    dispatch(setNetworkSetting(settingId, newValue))
 
   return (
     <Container title="Network">

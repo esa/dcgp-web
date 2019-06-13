@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import {
   Line,
   XAxis,
@@ -8,7 +9,6 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { LineChart } from './style'
-import { useRedux } from '../../../hooks'
 import { stepsSelector, isDoneSelector } from '../../selectors'
 
 const getData = (data, isDone) => {
@@ -19,13 +19,9 @@ const getData = (data, isDone) => {
   }
 }
 
-const mapStateToProps = {
-  steps: stepsSelector,
-  isDone: isDoneSelector,
-}
-
 const Chart = () => {
-  const { steps, isDone } = useRedux(mapStateToProps)
+  const steps = useSelector(stepsSelector)
+  const isDone = useSelector(isDoneSelector)
 
   // remove lest entry from steps when done
   // because the log scale doesn't handle 0

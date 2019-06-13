@@ -1,15 +1,12 @@
 import React from 'react'
-import { useRedux, useMeasure } from '../../../hooks'
+import { useSelector } from 'react-redux'
+import { useMeasure } from '../../../hooks'
 import { isAboutOpenSelector } from '../../selectors'
 import Divider from '../Divider'
 import { Wrapper } from './style'
 
-const mapStateToProps = {
-  isOpen: isAboutOpenSelector,
-}
-
 const About = () => {
-  const { isOpen } = useRedux(mapStateToProps)
+  const isOpen = useSelector(isAboutOpenSelector)
   const [bind, size] = useMeasure()
 
   return (

@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import CheckBox from '../../../icons/CheckBox'
-import { useRedux } from '../../../hooks'
+import { useSelector, useDispatch } from 'react-redux'
 import { capitalize } from '../../../utils/string'
 import { toggleKernel, kernelNamesById } from '../../actions'
 import { kernelsSelector } from '../../selectors'
@@ -10,17 +10,11 @@ import { Row } from './style'
 
 const kernelIds = Object.keys(kernelNamesById)
 
-const mapStateToProps = {
-  kernels: kernelsSelector,
-}
-
 const Kernels = () => {
-  const { dispatch, kernels } = useRedux(mapStateToProps)
+  const kernels = useSelector(kernelsSelector)
+  const dispatch = useDispatch()
 
-  const handleChange = useCallback(
-    kernelId => () => dispatch(toggleKernel(kernelId)),
-    [dispatch]
-  )
+  const handleChange = kernelId => () => dispatch(toggleKernel(kernelId))
 
   return (
     <Container title="Kernels">

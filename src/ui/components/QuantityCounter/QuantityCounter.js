@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import AddCircle from '../../../icons/AddCircle'
 import SubtractCircle from '../../../icons/SubtractCircle'
@@ -12,22 +12,19 @@ const QuantityCounter = ({
   tabIndex,
   ...restProps
 }) => {
-  const handleInputChange = useCallback(
-    event => {
-      const val = event.target.valueAsNumber
+  const handleInputChange = event => {
+    const val = event.target.valueAsNumber
 
-      if (isNaN(val)) {
-        onChange(min)
-      } else if (val > max) {
-        onChange(max)
-      } else if (val < min) {
-        onChange(min)
-      } else {
-        onChange(val)
-      }
-    },
-    [onChange, min, max]
-  )
+    if (isNaN(val)) {
+      onChange(min)
+    } else if (val > max) {
+      onChange(max)
+    } else if (val < min) {
+      onChange(min)
+    } else {
+      onChange(val)
+    }
+  }
 
   const handleDecrement = () => onChange(value - 1)
   const handleIncrement = () => onChange(value + 1)
