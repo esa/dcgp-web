@@ -65,6 +65,7 @@ const handleStep = (event$, { expression$, algorithm$ }) => {
             constants: event.payload.constants,
             time: Date.now(),
             scalar: 1,
+            previousAlgorithm: null,
           },
         ]),
         map(([action]) => action),
@@ -99,7 +100,9 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
 
   // scalar makes sure there is a consistent progress framerate
   const { maxSteps } = algorithmsById[algorithm.id]
-  const numSteps = Math.min(Math.round(maxSteps * data.scalar), 10000)
+  const algorithmDidChange = data.previousAlgorithm !== algorithm.id
+  const currentScalar = algorithmDidChange ? 1 : data.scalar
+  const numSteps = Math.min(Math.round(maxSteps * currentScalar), 10000)
 
   let result
   let returnEvent
@@ -129,7 +132,7 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
   const time = Date.now()
   const deltaTime = time - data.time
   const timeScalar = capBetweenHalfAndTwo(meta.progressInterval / deltaTime)
-  const scalar = timeScalar * data.scalar
+  const scalar = algorithmDidChange ? 1 : timeScalar * data.scalar
 
   const constants = result.constants || data.constants
   const loss = result.loss
@@ -158,7 +161,10 @@ const doStepGetProgressEvent = ([, data], [event, expression, algorithm]) => {
     }
   }
 
-  return [returnEvent, { time, scalar, constants, loss }]
+  return [
+    returnEvent,
+    { time, scalar, constants, loss, previousAlgorithm: algorithm.id },
+  ]
 }
 
 export default handleStep

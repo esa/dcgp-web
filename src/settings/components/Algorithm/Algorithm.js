@@ -28,7 +28,9 @@ const Algorithm = () => {
       <List>
         {algorithmIds.map(algorithmId => {
           const isDisabled =
-            algorithmId === 'gradientDescent' && constants.length === 0
+            (algorithmId === 'gradientDescent' || algorithmId === 'hybrid') &&
+            constants.length === 0
+
           return (
             <Row
               css="cursor: pointer;"
