@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9aebc6b43f5d886d8ff5ec031cda7ef5",
-    "url": "/dcgp-web/08645624c395ddba9cb5.worker.js"
+    "revision": "bf60a68360a2f97f51feeba0a9a45475",
+    "url": "/dcgp-web/71bfbee24851d859aadc.worker.js"
   },
   {
-    "revision": "28fa619d830394ac9fdd0c5a26775c6a",
+    "revision": "d5500e85e9020ebcb8a68ab375ac8160",
     "url": "/dcgp-web/index.html"
   },
   {
-    "revision": "10dfb239d204bea2b6ab",
+    "revision": "1deb942685102e48c51b",
     "url": "/dcgp-web/static/css/2.39000ce3.chunk.css"
   },
   {
-    "revision": "10dfb239d204bea2b6ab",
-    "url": "/dcgp-web/static/js/2.2e9b7bce.chunk.js"
+    "revision": "1deb942685102e48c51b",
+    "url": "/dcgp-web/static/js/2.7db93b13.chunk.js"
   },
   {
-    "revision": "04b4d7f89ad45385fd7b",
-    "url": "/dcgp-web/static/js/main.e0948d15.chunk.js"
+    "revision": "4399165bfed65088283c",
+    "url": "/dcgp-web/static/js/main.a8ecbf02.chunk.js"
   },
   {
     "revision": "5ccf561595570306d6cd",
@@ -264,8 +264,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dcgp-web/static/media/KaTeX_Typewriter-Regular.e52da442.woff"
   },
   {
-    "revision": "04cb775c2b7c3ee3ca2c2d5da68647ad",
-    "url": "/dcgp-web/static/media/dcgp.04cb775c.wasm"
+    "revision": "22f6e97cb6b0ffd181cf8603a30381b2",
+    "url": "/dcgp-web/static/media/dcgp.22f6e97c.wasm"
   },
   {
     "revision": "3d479b010e7604852c624db8b120b378",

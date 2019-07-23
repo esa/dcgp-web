@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/dcgp-web/static/js/main.e0948d15.chunk.js",
-    "main.js.map": "/dcgp-web/static/js/main.e0948d15.chunk.js.map",
+    "main.js": "/dcgp-web/static/js/main.a8ecbf02.chunk.js",
+    "main.js.map": "/dcgp-web/static/js/main.a8ecbf02.chunk.js.map",
     "runtime~main.js": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js",
     "runtime~main.js.map": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js.map",
     "static/css/2.39000ce3.chunk.css": "/dcgp-web/static/css/2.39000ce3.chunk.css",
-    "static/js/2.2e9b7bce.chunk.js": "/dcgp-web/static/js/2.2e9b7bce.chunk.js",
-    "static/js/2.2e9b7bce.chunk.js.map": "/dcgp-web/static/js/2.2e9b7bce.chunk.js.map",
-    "08645624c395ddba9cb5.worker.js": "/dcgp-web/08645624c395ddba9cb5.worker.js",
-    "08645624c395ddba9cb5.worker.js.map": "/dcgp-web/08645624c395ddba9cb5.worker.js.map",
+    "static/js/2.7db93b13.chunk.js": "/dcgp-web/static/js/2.7db93b13.chunk.js",
+    "static/js/2.7db93b13.chunk.js.map": "/dcgp-web/static/js/2.7db93b13.chunk.js.map",
+    "71bfbee24851d859aadc.worker.js": "/dcgp-web/71bfbee24851d859aadc.worker.js",
+    "71bfbee24851d859aadc.worker.js.map": "/dcgp-web/71bfbee24851d859aadc.worker.js.map",
     "index.html": "/dcgp-web/index.html",
-    "precache-manifest.8dfafe5ebadca0db2be7a8f59100a214.js": "/dcgp-web/precache-manifest.8dfafe5ebadca0db2be7a8f59100a214.js",
+    "precache-manifest.dc11aad552c65f8f2d07e3ea99be2c9c.js": "/dcgp-web/precache-manifest.dc11aad552c65f8f2d07e3ea99be2c9c.js",
     "service-worker.js": "/dcgp-web/service-worker.js",
     "static/css/2.39000ce3.chunk.css.map": "/dcgp-web/static/css/2.39000ce3.chunk.css.map",
     "static/media/katex.min.css": "/dcgp-web/static/media/KaTeX_Typewriter-Regular.e52da442.woff",
-    "static/media/dcgp.wasm": "/dcgp-web/static/media/dcgp.04cb775c.wasm",
+    "static/media/dcgp.wasm": "/dcgp-web/static/media/dcgp.22f6e97c.wasm",
     "static/media/logo-black.png": "/dcgp-web/static/media/logo-black.3d479b01.png",
     "static/media/logo-white.png": "/dcgp-web/static/media/logo-white.af28210e.png"
   }
