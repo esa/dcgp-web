@@ -119,6 +119,19 @@ function muPlusLambda(state = initialMuPlusLambdaState, action) {
   }
 }
 
+function hybrid(state = initialMuPlusLambdaState, action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case actions.SET_MU:
+      return { ...state, mu: payload }
+    case actions.SET_LAMBDA:
+      return { ...state, lambda: payload }
+    default:
+      return state
+  }
+}
+
 function gradientDescent(state = null, action) {
   const { type } = action
 
@@ -131,6 +144,7 @@ function gradientDescent(state = null, action) {
 const algorithmById = combineReducers({
   muPlusLambda,
   gradientDescent,
+  hybrid,
 })
 
 const algorithm = combineReducers({

@@ -83,6 +83,18 @@ export const step = (
     )
   }
 
+  if (algorithm.id === 'hybrid') {
+    return algorithms.hybrid(
+      expression,
+      algorithm.mu,
+      algorithm.lambda,
+      steps,
+      inputs,
+      outputs,
+      constants
+    )
+  }
+
   throw new Error('Selected an algorithm that is not supported.')
 }
 

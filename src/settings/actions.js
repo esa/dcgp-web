@@ -133,6 +133,24 @@ export const algorithmsById = {
     label: 'gradient descent',
     maxSteps: 10,
   },
+  hybrid: {
+    label: 'hybrid',
+    maxSteps: 10,
+    parameters: {
+      mu: {
+        label: 'mu',
+        action: setMu,
+        min: 1,
+        max: 10,
+      },
+      lambda: {
+        label: 'lambda',
+        action: setLambda,
+        min: 1,
+        max: 10,
+      },
+    },
+  },
 }
 
 export const setAlgorithm = algorithmId => ({
