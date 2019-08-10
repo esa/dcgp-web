@@ -33,3 +33,7 @@ export const Icon = styled.span`
   }};
   display: flex;
 `
+
+export const TabularNumbers = styled.span`
+  font-feature-settings: 'tnum' 1;
+`

@@ -11,7 +11,7 @@ import {
 } from '../../../dataset/selectors'
 import Warning from '../../../icons/Warning'
 import Error from '../../../icons/Error'
-import { List, Row, Bold, Icon, Label } from './style'
+import { List, Row, Bold, Icon, Label, TabularNumbers } from './style'
 
 const significant4 = number => number.toPrecision(4)
 
@@ -54,11 +54,11 @@ const Information = () => {
             <Warning />
           </Icon>
         )}
-        {loss && significant4(loss)}
+        <TabularNumbers>{loss && significant4(loss)}</TabularNumbers>
       </Row>
       <Row>
         <Bold>Step:</Bold>
-        {currentStep}
+        <TabularNumbers>{currentStep}</TabularNumbers>
       </Row>
     </List>
   )

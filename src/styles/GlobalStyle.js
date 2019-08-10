@@ -9,16 +9,13 @@ export default createGlobalStyle`
   body {
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.title};
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   code, pre {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-      monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
   }
 
   .katex-display {
