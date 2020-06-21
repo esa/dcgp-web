@@ -1,21 +1,29 @@
 {
   "files": {
-    "main.js": "/dcgp-web/static/js/main.f1500eb3.chunk.js",
-    "main.js.map": "/dcgp-web/static/js/main.f1500eb3.chunk.js.map",
-    "runtime~main.js": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js",
-    "runtime~main.js.map": "/dcgp-web/static/js/runtime~main.e2bb3b1d.js.map",
-    "static/css/2.39000ce3.chunk.css": "/dcgp-web/static/css/2.39000ce3.chunk.css",
-    "static/js/2.7db93b13.chunk.js": "/dcgp-web/static/js/2.7db93b13.chunk.js",
-    "static/js/2.7db93b13.chunk.js.map": "/dcgp-web/static/js/2.7db93b13.chunk.js.map",
-    "71bfbee24851d859aadc.worker.js": "/dcgp-web/71bfbee24851d859aadc.worker.js",
-    "71bfbee24851d859aadc.worker.js.map": "/dcgp-web/71bfbee24851d859aadc.worker.js.map",
+    "main.js": "/dcgp-web/static/js/main.38fa715c.chunk.js",
+    "main.js.map": "/dcgp-web/static/js/main.38fa715c.chunk.js.map",
+    "runtime-main.js": "/dcgp-web/static/js/runtime-main.da4f2dbf.js",
+    "runtime-main.js.map": "/dcgp-web/static/js/runtime-main.da4f2dbf.js.map",
+    "static/css/2.a769c08e.chunk.css": "/dcgp-web/static/css/2.a769c08e.chunk.css",
+    "static/js/2.a5d2aeed.chunk.js": "/dcgp-web/static/js/2.a5d2aeed.chunk.js",
+    "static/js/2.a5d2aeed.chunk.js.map": "/dcgp-web/static/js/2.a5d2aeed.chunk.js.map",
+    "5c4683ae6b9f463b14b8.worker.js": "/dcgp-web/5c4683ae6b9f463b14b8.worker.js",
+    "5c4683ae6b9f463b14b8.worker.js.LICENSE.txt": "/dcgp-web/5c4683ae6b9f463b14b8.worker.js.LICENSE.txt",
+    "5c4683ae6b9f463b14b8.worker.js.map": "/dcgp-web/5c4683ae6b9f463b14b8.worker.js.map",
     "index.html": "/dcgp-web/index.html",
-    "precache-manifest.5302ca03bf827a11a7157f384408c032.js": "/dcgp-web/precache-manifest.5302ca03bf827a11a7157f384408c032.js",
+    "precache-manifest.b06627cca0811341f50bd27f9ae05192.js": "/dcgp-web/precache-manifest.b06627cca0811341f50bd27f9ae05192.js",
     "service-worker.js": "/dcgp-web/service-worker.js",
-    "static/css/2.39000ce3.chunk.css.map": "/dcgp-web/static/css/2.39000ce3.chunk.css.map",
+    "static/css/2.a769c08e.chunk.css.map": "/dcgp-web/static/css/2.a769c08e.chunk.css.map",
+    "static/js/2.a5d2aeed.chunk.js.LICENSE.txt": "/dcgp-web/static/js/2.a5d2aeed.chunk.js.LICENSE.txt",
     "static/media/katex.min.css": "/dcgp-web/static/media/KaTeX_Typewriter-Regular.e52da442.woff",
     "static/media/dcgp.wasm": "/dcgp-web/static/media/dcgp.22f6e97c.wasm",
     "static/media/logo-black.png": "/dcgp-web/static/media/logo-black.3d479b01.png",
     "static/media/logo-white.png": "/dcgp-web/static/media/logo-white.af28210e.png"
-  }
+  },
+  "entrypoints": [
+    "static/js/runtime-main.da4f2dbf.js",
+    "static/css/2.a769c08e.chunk.css",
+    "static/js/2.a5d2aeed.chunk.js",
+    "static/js/main.38fa715c.chunk.js"
+  ]
 }
