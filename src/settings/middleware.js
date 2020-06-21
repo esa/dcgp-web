@@ -1,4 +1,4 @@
-import { sendUpdate } from '../dcgpProxy'
+import { sendUpdate } from "../dcgpProxy";
 import {
   TOGGLE_KERNEL,
   NETWORK_CHANGE,
@@ -11,126 +11,126 @@ import {
   algorithmsById,
   REMOVE_CONSTANT,
   setAlgorithm,
-} from './actions'
+} from "./actions";
 import {
   networkSelector,
   algorithmSelector,
   currrentAlgorithmSelector,
   constantsSelector,
-} from './selectors'
+} from "./selectors";
 import {
   resetEvolutionRequest,
   evolutionConvergedReset,
-} from '../evolution/actions'
-import { isEvolvingSelector } from '../evolution/selectors'
+} from "../evolution/actions";
+import { isEvolvingSelector } from "../evolution/selectors";
 
-export const handleKernelChange = store => next => action => {
+export const handleKernelChange = (store) => (next) => (action) => {
   if (action.type === TOGGLE_KERNEL) {
-    const state = store.getState()
-    const { payload } = action
+    const state = store.getState();
+    const { payload } = action;
 
     if (!(payload in state.settings.kernels)) {
-      throw new Error(`The specified kernelId "${payload}" does not exist.`)
+      throw new Error(`The specified kernelId "${payload}" does not exist.`);
     }
 
-    next(action)
+    next(action);
 
-    store.dispatch(resetEvolutionRequest())
-    return
+    store.dispatch(resetEvolutionRequest());
+    return;
   }
 
-  next(action)
-}
+  next(action);
+};
 
-export const handleNetworkChange = store => next => action => {
-  next(action)
+export const handleNetworkChange = (store) => (next) => (action) => {
+  next(action);
 
   if (action.type === NETWORK_CHANGE) {
-    const { dispatch } = store
+    const { dispatch } = store;
     const {
       payload: { settingId, value },
-    } = action
+    } = action;
 
     switch (settingId) {
-      case 'rows':
-        dispatch(setRows(value))
-        break
-      case 'columns':
-        dispatch(setColumns(value))
+      case "rows":
+        dispatch(setRows(value));
+        break;
+      case "columns":
+        dispatch(setColumns(value));
         // set the levels back if it will be higher than coloms + 1
         // value + 1 because the levelsBack may also reach the inputs
         if (value + 1 < networkSelector(store.getState()).levelsBack) {
-          dispatch(setLevelsBack(value + 1))
+          dispatch(setLevelsBack(value + 1));
         }
-        break
-      case 'arity':
-        dispatch(setArity(value))
-        break
-      case 'levelsBack':
-        dispatch(setLevelsBack(value))
-        break
+        break;
+      case "arity":
+        dispatch(setArity(value));
+        break;
+      case "levelsBack":
+        dispatch(setLevelsBack(value));
+        break;
       default:
-        throw new Error(`settingId ${settingId} is not allowed`)
+        throw new Error(`settingId ${settingId} is not allowed`);
     }
 
-    dispatch(resetEvolutionRequest())
+    dispatch(resetEvolutionRequest());
   }
-}
+};
 
-export const handleAlgorithm = store => next => action => {
-  next(action)
+export const handleAlgorithm = (store) => (next) => (action) => {
+  next(action);
 
   if (action.type === SET_ALGORITHM) {
-    const state = store.getState()
-    const isEvolving = isEvolvingSelector(state)
+    const state = store.getState();
+    const isEvolving = isEvolvingSelector(state);
 
     if (isEvolving) {
-      const algorithm = currrentAlgorithmSelector(state)
-      sendUpdate({ algorithm })
+      const algorithm = currrentAlgorithmSelector(state);
+      sendUpdate({ algorithm });
     }
 
-    store.dispatch(evolutionConvergedReset())
+    store.dispatch(evolutionConvergedReset());
   }
-}
+};
 
-export const handleParameterChange = store => next => action => {
-  next(action)
+export const handleParameterChange = (store) => (next) => (action) => {
+  next(action);
 
   if (action.type === CHANGE_PARAMETER) {
-    const { id: algorithmId } = algorithmSelector(store.getState())
-    const { parameterId, value } = action.payload
+    const { id: algorithmId } = algorithmSelector(store.getState());
+    const { parameterId, value } = action.payload;
 
-    const parameter = algorithmsById[algorithmId].parameters[parameterId]
+    const parameter = algorithmsById[algorithmId].parameters[parameterId];
 
-    const nextAction = parameter.action(value)
+    const nextAction = parameter.action(value);
 
-    store.dispatch(nextAction)
+    store.dispatch(nextAction);
 
-    const state = store.getState()
-    const isEvolving = isEvolvingSelector(state)
+    const state = store.getState();
+    const isEvolving = isEvolvingSelector(state);
 
     if (isEvolving) {
-      const algorithm = currrentAlgorithmSelector(state)
-      sendUpdate({ algorithm })
+      const algorithm = currrentAlgorithmSelector(state);
+      sendUpdate({ algorithm });
     }
   }
-}
+};
 
-export const handleRemoveConstant = store => next => action => {
-  next(action)
+export const handleRemoveConstant = (store) => (next) => (action) => {
+  next(action);
 
   if (action.type === REMOVE_CONSTANT) {
-    const updatedConstants = constantsSelector(store.getState())
-    const currentAlgorithm = currrentAlgorithmSelector(store.getState())
+    const updatedConstants = constantsSelector(store.getState());
+    const currentAlgorithm = currrentAlgorithmSelector(store.getState());
 
     if (
       updatedConstants.length === 0 &&
-      currentAlgorithm.id === 'gradientDescent'
+      currentAlgorithm.id === "gradientDescent"
     ) {
-      store.dispatch(setAlgorithm('muPlusLambda'))
+      store.dispatch(setAlgorithm("muPlusLambda"));
     }
   }
-}
+};
 
 export default [
   handleAlgorithm,
@@ -138,4 +138,4 @@ export default [
   handleNetworkChange,
   handleParameterChange,
   handleRemoveConstant,
-]
+];

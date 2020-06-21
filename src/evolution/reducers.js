@@ -17,68 +17,68 @@
 }
 */
 
-import { combineReducers } from 'redux'
-import * as actions from './actions'
+import { combineReducers } from "redux";
+import * as actions from "./actions";
 
 function isEvolving(state = false, action) {
-  const { type } = action
+  const { type } = action;
 
   switch (type) {
     case actions.START:
-      return true
+      return true;
     case actions.PAUSE:
     case actions.RESET:
     case actions.STEP:
     case actions.DONE:
-      return false
+      return false;
     default:
-      return state
+      return state;
   }
 }
 
 function isDone(state = false, action) {
-  const { type } = action
+  const { type } = action;
 
   switch (type) {
     case actions.DONE:
-      return true
+      return true;
     case actions.RESET:
-      return false
+      return false;
     default:
-      return state
+      return state;
   }
 }
 
 function isConverged(state = false, action) {
-  const { type } = action
+  const { type } = action;
 
   switch (type) {
     case actions.CONVERGED:
-      return true
+      return true;
     case actions.CONVERGED_RESET:
-      return false
+      return false;
     default:
-      return state
+      return state;
   }
 }
 
 function initial(state = {}, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
     case actions.INITIAL:
-      return payload
+      return payload;
     case actions.RESET:
-      return {}
+      return {};
     default:
-      return state
+      return state;
   }
 }
 
 const addProgress = (state, payload) => {
-  const len = state.length
+  const len = state.length;
 
-  if (len === 0) return [{ ...payload, step: payload.steps }]
+  if (len === 0) return [{ ...payload, step: payload.steps }];
 
   return [
     ...state,
@@ -86,19 +86,19 @@ const addProgress = (state, payload) => {
       ...payload,
       step: state[len - 1].step + payload.steps,
     },
-  ]
-}
+  ];
+};
 
 function steps(state = [], action) {
-  const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
     case actions.PROGRESS:
-      return addProgress(state, payload)
+      return addProgress(state, payload);
     case actions.RESET:
-      return []
+      return [];
     default:
-      return state
+      return state;
   }
 }
 
@@ -108,4 +108,4 @@ export default combineReducers({
   initial,
   steps,
   isConverged,
-})
+});

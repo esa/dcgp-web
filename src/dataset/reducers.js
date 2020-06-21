@@ -18,79 +18,79 @@
 }
 */
 
-import { combineReducers } from 'redux'
-import * as actions from './actions'
+import { combineReducers } from "redux";
+import * as actions from "./actions";
 
-let presetsById
+let presetsById;
 
-if (process.env.NODE_ENV !== 'test') {
-  const presetsRequire = require.context('./presets/', false, /\.js$/)
+if (process.env.NODE_ENV !== "test") {
+  const presetsRequire = require.context("./presets/", false, /\.js$/);
   presetsById = presetsRequire.keys().reduce((presets, key) => {
-    const preset = presetsRequire(key).default
-    return { ...presets, [preset.id]: preset }
-  }, {})
+    const preset = presetsRequire(key).default;
+    return { ...presets, [preset.id]: preset };
+  }, {});
 }
 
-if (process.env.NODE_ENV === 'test') {
-  const linear = require('./presets/linear.js').default
-  const sinc = require('./presets/sinc.js').default
-  presetsById = { [linear.id]: linear, [sinc.id]: sinc }
+if (process.env.NODE_ENV === "test") {
+  const linear = require("./presets/linear.js").default;
+  const sinc = require("./presets/sinc.js").default;
+  presetsById = { [linear.id]: linear, [sinc.id]: sinc };
 }
 
-const presetIds = Object.keys(presetsById)
+const presetIds = Object.keys(presetsById);
 
-function selectedId(state = 'sinc', action) {
-  const { type, payload } = action
+function selectedId(state = "sinc", action) {
+  const { type, payload } = action;
 
   switch (type) {
     case actions.SELECT_DATASET:
-      return payload
+      return payload;
     default:
-      return state
+      return state;
   }
 }
 
 function allIds(state = presetIds, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
     case actions.ADD_DATASET:
-      return [...state, payload.id]
+      return [...state, payload.id];
     default:
-      return state
+      return state;
   }
 }
 
 const addToState = (state = [], action) => {
   const {
     payload: { columnIndex },
-  } = action
+  } = action;
 
-  return [...state, columnIndex]
-}
+  return [...state, columnIndex];
+};
 
 const removeFromState = (state = [], action) => {
   const {
     payload: { columnIndex },
-  } = action
+  } = action;
 
-  return state.filter(index => index !== columnIndex)
-}
+  return state.filter((index) => index !== columnIndex);
+};
 
 const changeLabel = (labels = [], action) => {
   const {
     payload: { columnIndex, label },
-  } = action
+  } = action;
 
-  labels[columnIndex] = label
+  labels[columnIndex] = label;
 
-  return [...labels]
-}
+  return [...labels];
+};
 
 const modifyDataset = (property, state, action, modificationFunction) => {
-  const { payload } = action
-  const { datasetId } = payload
-  const dataset = state[datasetId]
+  const { payload } = action;
+  const { datasetId } = payload;
+  const dataset = state[datasetId];
 
   return {
     ...state,
@@ -98,43 +98,43 @@ const modifyDataset = (property, state, action, modificationFunction) => {
       ...dataset,
       [property]: modificationFunction(dataset[property], action),
     },
-  }
-}
+  };
+};
 
-const modifyInputs = modifyDataset.bind(null, 'inputs')
-const modifyOutputs = modifyDataset.bind(null, 'outputs')
-const modifyName = modifyDataset.bind(null, 'name')
-const modifyLabels = modifyDataset.bind(null, 'labels')
+const modifyInputs = modifyDataset.bind(null, "inputs");
+const modifyOutputs = modifyDataset.bind(null, "outputs");
+const modifyName = modifyDataset.bind(null, "name");
+const modifyLabels = modifyDataset.bind(null, "labels");
 
 function byId(state = presetsById, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
     case actions.ADD_DATASET:
-      return { ...state, [payload.id]: payload }
+      return { ...state, [payload.id]: payload };
     case actions.ADD_INPUT:
-      return modifyInputs(state, action, addToState)
+      return modifyInputs(state, action, addToState);
     case actions.REMOVE_INPUT:
-      return modifyInputs(state, action, removeFromState)
+      return modifyInputs(state, action, removeFromState);
     case actions.ADD_OUTPUT:
-      return modifyOutputs(state, action, addToState)
+      return modifyOutputs(state, action, addToState);
     case actions.REMOVE_OUTPUT:
-      return modifyOutputs(state, action, removeFromState)
+      return modifyOutputs(state, action, removeFromState);
     case actions.CHANGE_NAME:
-      return modifyName(state, action, (_, action) => action.payload.name)
+      return modifyName(state, action, (_, action) => action.payload.name);
     case actions.CHANGE_LABEL:
-      return modifyLabels(state, action, changeLabel)
+      return modifyLabels(state, action, changeLabel);
     default:
-      return state
+      return state;
   }
 }
 
 function errors(state = [], action) {
-  const { type } = action
+  const { type } = action;
 
   switch (type) {
     default:
-      return state
+      return state;
   }
 }
 
@@ -143,4 +143,4 @@ export default combineReducers({
   allIds,
   byId,
   errors,
-})
+});
