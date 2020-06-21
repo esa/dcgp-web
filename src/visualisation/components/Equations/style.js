@@ -3,6 +3,8 @@ import 'katex/dist/katex.min.css'
 import { BlockMath } from 'react-katex'
 import styled from 'styled-components'
 import { up } from 'styled-breakpoints'
+
+import { setInterFontSizeAndSpacing } from '../../../utils/font'
 import unstyledGridContainer from '../../../ui/components/GridContainer'
 
 export const GridContainer = styled(unstyledGridContainer)`
@@ -13,8 +15,8 @@ export const GridContainer = styled(unstyledGridContainer)`
   }
 `
 
-export const Bold = styled.b`
-  font-size: 17px;
+export const Bold = styled.h3`
+  ${setInterFontSizeAndSpacing(18)};
   font-weight: 600;
   margin-right: 0.25em;
   flex-grow: 1;

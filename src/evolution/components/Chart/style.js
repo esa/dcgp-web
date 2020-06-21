@@ -14,7 +14,7 @@ export const LineChart = styled(unstyledLineChart)`
 
   .recharts-reference-line line {
     stroke-width: 2px;
-    stroke: ${({ theme }) => theme.text.subtle};
+    stroke: ${({ theme }) => theme.border.divider};
     stroke-dasharray: none;
   }
 
@@ -29,7 +29,7 @@ export const LineChart = styled(unstyledLineChart)`
 
     &:nth-last-child(1) {
       stroke-width: 2px;
-      stroke: ${({ theme }) => theme.text.subtle};
+      stroke: ${({ theme }) => theme.border.divider};
       stroke-dasharray: none;
     }
   }

@@ -4,16 +4,13 @@ import GlobalStyle from '../../../styles/GlobalStyle'
 import Navigation from '../Navigation'
 import Footer from '../Footer'
 import Page from '../Page'
-import Divider from '../Divider'
-import About from '../About'
-import { Dataset } from '../../../dataset'
 import { Kernels, Network, Algorithm } from '../../../settings'
 import { Evolution } from '../../../evolution'
 import { Plot, Equations } from '../../../visualisation'
 
 const PageLayout = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `
 
 const Body = () => {
@@ -23,11 +20,6 @@ const Body = () => {
       <Navigation />
       <PageLayout>
         <Page>
-          <About />
-          <Dataset />
-          <div css="grid-column: full;">
-            <Divider />
-          </div>
           <Network />
           <Kernels />
           <Algorithm />

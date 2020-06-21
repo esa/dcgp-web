@@ -2,13 +2,11 @@ import React, { useState, useMemo } from 'react'
 import copy from 'copy-to-clipboard'
 import { useSelector } from 'react-redux'
 import { usePredictionEquations } from '../../../dcgpProxy/hooks'
-import Divider from '../../../ui/components/Divider'
 import {
   equationsSelector,
   outputLabelsSelector,
 } from '../../../dataset/selectors'
 import { EquationBlock, GridContainer, Bold, Row } from './style'
-import SubHeader from '../../../ui/components/SubHeader'
 import CircleButton from '../../../ui/components/CircleButton'
 import Eye from '../../../icons/Eye'
 import Fold from '../../../icons/Fold'
@@ -56,12 +54,10 @@ const Equations = () => {
 
   return (
     <GridContainer>
-      <SubHeader>Equations</SubHeader>
-      <Divider css="margin-bottom: 15px" />
       {equations && (
         <div css="margin-bottom: 30px;">
           <Row css="margin-bottom: 15px;">
-            <Bold css="flex-grow: 1;">Label equations:</Bold>
+            <Bold css="flex-grow: 1;">Label equations</Bold>
           </Row>
           {equations.map(equation => (
             <EquationBlock key={equation} equation={equation} />
@@ -69,7 +65,7 @@ const Equations = () => {
         </div>
       )}
       <Row css="margin: 15px 0;">
-        <Bold css="flex-grow: 1;">Prediction equation:</Bold>
+        <Bold css="flex-grow: 1;">Prediction equation</Bold>
         <CircleButton
           onClick={handleChangeShowingPrediction}
           title={`${isShowingPrediction ? 'Hide' : 'Show'} prediction equation`}

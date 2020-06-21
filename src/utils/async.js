@@ -6,8 +6,8 @@
  * @param {number} time Time to pause the execution.
  * @return {Promise<undefined>}
  */
-export const delay = async time =>
-  new Promise(resolve => setTimeout(resolve, time))
+export const delay = async (time) =>
+  new Promise((resolve) => setTimeout(resolve, time));
 
 /**
  * Interupts the event loop to handle other events first.
@@ -16,4 +16,4 @@ export const delay = async time =>
  * @function interupt
  * @return {Promise<undefined>}
  */
-export const interupt = async () => delay(1)
+export const interupt = async () => delay(1);

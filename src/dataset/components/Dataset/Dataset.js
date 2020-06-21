@@ -53,8 +53,8 @@ const Dataset = () => {
 
   return (
     <>
-      <div css="grid-column: full;">
-        <Heading>Select data</Heading>
+      <div css="grid-column: full; margin-top: 30px;">
+        <Heading>Select dataset</Heading>
         <List>
           {datasetIds.map(id => (
             <Item key={id} onClick={handleClick(id)}>

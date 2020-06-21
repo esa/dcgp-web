@@ -1,1 +1,1 @@
-export const isAboutOpenSelector = state => state.ui.isAboutOpen
+export const isAboutOpenSelector = (state) => state.ui.isAboutOpen;

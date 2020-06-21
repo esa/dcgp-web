@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import styledNormalize from 'styled-normalize'
+import { createGlobalStyle } from "styled-components";
+import styledNormalize from "styled-normalize";
 
 export default createGlobalStyle`
   ${styledNormalize};
@@ -23,4 +23,4 @@ export default createGlobalStyle`
     margin: 0;
     }
   }
-`
+`;

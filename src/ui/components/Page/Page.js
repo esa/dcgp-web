@@ -6,7 +6,8 @@ const Page = styled.main`
   margin-left: auto;
   margin-right: auto;
   max-width: 1180px;
-  padding: 30px 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   display: grid;
   grid-template-columns: [full-start] 1fr [full-end];
   grid-template-rows: auto;
@@ -14,7 +15,8 @@ const Page = styled.main`
 
   ${up('sm')} {
     grid-template-columns: [full-start] repeat(2, 1fr) [full-end];
-    padding: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
   }
 
   ${up('md')} {
@@ -25,6 +27,7 @@ const Page = styled.main`
 
   ${up('lg')} {
     grid-template-columns: [full-start] repeat(4, 1fr) [full-end];
+    width: 100%;
   }
 `
 

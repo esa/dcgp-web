@@ -43,7 +43,7 @@ const Chart = ({
             <Scatter
               name="predictions"
               data={predictionPoints}
-              fill={theme.secundary}
+              fill={theme.secondary}
               shape={Circle}
               animationDuration={500}
               animationEasing="ease-out"

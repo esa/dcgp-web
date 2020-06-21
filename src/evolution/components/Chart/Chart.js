@@ -23,17 +23,17 @@ const Chart = () => {
   const steps = useSelector(stepsSelector)
   const isDone = useSelector(isDoneSelector)
 
-  // remove lest entry from steps when done
+  // remove last entry from steps when done
   // because the log scale doesn't handle 0
   const data = getData(steps, isDone)
 
   return (
-    <div css="margin: 0 5px; position: relative; padding-bottom: 65%;">
+    <div css="margin: 0 2px; position: relative; padding-bottom: 65%;">
       <div css="width: 100%; height: 100%; position: absolute;">
         <ResponsiveContainer style={{ position: 'absolute' }}>
           <LineChart
             data={data}
-            margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+            margin={{ top: 0, right: 0, bottom: 2, left: 2 }}
           >
             <XAxis
               dataKey="step"

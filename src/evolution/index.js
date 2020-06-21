@@ -1,1 +1,1 @@
-export { default as Evolution } from './components/Evolution'
+export { default as Evolution } from "./components/Evolution";

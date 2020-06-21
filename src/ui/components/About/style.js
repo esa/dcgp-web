@@ -1,8 +1,11 @@
 import styled from 'styled-components'
 import { transparentize as fade } from 'polished'
 
+import {setInterFontSizeAndSpacing} from '../../../utils/font'
+
 export const Wrapper = styled.div`
   grid-column: full;
+  margin-top: 30px;
   transition: max-height 500ms ease-in-out, min-height 500ms ease-in-out;
   max-height: ${({ height, isOpen }) => (isOpen ? height : 0)}px;
   min-height: ${({ height, isOpen }) => (isOpen ? height : 0)}px;
@@ -10,18 +13,18 @@ export const Wrapper = styled.div`
 
   h1 {
     margin-top: 0;
-    font-size: 1.8rem;
+    ${setInterFontSizeAndSpacing(28)};
     color: ${({ theme }) => theme.title};
   }
 
   h2 {
-    font-size: 1.4rem;
+    ${setInterFontSizeAndSpacing(24)};
     margin: 1.5em 0 0.8em;
     color: ${({ theme }) => theme.title};
   }
 
   summary {
-    font-size: 1.4rem;
+    ${setInterFontSizeAndSpacing(24)};
     outline: none;
     cursor: pointer;
     margin: 1.5em 0 0.8em;
@@ -35,7 +38,7 @@ export const Wrapper = styled.div`
 
   p,
   ul {
-    font-size: 1.05rem;
+    ${setInterFontSizeAndSpacing(17)};
     line-height: 1.6;
     color: ${({ theme }) => theme.text.regular};
   }
