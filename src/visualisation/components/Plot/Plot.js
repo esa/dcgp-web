@@ -78,8 +78,8 @@ const Plot = () => {
         selectedInput={selectedInput}
         selectedOutput={selectedOutput}
       />
-      <Divider css="margin: 15px 0;" />
       <AxisSelection
+      css="margin-top: 30px;"
         name="inputs"
         value={selectedInput}
         options={inputLabels}

@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 
+import { setInterFontSizeAndSpacing } from '../../../utils/font'
+
 const SubHeader = styled.h2`
-  font-size: 20px;
+  ${setInterFontSizeAndSpacing(21)};
   font-weight: 600;
   margin: 0;
   margin-bottom: 8px;

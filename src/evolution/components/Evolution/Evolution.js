@@ -9,9 +9,8 @@ const Evolve = () => {
   return (
     <GridContainer>
       <Controls />
-      <Divider />
-      <Information />
       <Chart />
+      <Information />
     </GridContainer>
   )
 }

@@ -9,15 +9,6 @@ export const bright = {
   orange: '#E37222',
 }
 
-export const dark = {
-  red: '#822433',
-  yellow: '#B88B00',
-  blue: '#002664',
-  azure: '#00549F',
-  green: '#284E36',
-  orange: '#9D5116',
-}
-
 export const grays = {
   '000': '#FFFFFF',
   '100': '#F5F5F5',
@@ -34,8 +25,7 @@ export const grays = {
 
 export const DAY = {
   ...bright,
-  dark,
-  background: grays['000'],
+  background: grays['100'],
   border: {
     content: fade(0.9, grays['900']),
     divider: grays['200'],
@@ -44,9 +34,9 @@ export const DAY = {
   heading: grays['800'],
   headingSubtle: grays['600'],
   primary: bright.red,
-  secundary: bright.yellow,
+  secondary: bright.azure,
   surface: {
-    regular: grays['100'],
+    regular: grays['000'],
     selected: grays['200'],
   },
   text: {
@@ -69,7 +59,7 @@ export const NIGHT = {
   heading: grays['100'],
   headingSubtle: grays['600'],
   primary: bright.red,
-  secundary: bright.yellow,
+  secondary: bright.azure,
   surface: {
     regular: grays['700'],
     selected: grays['600'],

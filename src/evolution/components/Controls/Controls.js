@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
+
 import {
   startEvolutionRequest,
   pauseEvolutionRequest,
@@ -9,16 +10,17 @@ import {
   initialEvolutionRequest,
 } from '../../actions'
 import { evolutionStateSelector } from '../../selectors'
-import PlayPauseButton from '../PlayPauseButton'
-import CircleButton from '../../../ui/components/CircleButton'
-import Reset from '../../../icons/Reset'
-import Next from '../../../icons/Next'
+import ButtonBase from './ButtonBase'
+import Reset from '../../../icons/gobackwards'
+import Next from '../../../icons/forward/fill'
+import Play from '../../../icons/play/fill'
+import Pause from '../../../icons/pause/fill'
 
 const ControlWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px 0 30px;
+  margin: 20px 0 32px;
 
   & button:nth-child(2) {
     margin-left: 20px;
@@ -26,7 +28,7 @@ const ControlWrapper = styled.div`
   }
 `
 
-const Controls = () => {
+export default function Controls() {
   const evolutionState = useSelector(evolutionStateSelector)
   const dispatch = useDispatch()
 
@@ -39,21 +41,25 @@ const Controls = () => {
   const handlePause = () => dispatch(pauseEvolutionRequest())
   const handleStep = () => dispatch(stepEvolutionRequest())
 
+  const isPlaying = evolutionState === 'EVOLVING'
+
+
   return (
     <ControlWrapper>
-      <CircleButton onClick={handleReset} title="Reset">
-        <Reset size={null} />
-      </CircleButton>
-      <PlayPauseButton
-        isPlaying={evolutionState === 'EVOLVING'}
-        handlePlay={handlePlay}
-        handlePause={handlePause}
-      />
-      <CircleButton onClick={handleStep} title="Next step">
-        <Next size={null} />
-      </CircleButton>
+      <ButtonBase onClick={handleReset} title="Reset" size={21}>
+        <Reset />
+      </ButtonBase>
+      <ButtonBase
+      css="margin-left: 20px; margin-right: 20px;"
+        size={32}
+        onClick={isPlaying ? handlePause : handlePlay}
+        title={isPlaying ? 'Pause' : 'Play'}
+      >
+        {isPlaying ? <Pause /> : <Play />}
+      </ButtonBase>
+      <ButtonBase onClick={handleStep} title="Next step" size={21}>
+        <Next />
+      </ButtonBase>
     </ControlWrapper>
   )
 }
-
-export default Controls

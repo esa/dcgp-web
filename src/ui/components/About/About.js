@@ -12,7 +12,7 @@ const About = () => {
   return (
     <Wrapper height={size.height} isOpen={isOpen}>
       <div {...bind}>
-        <h1>About dcgp</h1>
+        <h1>About dCGP</h1>
         <h2>What is this?</h2>
         <p>
           Differentiable Genetic Cartesian Programming (dCGP) is a newly
