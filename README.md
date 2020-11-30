@@ -10,7 +10,7 @@ Web interface to use dcgp and inspect its chromosomes. The goal of this project 
 # Development
 Anyone is welcome to help progress and improve this web application. Tasks can be found under the [issues tab](https://github.com/esa/dcgp-web/issues). If your problem/task is not already an issue, feel free to create a new issue explaining your problem/task.
 
-This project is build using [Create React App](https://facebook.github.io/create-react-app/), information on the project stucture and setup can be found in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/documentation-intro).
+This project is build using [Create React App](https://facebook.github.io/create-react-app/), information on the project structure and setup can be found in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/documentation-intro).
 
 ## Prerequisite
 - [nodejs](https://nodejs.org/) >= 8
