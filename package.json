@@ -36,7 +36,7 @@
     "katex": "^0.10.1",
     "lint-staged": "^10.2.11",
     "mathjs": "^5.8.0",
-    "nanoid": "^2.0.1",
+    "nanoid": "^3.1.31",
     "polished": "^3.0.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
